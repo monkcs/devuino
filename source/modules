@@ -1,0 +1,54 @@
+
+
+Interfaces
+==========
+
+D Pin
+
+Input
+	-InputAnalog
+	-InputDigital
+	-I Read
+
+Output	
+	§§ -I OutputDigital (off, on, toggle)
+		-I OutputAnalog
+	-I Write	
+
+§§ Light (brightness)
+	§§ -I Rgb (red, green, blue, color(rgb, hex))
+		§§ -I Rgbw (white, color(rgbw, hex))
+
+Display (direction,dimensions, justify, cursor, clear)
+	-I CharacterDisplay
+		-I SegmentDisplay (struct_SevenSegmentCharacter, privat_input-to-struct, 
+
+§§ Temperature (celsius, fahrenheit, kelvin)
+
+§§ Distance (metre, decimetre, centimetre, millimetre, inch, feet, yard)
+
+Devices
+=======
+
+Basic
+-----
+
+Button		:: InputDigital
+Potentiometer	:: InputAnalog
+
+Led		:: Light, OutputAnalog, Pin
+LedRgb		:: Rgb, OutputAnalog, Pin
+LedRgbw		:: Rgb, OutputAnalog, Pin
+
+Max72xx		:: SegmentDisplay, SPI, Light
+
+Power
+	-Power managment
+
+
+
+Protocol
+========
+	-SPI
+	-UART/Serial
+	-I2C
