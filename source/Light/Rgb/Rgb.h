@@ -5,7 +5,7 @@
 
 class Rgb : public Light  {
 	public:
-        void brightness(byte value);
+        void brightness(int value);
         void color(long hexadecimal);
         void color(byte r, byte g, byte b);
 		virtual void red(byte value) = 0;

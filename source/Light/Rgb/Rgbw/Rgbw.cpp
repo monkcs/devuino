@@ -1,6 +1,6 @@
 #include "Rgbw.h"
 
-void Rgbw::brightness(byte value) {
+void Rgbw::brightness(int value) {
     bright = value;
     color(r, g, b, w);
 }

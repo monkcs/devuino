@@ -1,8 +1,9 @@
 #include "Light.h"
 
-byte Light::brightness() {
+int Light::brightness() {
     return bright;
 }
 void Light::brightness(float percent) {
-    brightness((byte)(255 * percent));
+    // brightness(255 * percent);
+    // brightness(1023 * percent);
 }

@@ -5,11 +5,11 @@ typedef unsigned char byte; /* Remove before shipping */
 
 class Light {
 	public:
-		byte brightness();
+		int brightness();
 		void brightness(float percent);
-		virtual void brightness(byte value) = 0;
+		virtual void brightness(int value) = 0;
 	protected:
-	    byte bright = 0;
+	    int bright = 0;
 };
 
 #endif

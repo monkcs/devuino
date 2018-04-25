@@ -1,6 +1,6 @@
 #include "Rgb.h"
 
-void Rgb::brightness(byte value) {
+void Rgb::brightness(int value) {
     bright = value;
     color(r, g, b);
 }
