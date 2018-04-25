@@ -1,8 +1,6 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
-typedef unsigned char byte; /* Remove before shipping */
-
 class Light {
 	public:
 		int brightness();
