@@ -6,4 +6,5 @@ int Light::brightness() {
 void Light::brightness(float percent) {
     // brightness(255 * percent);
     // brightness(1023 * percent);
+    // brightness(4095 * percent);
 }
