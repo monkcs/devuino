@@ -2,13 +2,13 @@
 
 void Rgb::brightness(int value) {
     bright = value;
-    color(r, g, b);
+    colour(r, g, b);
 }
-void Rgb::color(long hexadecimal) {
-    color((byte)(hexadecimal >> 16), (byte)(hexadecimal >> 8), (byte)(hexadecimal));
+void Rgb::colour(long hexadecimal) {
+    colour((byte)(hexadecimal >> 16), (byte)(hexadecimal >> 8), (byte)(hexadecimal));
 }
 
-void Rgb::color(byte r, byte g, byte b) {
+void Rgb::colour(byte r, byte g, byte b) {
     this->r = r;
     this->g = g;
     this->b = b;
