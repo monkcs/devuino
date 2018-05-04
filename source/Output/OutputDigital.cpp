@@ -1,10 +1,13 @@
 #include "OutputDigital.h"
 
-void OutputDigital::toggle() {
-	if ((active = !active)) {
+void OutputDigital::toggle()
+{
+	if ((active = !active))
+	{
 		on();
 	}
-	else {
+	else
+	{
 		off();
 	}
 }
