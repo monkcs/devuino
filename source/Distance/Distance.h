@@ -14,6 +14,7 @@ namespace devuino
         float yard();
         float foot();
         float inch();
+        float nautical();
     };
 }
 #endif
