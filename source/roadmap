@@ -1,3 +1,5 @@
+I = Interface
+§§ = Done
 
 
 Interfaces
@@ -12,8 +14,10 @@ Input
 
 Output	
 	§§ -I OutputDigital (off, on, toggle)
-		-I OutputAnalog
-	-I Write	
+			-I OutputAnalog (analog,)
+	-I Write
+
+-I Resolution (resolution(bits))
 
 §§ Light (brightness)
 	§§ -I Rgb (red, green, blue, color(rgb, hex))
