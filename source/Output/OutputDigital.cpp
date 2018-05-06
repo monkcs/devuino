@@ -1,13 +1,16 @@
 #include "OutputDigital.h"
 
-void OutputDigital::toggle()
+namespace devuino
 {
-	if ((active = !active))
-	{
-		on();
-	}
-	else
-	{
-		off();
-	}
+    void OutputDigital::toggle()
+    {
+        if ((active = !active))
+        {
+            on();
+        }
+        else
+        {
+            off();
+        }
+    }
 }

@@ -1,15 +1,18 @@
 #ifndef OUTPUTDIGITAL_H
 #define OUTPUTDIGITAL_H
 
-class OutputDigital
+namespace devuino
 {
-  public:
-	virtual void off() = 0;
-	virtual void on() = 0;
-	void toggle();
+    class OutputDigital
+    {
+      public:
+        virtual void off() = 0;
+        virtual void on() = 0;
+        void toggle();
 
-  protected:
-	bool active = false;
-};
+      protected:
+        bool active = false;
+    };
+}
 
 #endif
