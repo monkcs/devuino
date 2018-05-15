@@ -4,9 +4,9 @@ namespace devuino
 {
     int Resolution::resolution()
     {
-        return bitresolution;
+        return bitresolution * 8;
     }
-    void Resolution::resolution(int bits)
+    void Resolution::resolution(byte bits)
     {
         bitresolution = bits;
     }

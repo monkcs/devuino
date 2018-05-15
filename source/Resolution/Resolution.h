@@ -5,12 +5,12 @@ namespace devuino
 {
     class Resolution
     {
-      public:
-        int resolution();
-        void resolution(int bits);
-
       protected:
-        int bitresolution = 8;
+        int resolution();
+        void resolution(byte bits);
+
+      private:
+        byte bitresolution = 8;
     };
 }
 
