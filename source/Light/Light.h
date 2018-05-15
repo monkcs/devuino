@@ -1,6 +1,8 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
+#include "../Resolution/Resolution.h"
+
 namespace devuino
 {
     class Light
@@ -12,6 +14,7 @@ namespace devuino
 
       protected:
         int bright = 0;
+        Resolution bitsize;
     };
 }
 
