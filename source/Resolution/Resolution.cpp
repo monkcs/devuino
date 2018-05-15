@@ -2,12 +2,17 @@
 
 namespace devuino
 {
+    Resolution::Resolution(int bits)
+        : bitresolution(bits)
+    {
+    }
+    int Resolution::bits()
+    {
+        return bitresolution;
+    }
     int Resolution::resolution()
     {
-        return bitresolution * 8;
-    }
-    void Resolution::resolution(byte bits)
-    {
-        bitresolution = bits;
+        // Bitshift equals 2^n
+        return 1 << bitresolution;
     }
 }
