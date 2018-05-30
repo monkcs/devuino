@@ -1,7 +1,8 @@
 #ifndef RGB_H
 #define RGB_H
 
-#include "../Light.h"
+#include <Arduino.h>
+#include "Light.h"
 
 namespace devuino
 {

@@ -1,8 +1,8 @@
 #ifndef OUTPUTANALOG_H
 #define OUTPUTANALOG_H
 
-#include "../OutputDigital.h"
-#include "../../Resolution/Resolution.h"
+#include "OutputDigital.h"
+#include "Resolution.h"
 
 namespace devuino
 {
