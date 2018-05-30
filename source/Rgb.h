@@ -9,7 +9,7 @@ namespace devuino
     class Rgb : public Light
     {
       public:
-        void brightness(int value);
+        void brightness(int value) override;
         void colour(long hexadecimal);
         void colour(byte r, byte g, byte b);
         virtual void red(byte value) = 0;

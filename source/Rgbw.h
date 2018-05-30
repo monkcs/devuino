@@ -9,8 +9,8 @@ namespace devuino
     class Rgbw : public Rgb
     {
       public:
-        void brightness(int value);
-        void colour(long hexadecimal);
+        void brightness(int value) override;
+        void colour(long hexadecimal) override;
         void colour(byte red, byte green, byte blue, byte white);
         virtual void white(byte value) = 0;
 
