@@ -17,7 +17,7 @@ Output
 			-I OutputAnalog (analog,)
 	-I Write
 
--I Resolution (resolution(bits))
+§§ Resolution (resolution(bits))
 
 §§ Light (brightness)
 	§§ -I Rgb (red, green, blue, color(rgb, hex))
@@ -29,7 +29,7 @@ Display (direction,dimensions, justify, cursor, clear)
 
 §§ Temperature (celsius, fahrenheit, kelvin)
 
-§§ Distance (metre, decimetre, centimetre, millimetre, inch, feet, yard)
+§§ Distance (metre, decimetre, centimetre, millimetre, inch, feet, yard, nautical)
 
 Devices
 =======
