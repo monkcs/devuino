@@ -6,10 +6,13 @@
 
 namespace devuino
 {
-    class OutputAnalog : public OutputDigital, public Resolution
+    class OutputAnalog : public OutputDigital
     {
       public:
         virtual void analog(int value) = 0;
+
+      protected:
+        Resolution bitsize;
     };
 }
 
