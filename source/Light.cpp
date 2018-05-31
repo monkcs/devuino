@@ -2,6 +2,10 @@
 
 namespace devuino
 {
+    Light::Light(int bitresolution)
+        : bitsize(bitresolution)
+    {
+    }
     int Light::brightness()
     {
         return bright;
