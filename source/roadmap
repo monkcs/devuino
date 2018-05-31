@@ -1,5 +1,6 @@
 I = Interface
 §§ = Done
+¤ = Member object
 
 
 Interfaces
@@ -40,7 +41,7 @@ Basic
 Button		:: InputDigital
 Potentiometer	:: InputAnalog
 
-Led		:: Light, OutputAnalog, Pin
+§§ Led		:: Light, OutputAnalog
 LedRgb		:: Rgb, OutputAnalog, Pin
 LedRgbw		:: Rgb, OutputAnalog, Pin
 
