@@ -2,6 +2,10 @@
 
 namespace devuino
 {
+    Rgb::Rgb()
+        : Light(8)
+    {
+    }
     void Rgb::brightness(int value)
     {
         bright = value;

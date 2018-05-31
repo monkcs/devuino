@@ -1,14 +1,15 @@
 #ifndef RGB_H
 #define RGB_H
 
-#include <Arduino.h>
 #include "Light.h"
+#include <Arduino.h>
 
 namespace devuino
 {
     class Rgb : public Light
     {
       public:
+        Rgb();
         void brightness(int value) override;
         void colour(long hexadecimal);
         void colour(byte r, byte g, byte b);
