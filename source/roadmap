@@ -42,7 +42,7 @@ Button		:: InputDigital
 Potentiometer	:: InputAnalog
 
 §§ Led		:: Light, OutputAnalog
-LedRgb		:: Rgb, OutputAnalog, Pin
+§§ LedRgb	:: Rgb, OutputAnalog
 LedRgbw		:: Rgb, OutputAnalog, Pin
 
 Max72xx		:: SegmentDisplay, SPI, Light

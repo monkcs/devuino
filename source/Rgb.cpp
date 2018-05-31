@@ -7,7 +7,7 @@ namespace devuino
         bright = value;
         colour(r, g, b);
     }
-    
+
     void Rgb::colour(long hexadecimal)
     {
         colour((byte)(hexadecimal >> 16), (byte)(hexadecimal >> 8),
