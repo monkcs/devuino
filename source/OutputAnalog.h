@@ -12,7 +12,7 @@ namespace devuino
         virtual void analog(int value) = 0;
 
       protected:
-        Resolution bitsize;
+        Resolution bitsize = 8;
     };
 }
 
