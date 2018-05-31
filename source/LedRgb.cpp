@@ -27,21 +27,26 @@ namespace devuino
 
     void LedRgb::on()
     {
-        colour(r, g, b);
+        brightness(255);
     }
 
     void LedRgb::red(byte value)
     {
-        analogWrite(pins[0], value);
+        change(pins[0], value);
     }
 
     void LedRgb::green(byte value)
     {
-        analogWrite(pins[1], value);
+        change(pins[1], value);
     }
 
     void LedRgb::blue(byte value)
     {
-        analogWrite(pins[2], value);
+        change(pins[2], value);
+    }
+
+    void LedRgb::change(int pin, byte value)
+    {
+        analogWrite(pin, (int)(value * (bright / 255));
     }
 }

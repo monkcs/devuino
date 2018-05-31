@@ -1,8 +1,8 @@
 #ifndef LEDRGB_H
 #define LEDRGB_H
 
-#include "Rgb.h"
 #include "OutputDigital.h"
+#include "Rgb.h"
 
 namespace devuino
 {
@@ -20,6 +20,9 @@ namespace devuino
 
       protected:
         int pins[3];
+
+      private:
+        void change(int pin, byte value);
     };
 }
 
