@@ -38,12 +38,13 @@ Devices
 Basic
 -----
 
+§§ Switch		:: OutputDigital
 Button		:: InputDigital
 Potentiometer	:: InputAnalog
 
-§§ Led		:: Light, OutputAnalog
-§§ LedRgb	:: Rgb, OutputAnalog
-§§ LedRgbw	:: Rgbw, OutputAnalog
+§§ Led		:: Light, OutputDigital
+§§ LedRgb	:: Rgb, OutputDigital
+§§ LedRgbw	:: Rgbw, OutputDigital
 
 Max72xx		:: SegmentDisplay, SPI, Light
 
