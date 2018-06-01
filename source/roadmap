@@ -43,7 +43,7 @@ Potentiometer	:: InputAnalog
 
 §§ Led		:: Light, OutputAnalog
 §§ LedRgb	:: Rgb, OutputAnalog
-LedRgbw		:: Rgb, OutputAnalog, Pin
+§§ LedRgbw	:: Rgbw, OutputAnalog
 
 Max72xx		:: SegmentDisplay, SPI, Light
 
