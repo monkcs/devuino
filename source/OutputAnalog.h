@@ -9,10 +9,11 @@ namespace devuino
     class OutputAnalog : public OutputDigital
     {
       public:
+        OutputAnalog(int bitresolution);
         virtual void analog(int value) = 0;
 
       protected:
-        Resolution bitsize = 8;
+        Resolution bitsize;
     };
 }
 
