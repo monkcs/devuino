@@ -1,6 +1,7 @@
 I = Interface
 §§ = Done
 ¤ = Member object
+% = override
 
 
 Interfaces
@@ -9,13 +10,13 @@ Interfaces
 D Pin
 
 Input
-	-InputAnalog
-	-InputDigital
+	-I InputAnalog %(value, ¤debounce)
+	§§ -InputDigital %(value, ¤debounce)
 	-I Read
 
 Output	
 	§§ -I OutputDigital (off, on, toggle)
-			-I OutputAnalog (analog,)
+			§§ -I OutputAnalog (analog)
 	-I Write
 
 §§ Resolution (resolution(bits))
@@ -41,6 +42,11 @@ Basic
 §§ Switch		:: OutputDigital
 Button		:: InputDigital
 Potentiometer	:: InputAnalog
+
+Servo 	:: OutputAnalog
+Buzzer  :: OutputAnalog
+
+
 
 §§ Led		:: Light, OutputDigital
 §§ LedRgb	:: Rgb, OutputDigital
