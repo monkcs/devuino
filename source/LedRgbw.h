@@ -1,6 +1,7 @@
 #ifndef LEDRGBW_H
 #define LEDRGBW_H
 
+#include <Arduino.h>
 #include "OutputDigital.h"
 #include "Rgbw.h"
 
@@ -9,7 +10,7 @@ namespace devuino
     class LedRgbw : public OutputDigital, public Rgbw
     {
       public:
-        LedRgbw(int redpin, int greenpin, int bluepin, int whitepin);
+        LedRgbw(byte redpin, byte greenpin, byte bluepin, byte whitepin);
         ~LedRgbw();
 
         void off() override;
@@ -20,10 +21,10 @@ namespace devuino
         void white(byte value) override;
 
       protected:
-        int pins[4];
+        byte pins[4];
 
       private:
-        void change(int pin, byte value);
+        void change(byte pin, byte value);
     };
 }
 

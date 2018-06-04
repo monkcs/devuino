@@ -3,7 +3,7 @@
 
 namespace devuino
 {
-    Led::Led(int pin, int bitresolution)
+    Led::Led(byte pin, int bitresolution)
         : Light(bitresolution), pin(pin)
     {
         pinMode(pin, OUTPUT);

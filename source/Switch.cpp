@@ -3,7 +3,7 @@
 
 namespace devuino
 {
-    Switch::Switch(int pin)
+    Switch::Switch(byte pin)
     {
         this->pin = pin;
         pinMode(pin, OUTPUT);
