@@ -12,6 +12,6 @@ namespace devuino
     }
     void Light::brightness(float percent)
     {
-        brightness((int)(bitsize.resolution() * percent));
+        brightness((int)(bitsize.resolution * percent));
     }
 }

@@ -7,11 +7,9 @@ namespace devuino
     {
       public:
         Resolution(int bits);
-        int bits();
-        int resolution();
-
-      private:
-        const int bitresolution;
+        
+        const int bits;
+        const int resolution;
     };
 }
 
