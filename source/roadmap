@@ -10,7 +10,7 @@ Interfaces
 D Pin
 
 Input
-	-I InputAnalog %(value, ¤debounce)
+	§§ -I InputAnalog %(value, ¤debounce)
 	§§ -InputDigital %(value, ¤debounce)
 	-I Read
 
