@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# Vs Code
+.vscode
+settings.json
+c_cpp_properties.json
