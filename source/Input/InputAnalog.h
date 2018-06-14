@@ -8,7 +8,7 @@ namespace devuino
     class InputAnalog
     {
       public:
-        InputAnalog(int bitresolution, bool debounce = false);
+        InputAnalog(int bitresolution, bool debounce);
 
         float percent();
         virtual int value() = 0;
