@@ -1,13 +1,13 @@
 #ifndef LED_H
 #define LED_H
 
-#include <Arduino.h>
 #include "Light.h"
 #include "OutputDigital.h"
+#include <Arduino.h>
 
 namespace devuino
 {
-    class Led : public OutputDigital, public Light
+    class Led : public Light, public OutputDigital
     {
       public:
         Led(byte pin, int bitresolution = 8);
@@ -18,7 +18,7 @@ namespace devuino
         void on() override;
 
       protected:
-        byte pin;
+        const byte pin;
     };
 }
 

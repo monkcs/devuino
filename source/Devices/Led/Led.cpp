@@ -4,7 +4,7 @@
 namespace devuino
 {
     Led::Led(byte pin, int bitresolution)
-        : Light(bitresolution), pin(pin)
+        : pin(pin), Light(bitresolution)
     {
         pinMode(pin, OUTPUT);
     }

@@ -17,7 +17,7 @@ namespace devuino
 
       protected:
         void change(bool state);
-        byte pin;
+        const byte pin;
     };
 }
 
