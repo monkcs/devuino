@@ -9,6 +9,6 @@ namespace devuino
 
     float InputAnalog::percent()
     {
-        return value() / bitsize.resolution;
+        return (float)value() / (float)bitsize.resolution;
     }
 }
