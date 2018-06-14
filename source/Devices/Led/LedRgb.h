@@ -1,9 +1,9 @@
 #ifndef LEDRGB_H
 #define LEDRGB_H
 
-#include <Arduino.h>
 #include "OutputDigital.h"
 #include "Rgb.h"
+#include <Arduino.h>
 
 namespace devuino
 {
@@ -20,10 +20,8 @@ namespace devuino
         void blue(byte value) override;
 
       protected:
-        byte pins[3];
-
-      private:
         void change(byte pin, byte value);
+        byte pins[3];
     };
 }
 
