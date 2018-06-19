@@ -10,7 +10,7 @@ Interfaces
 D Pin
 
 Input
-	§§ -I InputAnalog %(value, ¤debounce)
+	§§ -I InputAnalog %(value, percent, ¤debounce)
 	§§ -InputDigital %(value, ¤debounce)
 	-I Read
 
@@ -25,7 +25,7 @@ Output
 	§§ -I Rgb (red, green, blue, color(rgb, hex))
 		§§ -I Rgbw (white, color(rgbw, hex))
 
-Display (direction,dimensions, justify, cursor, clear)
+Display (direction, dimensions, justify, cursor, clear)
 	-I CharacterDisplay
 		-I SegmentDisplay (struct_SevenSegmentCharacter, privat_input-to-struct, 
 
@@ -35,32 +35,32 @@ Display (direction,dimensions, justify, cursor, clear)
 
 Devices
 =======
+	§§ Switch		:: OutputDigital
+	Button		:: InputDigital
+	§§ Potentiometer	:: InputAnalog
 
-Basic
------
+	Servo 	:: OutputAnalog
+	Buzzer  :: OutputAnalog
 
-§§ Switch		:: OutputDigital
-Button		:: InputDigital
-Potentiometer	:: InputAnalog
-
-Servo 	:: OutputAnalog
-Buzzer  :: OutputAnalog
-
-
-
-§§ Led		:: Light, OutputDigital
-§§ LedRgb	:: Rgb, OutputDigital
-§§ LedRgbw	:: Rgbw, OutputDigital
+	§§ Led		:: Light, OutputDigital
+	§§ LedRgb	:: Rgb, OutputDigital
+	§§ LedRgbw	:: Rgbw, OutputDigital
 
 Max72xx		:: SegmentDisplay, SPI, Light
 
+System
+======
+
+Control
+	- Watchdog timer
+	- 
+
 Power
-	-Power managment
+	- Power managment
+		- Power saving modes
+	- Reset
 
-
-
-Protocol
-========
-	-SPI
-	-UART/Serial
-	-I2C
+I/O
+	- SPI
+	- UART/Serial
+	- I2C
