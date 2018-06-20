@@ -39,18 +39,18 @@ Interfaces
 Devices
 ═══════
     
-🔴 Switch		:: OutputDigital
-🔵 Button		:: InputDigital
+🔵 Switch		    :: OutputDigital
+🔵 Button		    :: InputDigital
 🔵 Potentiometer	:: InputAnalog
 
-🔴 Servo		:: OutputAnalog
-🔴 Buzzer		:: OutputAnalog
+🔴 Servo		    :: OutputAnalog
+🔴 Buzzer	    	:: OutputAnalog
 
-🔵 Led			:: Light, OutputDigital
-🔵 LedRgb		:: Rgb, OutputDigital
-🔵 LedRgbw		:: Rgbw, OutputDigital
+🔵 Led			    :: Light, OutputDigital
+🔵 LedRgb		    :: Rgb, OutputDigital
+🔵 LedRgbw		    :: Rgbw, OutputDigital
 
-🔴 Max72xx		:: SegmentDisplay, SPI, Light
+🔴 Max72xx		    :: SegmentDisplay, SPI, Light
 
 
 System
