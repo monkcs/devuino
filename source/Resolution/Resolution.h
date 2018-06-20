@@ -3,7 +3,7 @@
 
 namespace devuino
 {
-    class Resolution
+    class Resolution final
     {
       public:
         Resolution(int bits);
