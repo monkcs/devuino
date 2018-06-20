@@ -8,9 +8,6 @@ namespace devuino
     {
         pinMode(pin, INPUT);
     }
-    Potentiometer::~Potentiometer()
-    {
-    }
 
     int Potentiometer::value()
     {

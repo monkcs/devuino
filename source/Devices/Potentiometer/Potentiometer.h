@@ -10,7 +10,6 @@ namespace devuino
     {
       public:
         Potentiometer(byte pin, bool debounce = true, int bitresolution = 8);
-        ~Potentiometer();
 
         int value() override;
 
