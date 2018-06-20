@@ -14,7 +14,7 @@ namespace devuino
         virtual int value() = 0;
 
       protected:
-        Resolution bitsize;
+        const Resolution bitsize;
         const bool debounce;
     };
 }

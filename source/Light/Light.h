@@ -15,7 +15,7 @@ namespace devuino
 
       protected:
         int bright = 0;
-        Resolution bitsize;
+        const Resolution bitsize;
     };
 }
 
