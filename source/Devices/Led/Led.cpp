@@ -27,6 +27,6 @@ namespace devuino
 
     void Led::on()
     {
-        brightness(bitsize.resolution);
+        brightness(bitsize.resolution - 1);
     }
 }
