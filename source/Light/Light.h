@@ -9,7 +9,7 @@ namespace devuino
     {
       public:
         Light(int bitresolution);
-        int brightness();
+        int brightness() const;
         void brightness(float percent);
         virtual void brightness(int value) = 0;
 

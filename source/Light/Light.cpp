@@ -6,7 +6,7 @@ namespace devuino
         : bitsize(bitresolution)
     {
     }
-    int Light::brightness()
+    int Light::brightness() const
     {
         return bright;
     }
