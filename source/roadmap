@@ -1,64 +1,68 @@
-I = Interface
-§§ = Done
-¤ = Member object
-% = override
+
+Devuino 
+
+
+└ * ─ * ├ * ├ 
+🔵 = Implemented fully 
+🔴 = Not implemented 
+
 
 
 Interfaces
-==========
+══════════
 
-D Pin
-
-Input
-	§§ -I InputAnalog %(value, percent, ¤debounce)
-	§§ -InputDigital %(value, ¤debounce)
+🔵 Input
+    ├─ 🔵 InputAnalog %(value, percent, ¤debounce)
+    └─ 🔵 InputDigital %(value, ¤debounce)
 	-I Read
 
-Output	
-	§§ -I OutputDigital (off, on, toggle)
-			§§ -I OutputAnalog (analog)
+🔵 Output
+    └─ 🔵 OutputDigital (off, on, toggle)
+        └─ 🔵 OutputAnalog (analog)
 	-I Write
 
-§§ Resolution (resolution(bits))
+🔵 Resolution (resolution(bits))
 
-§§ Light (brightness)
-	§§ -I Rgb (red, green, blue, color(rgb, hex))
-		§§ -I Rgbw (white, color(rgbw, hex))
+🔵 Light (brightness)
+    └─ 🔵 Rgb (red, green, blue, color(rgb, hex))
+        └─ 🔵 Rgbw (white, color(rgbw, hex))
 
-Display (direction, dimensions, justify, cursor, clear)
-	-I CharacterDisplay
-		-I SegmentDisplay (struct_SevenSegmentCharacter, privat_input-to-struct, 
+🔴 Display (direction, dimensions, justify, cursor, clear)
+    └─ 🔴 CharacterDisplay
+        └─ 🔴 SegmentDisplay (struct_SevenSegmentCharacter, privat_input-to-struct, 
 
-§§ Temperature (celsius, fahrenheit, kelvin)
+🔵 Temperature (celsius, fahrenheit, kelvin)
 
-§§ Distance (metre, decimetre, centimetre, millimetre, inch, feet, yard, nautical)
+🔵 Distance (metre, decimetre, centimetre, millimetre, inch, feet, yard, nautical)
+
 
 Devices
-=======
-	§§ Switch		:: OutputDigital
-	Button		:: InputDigital
-	§§ Potentiometer	:: InputAnalog
+═══════
+    
+🔴 Switch		:: OutputDigital
+🔵 Button		:: InputDigital
+🔵 Potentiometer	:: InputAnalog
 
-	Servo 	:: OutputAnalog
-	Buzzer  :: OutputAnalog
+🔴 Servo		:: OutputAnalog
+🔴 Buzzer		:: OutputAnalog
 
-	§§ Led		:: Light, OutputDigital
-	§§ LedRgb	:: Rgb, OutputDigital
-	§§ LedRgbw	:: Rgbw, OutputDigital
+🔵 Led			:: Light, OutputDigital
+🔵 LedRgb		:: Rgb, OutputDigital
+🔵 LedRgbw		:: Rgbw, OutputDigital
 
-Max72xx		:: SegmentDisplay, SPI, Light
+🔴 Max72xx		:: SegmentDisplay, SPI, Light
+
 
 System
-======
+══════
 
-Control
-	- Watchdog timer
-	- 
+🔴 Control
+    └─ 🔴 Watchdog timer
 
-Power
-	- Power managment
-		- Power saving modes
-	- Reset
+🔴 Power
+    └─ 🔴 Power managment
+        ├─ 🔴 Power saving modes
+        └─ 🔴 Reset
 
 I/O
 	- SPI
