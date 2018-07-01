@@ -2,13 +2,14 @@
 #define ONBOARD_H
 
 #include "Pin.h"
+#include <Arduino.h>
 
 namespace devuino::pin
 {
     class Onboard : public Pin
     {
       public:
-        Onboard(int pin);
+        Onboard(byte pin);
 
         int analogread() override;
         void analogwrite(int value) override;
