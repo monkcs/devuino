@@ -1,7 +1,7 @@
 #include "Led.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     Led::Led(T pin, int bitresolution)
         : pin(pin), Light(bitresolution)

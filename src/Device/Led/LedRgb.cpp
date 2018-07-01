@@ -1,7 +1,7 @@
 #include "LedRgb.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     LedRgb::LedRgb(T redpin, T greenpin, T bluepin)
     {

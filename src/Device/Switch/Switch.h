@@ -4,7 +4,7 @@
 #include "OutputDigital.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     template <typename T>
     class Switch : public OutputDigital

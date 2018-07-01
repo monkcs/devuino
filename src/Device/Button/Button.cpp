@@ -1,7 +1,7 @@
 #include "Button.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     Button::Button(T pin, bool debounce, pin::Resistor pull)
         : pin(pin), InputDigital(debounce), pull(pull)

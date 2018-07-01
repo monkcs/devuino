@@ -1,7 +1,7 @@
 #include "Switch.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     Switch::Switch(T pin) : pin(pin)
     {

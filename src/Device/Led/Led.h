@@ -5,7 +5,7 @@
 #include "OutputDigital.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     template <typename T>
     class Led : public Light, public OutputDigital

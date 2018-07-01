@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "Potentiometer.h"
 
-namespace devuino
+namespace devuino::device
 {
     Potentiometer::Potentiometer(T pin, bool debounce, int bitresolution)
         : pin(pin), InputAnalog(bitresolution, debounce)

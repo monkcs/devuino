@@ -4,7 +4,7 @@
 #include "InputAnalog.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     /* Debounce not yet implemented */
     template <typename T>

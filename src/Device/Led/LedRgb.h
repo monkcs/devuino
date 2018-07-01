@@ -5,7 +5,7 @@
 #include "Rgb.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     template <typename T>
     class LedRgb : public OutputDigital, public Rgb

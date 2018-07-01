@@ -5,7 +5,7 @@
 #include "Rgbw.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     template <typename T>
     class LedRgbw : public OutputDigital, public Rgbw

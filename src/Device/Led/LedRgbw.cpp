@@ -1,7 +1,7 @@
 #include "LedRgbw.h"
 #include <Arduino.h>
 
-namespace devuino
+namespace devuino::device
 {
     LedRgbw::LedRgbw(T redpin, T greenpin, T bluepin, T whitepin)
     {
