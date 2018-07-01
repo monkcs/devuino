@@ -3,8 +3,6 @@
 
 #include "OutputDigital.h"
 #include "Rgb.h"
-#include <Arduino.h>
-
 namespace devuino::device
 {
     template <typename T>

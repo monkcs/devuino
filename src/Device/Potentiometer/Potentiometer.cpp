@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "Potentiometer.h"
 
 namespace devuino::device

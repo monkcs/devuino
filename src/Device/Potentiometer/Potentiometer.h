@@ -2,7 +2,6 @@
 #define POTENTIOMETER_H
 
 #include "InputAnalog.h"
-#include <Arduino.h>
 
 namespace devuino::device
 {

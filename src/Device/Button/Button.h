@@ -2,7 +2,6 @@
 #define BUTTON_H
 
 #include "InputDigital.h"
-#include <Arduino.h>
 
 namespace devuino::device
 {

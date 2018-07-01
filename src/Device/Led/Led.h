@@ -3,7 +3,6 @@
 
 #include "Light.h"
 #include "OutputDigital.h"
-#include <Arduino.h>
 
 namespace devuino::device
 {

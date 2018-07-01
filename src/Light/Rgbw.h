@@ -1,7 +1,6 @@
 #ifndef RGBW_H
 #define RGBW_H
 
-#include <Arduino.h>
 #include "Rgb.h"
 
 namespace devuino

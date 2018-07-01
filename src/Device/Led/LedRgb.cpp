@@ -1,5 +1,4 @@
 #include "LedRgb.h"
-#include <Arduino.h>
 
 namespace devuino::device
 {

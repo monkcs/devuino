@@ -1,5 +1,4 @@
 #include "Switch.h"
-#include <Arduino.h>
 
 namespace devuino::device
 {
