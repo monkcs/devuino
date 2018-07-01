@@ -11,6 +11,9 @@ Devuino
 Interfaces
 ══════════
 
+🔴 Pin
+    └─ 🔴 Onboard
+
 🔵 Input
     ├─ 🔵 InputAnalog %(value, percent, ¤debounce)
     └─ 🔵 InputDigital %(value, ¤debounce)
@@ -39,25 +42,30 @@ Interfaces
 Devices
 ═══════
     
-🔵 Switch		    :: OutputDigital
-🔵 Button		    :: InputDigital
-🔵 Potentiometer	:: InputAnalog
+🔵 Switch                   :: OutputDigital
+🔵 Button                   :: InputDigital
+🔵 Potentiometer            :: InputAnalog
 
-🔴 Servo		    :: OutputAnalog
-🔴 Buzzer	    	:: OutputAnalog
+🔴 Servo                    :: OutputAnalog
+🔴 Buzzer                   :: OutputAnalog
 
-🔵 Led			    :: Light, OutputDigital
-🔵 LedRgb		    :: Rgb, OutputDigital
-🔵 LedRgbw		    :: Rgbw, OutputDigital
+🔵 Led                      :: Light, OutputDigital
+🔵 LedRgb                   :: Rgb, OutputDigital
+🔵 LedRgbw                  :: Rgbw, OutputDigital
 
-🔴 Max72xx		    :: SegmentDisplay, SPI, Light
+🔴 Max72xx                  :: SegmentDisplay, SPI, Light
 
 
 System
 ══════
 
+🔴 Time
+    └─ 🔴 Uptime
+
 🔴 Control
-    └─ 🔴 Watchdog timer
+    ├─ 🔴 Watchdog timer
+    └─ 🔴 Interrupt hardware
+    └─ 🔴 Interrupt software
 
 🔴 Power
     └─ 🔴 Power managment

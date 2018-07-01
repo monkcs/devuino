@@ -7,10 +7,11 @@
 
 namespace devuino
 {
+    template <typename T>
     class Led : public Light, public OutputDigital
     {
       public:
-        Led(byte pin, int bitresolution = 8);
+        Led(T pin, int bitresolution = 8);
         ~Led();
 
         void brightness(int value) override;
@@ -18,7 +19,7 @@ namespace devuino
         void on() override;
 
       protected:
-        const byte pin;
+        T pin;
     };
 }
 

@@ -1,15 +1,16 @@
 #ifndef SWITCH_H
 #define SWITCH_H
 
-#include <Arduino.h>
 #include "OutputDigital.h"
+#include <Arduino.h>
 
 namespace devuino
 {
+    template <typename T>
     class Switch : public OutputDigital
     {
       public:
-        Switch(byte pin);
+        Switch(T pin);
         ~Switch();
 
         void off() override;
@@ -17,7 +18,7 @@ namespace devuino
 
       protected:
         void change(bool state);
-        const byte pin;
+        T pin;
     };
 }
 

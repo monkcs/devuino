@@ -1,9 +1,9 @@
-#include <Arduino.h>
 #include "LedRgbw.h"
+#include <Arduino.h>
 
 namespace devuino
 {
-    LedRgbw::LedRgbw(byte redpin, byte greenpin, byte bluepin, byte whitepin)
+    LedRgbw::LedRgbw(T redpin, T greenpin, T bluepin, T whitepin)
     {
         pins[0] = redpin;
         pins[1] = greenpin;
@@ -12,7 +12,7 @@ namespace devuino
 
         for (auto pin : pins)
         {
-            pinMode(pin, OUTPUT);
+            pin.initiate(devuino::pin::Mode::OutputAnalog);
         }
     }
 
@@ -51,8 +51,8 @@ namespace devuino
         change(pins[3], value);
     }
 
-    void LedRgbw::change(byte pin, byte value)
+    void LedRgbw::change(T pin, byte value)
     {
-        analogWrite(pin, (byte)(value * (bright / 255)));
+        pin.analogwrite((byte)(value * (bright / 255)));
     }
 }

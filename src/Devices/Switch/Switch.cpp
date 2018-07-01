@@ -3,9 +3,9 @@
 
 namespace devuino
 {
-    Switch::Switch(byte pin) : pin(pin)
+    Switch::Switch(T pin) : pin(pin)
     {
-        pinMode(pin, OUTPUT);
+        this->pin.initiate(pin::Mode::OutputDigital);
         off();
     }
 
@@ -27,6 +27,6 @@ namespace devuino
     void Switch::change(bool state)
     {
         active = state;
-        digitalWrite(pin, state);
+        pin.digitalwrite(state);
     }
 }

@@ -7,10 +7,11 @@
 
 namespace devuino
 {
+    template <typename T>
     class LedRgb : public OutputDigital, public Rgb
     {
       public:
-        LedRgb(byte redpin, byte greenpin, byte bluepin);
+        LedRgb(T redpin, T greenpin, T bluepin);
         ~LedRgb();
 
         void off() override;
@@ -20,8 +21,8 @@ namespace devuino
         void blue(byte value) override;
 
       protected:
-        void change(byte pin, byte value);
-        byte pins[3];
+        void change(T pin, byte value);
+        T pins[3];
     };
 }
 

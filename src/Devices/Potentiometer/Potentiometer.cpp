@@ -3,10 +3,10 @@
 
 namespace devuino
 {
-    Potentiometer::Potentiometer(byte pin, bool debounce, int bitresolution)
+    Potentiometer::Potentiometer(T pin, bool debounce, int bitresolution)
         : pin(pin), InputAnalog(bitresolution, debounce)
     {
-        pinMode(pin, INPUT);
+        this->pin.initiate(pin::Mode::InputAnalog);
     }
 
     int Potentiometer::value()
@@ -17,7 +17,7 @@ namespace devuino
         }
         else */
         {
-            return analogRead(pin);
+            return pin.analogread();
         }
     }
 }

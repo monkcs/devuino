@@ -7,15 +7,17 @@
 namespace devuino
 {
     /* Debounce not yet implemented */
+    template <typename T>
     class Button : public InputDigital
     {
       public:
-        Button(byte pin, bool debounce = true);
+        Button(T pin, bool debounce = true, pin::Resistor pull);
 
         bool value() override;
 
       protected:
-        const byte pin;
+        T pin;
+        const pin::Resistor pull;
     };
 }
 

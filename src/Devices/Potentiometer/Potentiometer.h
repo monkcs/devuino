@@ -1,21 +1,22 @@
 #ifndef POTENTIOMETER_H
 #define POTENTIOMETER_H
 
-#include <Arduino.h>
 #include "InputAnalog.h"
+#include <Arduino.h>
 
 namespace devuino
 {
     /* Debounce not yet implemented */
+    template <typename T>
     class Potentiometer : public InputAnalog
     {
       public:
-        Potentiometer(byte pin, bool debounce = true, int bitresolution = 8);
+        Potentiometer(T pin, bool debounce = true, int bitresolution = 8);
 
         int value() override;
 
       protected:
-        const byte pin;
+        T pin;
     };
 }
 

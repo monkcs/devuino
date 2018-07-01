@@ -3,10 +3,10 @@
 
 namespace devuino
 {
-    Button::Button(byte pin, bool debounce)
-        : pin(pin), InputDigital(debounce)
+    Button::Button(T pin, bool debounce, pin::Resistor pull)
+        : pin(pin), InputDigital(debounce), pull(pull)
     {
-        pinMode(pin, INPUT);
+        this->pin.initiate(pin::Mode::InputDigital, pull);
     }
 
     bool Button::value()
@@ -17,7 +17,7 @@ namespace devuino
         }
         else */
         {
-            return digitalRead(pin);
+            return pin.digitalread();
         }
     }
 }

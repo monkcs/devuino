@@ -3,10 +3,10 @@
 
 namespace devuino
 {
-    Led::Led(byte pin, int bitresolution)
+    Led::Led(T pin, int bitresolution)
         : pin(pin), Light(bitresolution)
     {
-        pinMode(pin, OUTPUT);
+        this->pin.initiate(pin::Mode::OutputAnalog);
     }
 
     Led::~Led()
@@ -17,7 +17,7 @@ namespace devuino
     void Led::brightness(int value)
     {
         bright = value;
-        analogWrite(pin, value);
+        pin.analogwrite(value);
     }
 
     void Led::off()
