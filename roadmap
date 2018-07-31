@@ -11,8 +11,8 @@ Devuino
 Interfaces
 ══════════
 
-🔴 Pin
-    └─ 🔴 Onboard
+🔵 Pin
+    └─ 🔵 Onboard
 
 🔵 Input
     ├─ 🔵 InputAnalog %(value, percent, ¤debounce)
@@ -54,6 +54,8 @@ Devices
 🔵 LedRgbw                  :: Rgbw, OutputDigital
 
 🔴 Max72xx                  :: SegmentDisplay, SPI, Light
+
+🔴 SR04                   :: Distance
 
 
 System
