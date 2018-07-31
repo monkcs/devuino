@@ -1,32 +1,38 @@
 #include "Led.h"
+#include "Pin.h"
 
 namespace devuino
 {
     namespace device
     {
-        Led::Led(T pin, int bitresolution)
+        template <typename T>
+        Led<T>::Led(T pin, int bitresolution)
             : pin(pin), Light(bitresolution)
         {
             this->pin.initiate(pin::Mode::OutputAnalog);
         }
 
-        Led::~Led()
+        template <typename T>
+        Led<T>::~Led()
         {
             off();
         }
 
-        void Led::brightness(int value)
+        template <typename T>
+        void Led<T>::brightness(int value)
         {
             bright = value;
             pin.analogwrite(value);
         }
 
-        void Led::off()
+        template <typename T>
+        void Led<T>::off()
         {
             brightness(0);
         }
 
-        void Led::on()
+        template <typename T>
+        void Led<T>::on()
         {
             brightness(bitsize.resolution - 1);
         }

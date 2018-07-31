@@ -1,16 +1,19 @@
 #include "Potentiometer.h"
+#include "Pin.h"
 
 namespace devuino
 {
     namespace device
     {
-        Potentiometer::Potentiometer(T pin, bool debounce, int bitresolution)
+        template <typename T>
+        Potentiometer<T>::Potentiometer(T pin, bool debounce, int bitresolution)
             : pin(pin), InputAnalog(bitresolution, debounce)
         {
             this->pin.initiate(pin::Mode::InputAnalog);
         }
 
-        int Potentiometer::value()
+        template <typename T>
+        int Potentiometer<T>::value()
         {
             /* if (debounce)
         {

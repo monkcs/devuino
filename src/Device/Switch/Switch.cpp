@@ -1,32 +1,38 @@
 #include "Switch.h"
+#include "Pin.h"
 
 namespace devuino
 {
     namespace device
     {
-        Switch::Switch(T pin)
+        template <typename T>
+        Switch<T>::Switch(T pin)
             : pin(pin)
         {
             this->pin.initiate(pin::Mode::OutputDigital);
             off();
         }
 
-        Switch::~Switch()
+        template <typename T>
+        Switch<T>::~Switch()
         {
             off();
         }
 
-        void Switch::off()
+        template <typename T>
+        void Switch<T>::off()
         {
             change(false);
         }
 
-        void Switch::on()
+        template <typename T>
+        void Switch<T>::on()
         {
             change(true);
         }
 
-        void Switch::change(bool state)
+        template <typename T>
+        void Switch<T>::change(bool state)
         {
             active = state;
             pin.digitalwrite(state);

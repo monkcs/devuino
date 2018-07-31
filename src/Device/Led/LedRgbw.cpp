@@ -1,10 +1,12 @@
 #include "LedRgbw.h"
+#include "Pin.h"
 
 namespace devuino
 {
     namespace device
     {
-        LedRgbw::LedRgbw(T redpin, T greenpin, T bluepin, T whitepin)
+        template <typename T>
+        LedRgbw<T>::LedRgbw(T redpin, T greenpin, T bluepin, T whitepin)
         {
             pins[0] = redpin;
             pins[1] = greenpin;
@@ -13,46 +15,53 @@ namespace devuino
 
             for (auto pin : pins)
             {
-                pin.initiate(devuino::pin::Mode::OutputAnalog);
+                pin.initiate(pin::Mode::OutputAnalog);
             }
         }
-
-        LedRgbw::~LedRgbw()
+        template <typename T>
+        LedRgbw<T>::~LedRgbw()
         {
             off();
         }
 
-        void LedRgbw::off()
+        template <typename T>
+        void LedRgbw<T>::off()
         {
             brightness(0);
         }
 
-        void LedRgbw::on()
+        template <typename T>
+        void LedRgbw<T>::on()
         {
             brightness(255);
         }
 
-        void LedRgbw::red(byte value)
+        template <typename T>
+        void LedRgbw<T>::red(byte value)
         {
             change(pins[0], value);
         }
 
-        void LedRgbw::green(byte value)
+        template <typename T>
+        void LedRgbw<T>::green(byte value)
         {
             change(pins[1], value);
         }
 
-        void LedRgbw::blue(byte value)
+        template <typename T>
+        void LedRgbw<T>::blue(byte value)
         {
             change(pins[2], value);
         }
 
-        void LedRgbw::white(byte value)
+        template <typename T>
+        void LedRgbw<T>::white(byte value)
         {
             change(pins[3], value);
         }
 
-        void LedRgbw::change(T pin, byte value)
+        template <typename T>
+        void LedRgbw<T>::change(T pin, byte value)
         {
             pin.analogwrite((byte)(value * (bright / 255)));
         }

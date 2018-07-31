@@ -1,16 +1,19 @@
 #include "Button.h"
+#include "Pin.h"
 
 namespace devuino
 {
     namespace device
     {
-        Button::Button(T pin, bool debounce, pin::Resistor pull)
+        template <typename T>
+        Button<T>::Button(T pin, pin::Resistor pull, bool debounce)
             : pin(pin), InputDigital(debounce)
         {
             this->pin.initiate(pin::Mode::InputDigital, pull);
         }
 
-        bool Button::value()
+        template <typename T>
+        bool Button<T>::value()
         {
             /* if (debounce)
         {
