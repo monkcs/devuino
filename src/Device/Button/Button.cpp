@@ -3,7 +3,7 @@
 namespace devuino::device
 {
     Button::Button(T pin, bool debounce, pin::Resistor pull)
-        : pin(pin), InputDigital(debounce), pull(pull)
+        : pin(pin), InputDigital(debounce)
     {
         this->pin.initiate(pin::Mode::InputDigital, pull);
     }

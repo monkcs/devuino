@@ -16,7 +16,6 @@ namespace devuino::device
 
       protected:
         T pin;
-        const pin::Resistor pull;
     };
 }
 
