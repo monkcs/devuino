@@ -1,22 +1,25 @@
 #include "Button.h"
 
-namespace devuino::device
+namespace devuino
 {
-    Button::Button(T pin, bool debounce, pin::Resistor pull)
-        : pin(pin), InputDigital(debounce)
+    namespace device
     {
-        this->pin.initiate(pin::Mode::InputDigital, pull);
-    }
+        Button::Button(T pin, bool debounce, pin::Resistor pull)
+            : pin(pin), InputDigital(debounce)
+        {
+            this->pin.initiate(pin::Mode::InputDigital, pull);
+        }
 
-    bool Button::value()
-    {
-        /* if (debounce)
+        bool Button::value()
+        {
+            /* if (debounce)
         {
             
         }
         else */
-        {
-            return pin.digitalread();
+            {
+                return pin.digitalread();
+            }
         }
     }
 }

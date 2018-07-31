@@ -3,20 +3,23 @@
 
 #include "InputAnalog.h"
 
-namespace devuino::device
+namespace devuino
 {
-    /* Debounce not yet implemented */
-    template <typename T>
-    class Potentiometer : public InputAnalog
+    namespace device
     {
-      public:
-        Potentiometer(T pin, bool debounce = true, int bitresolution = 8);
+        /* Debounce not yet implemented */
+        template <typename T>
+        class Potentiometer : public InputAnalog
+        {
+          public:
+            Potentiometer(T pin, bool debounce = true, int bitresolution = 8);
 
-        int value() override;
+            int value() override;
 
-      protected:
-        T pin;
-    };
+          protected:
+            T pin;
+        };
+    }
 }
 
 #endif

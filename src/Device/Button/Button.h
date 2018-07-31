@@ -3,20 +3,23 @@
 
 #include "InputDigital.h"
 
-namespace devuino::device
+namespace devuino
 {
-    /* Debounce not yet implemented */
-    template <typename T>
-    class Button : public InputDigital
+    namespace device
     {
-      public:
-        Button(T pin, bool debounce = true, pin::Resistor pull);
+        /* Debounce not yet implemented */
+        template <typename T>
+        class Button : public InputDigital
+        {
+          public:
+            Button(T pin, bool debounce = true, pin::Resistor pull);
 
-        bool value() override;
+            bool value() override;
 
-      protected:
-        T pin;
-    };
+          protected:
+            T pin;
+        };
+    }
 }
 
 #endif

@@ -3,22 +3,24 @@
 
 #include "OutputDigital.h"
 
-namespace devuino::device
+namespace devuino
 {
-    template <typename T>
-    class Switch : public OutputDigital
+    namespace device
     {
-      public:
-        Switch(T pin);
-        ~Switch();
+        template <typename T>
+        class Switch : public OutputDigital
+        {
+          public:
+            Switch(T pin);
+            ~Switch();
 
-        void off() override;
-        void on() override;
+            void off() override;
+            void on() override;
 
-      protected:
-        void change(bool state);
-        T pin;
-    };
+          protected:
+            void change(bool state);
+            T pin;
+        };
+    }
 }
-
 #endif

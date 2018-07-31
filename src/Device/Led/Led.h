@@ -4,22 +4,24 @@
 #include "Light.h"
 #include "OutputDigital.h"
 
-namespace devuino::device
+namespace devuino
 {
-    template <typename T>
-    class Led : public Light, public OutputDigital
+    namespace device
     {
-      public:
-        Led(T pin, int bitresolution = 8);
-        ~Led();
+        template <typename T>
+        class Led : public Light, public OutputDigital
+        {
+          public:
+            Led(T pin, int bitresolution = 8);
+            ~Led();
 
-        void brightness(int value) override;
-        void off() override;
-        void on() override;
+            void brightness(int value) override;
+            void off() override;
+            void on() override;
 
-      protected:
-        T pin;
-    };
+          protected:
+            T pin;
+        };
+    }
 }
-
 #endif

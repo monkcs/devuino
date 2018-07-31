@@ -4,26 +4,29 @@
 #include "OutputDigital.h"
 #include "Rgbw.h"
 
-namespace devuino::device
+namespace devuino
 {
-    template <typename T>
-    class LedRgbw : public OutputDigital, public Rgbw
+    namespace device
     {
-      public:
-        LedRgbw(T redpin, T greenpin, T bluepin, T whitepin);
-        ~LedRgbw();
+        template <typename T>
+        class LedRgbw : public OutputDigital, public Rgbw
+        {
+          public:
+            LedRgbw(T redpin, T greenpin, T bluepin, T whitepin);
+            ~LedRgbw();
 
-        void off() override;
-        void on() override;
-        void red(byte value) override;
-        void green(byte value) override;
-        void blue(byte value) override;
-        void white(byte value) override;
+            void off() override;
+            void on() override;
+            void red(byte value) override;
+            void green(byte value) override;
+            void blue(byte value) override;
+            void white(byte value) override;
 
-      protected:
-        void change(T pin, byte value);
-        T pins[4];
-    };
+          protected:
+            void change(T pin, byte value);
+            T pins[4];
+        };
+    }
 }
 
 #endif
