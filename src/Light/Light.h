@@ -2,6 +2,7 @@
 #define LIGHT_H
 
 #include "Resolution.h"
+#include <Arduino.h>
 
 namespace devuino
 {

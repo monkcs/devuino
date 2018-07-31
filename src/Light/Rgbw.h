@@ -2,6 +2,7 @@
 #define RGBW_H
 
 #include "Rgb.h"
+#include <Arduino.h>
 
 namespace devuino
 {

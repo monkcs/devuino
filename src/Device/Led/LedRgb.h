@@ -3,6 +3,8 @@
 
 #include "OutputDigital.h"
 #include "Rgb.h"
+#include <Arduino.h>
+
 namespace devuino
 {
     namespace device

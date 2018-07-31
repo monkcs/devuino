@@ -3,6 +3,7 @@
 
 #include "Light.h"
 #include "OutputDigital.h"
+#include "Pin.h"
 
 namespace devuino
 {

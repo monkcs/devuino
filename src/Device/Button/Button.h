@@ -2,6 +2,7 @@
 #define BUTTON_H
 
 #include "InputDigital.h"
+#include "Pin.h"
 
 namespace devuino
 {
@@ -12,7 +13,7 @@ namespace devuino
         class Button : public InputDigital
         {
           public:
-            Button(T pin, bool debounce = true, pin::Resistor pull);
+            Button(T pin, pin::Resistor pull, bool debounce = true);
 
             bool value() override;
 

@@ -2,6 +2,7 @@
 #define RGB_H
 
 #include "Light.h"
+#include <Arduino.h>
 
 namespace devuino
 {
