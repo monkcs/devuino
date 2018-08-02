@@ -55,7 +55,7 @@ Devices
 
 🔴 Max72xx                  :: SegmentDisplay, SPI, Light
 
-🔴 SR04                   :: Distance
+🔴 HCSR04                   :: Distance
 
 
 System
