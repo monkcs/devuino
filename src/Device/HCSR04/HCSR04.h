@@ -1,5 +1,5 @@
-#ifndef SR04_H
-#define SR04_H
+#ifndef HCSR04_H
+#define HCSR04_H
 
 #include "Distance.h"
 
@@ -8,10 +8,10 @@ namespace devuino
     namespace device
     {
         template <typename T>
-        class SR04 : public Distance
+        class HCSR04 : public Distance
         {
           public:
-            SR04(T input, T output, float minimum = 0.02, float maximum = 4.0)
+            HCSR04(T input, T output, float minimum = 0.02, float maximum = 4.0)
                 : input(input), output(output), minimum(minimum), maximum(maximum)
             {
                 this->input.initiate(pin::Mode::OutputDigital, pin::Resistor::None);
