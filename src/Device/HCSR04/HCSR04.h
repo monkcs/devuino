@@ -18,7 +18,7 @@ namespace devuino
                 this->output.initiate(pin::Mode::OutputDigital, pin::Resistor::None);
             }
             
-            float metre() override
+            float distance() override
             {
                 float reading = 0.0;
 
