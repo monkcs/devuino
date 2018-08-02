@@ -22,7 +22,7 @@ namespace devuino
 
         bool Onboard::digitalread()
         {
-            digitalRead(pin);
+            return digitalRead(pin);
         }
 
         void Onboard::digitalwrite(bool value)
