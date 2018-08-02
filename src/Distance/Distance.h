@@ -6,15 +6,36 @@ namespace devuino
     class Distance
     {
       public:
-        virtual float metre() = 0;
-        float decimetre();
-        float centimetre();
-        float millimetre();
-        float micrometre();
-        float yard();
-        float foot();
-        float inch();
-        float nautical();
+        float distance(Imperial unit);
+        float distance(SI unit);
+        virtual float distance() = 0;
+    };
+
+    enum class Imperial
+    {
+        Nautical,
+        Mile,
+        Furlong,
+        Chain,
+        Yard,
+        Foot,
+        Inch,
+        Thou
+    };
+
+    enum class SI
+    {
+        Giga,
+        Mega,
+        Kilo,
+        Hekto,
+        Deka,
+        Metre,
+        Deci,
+        Centi,
+        Milli,
+        Micro,
+        Nano
     };
 }
 #endif
