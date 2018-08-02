@@ -3,15 +3,7 @@
 
 namespace devuino
 {
-    class Distance
-    {
-      public:
-        float distance(Imperial unit);
-        float distance(SI unit);
-        virtual float distance() = 0;
-    };
-
-    enum class Imperial
+        enum class Imperial
     {
         Nautical,
         Mile,
@@ -36,6 +28,14 @@ namespace devuino
         Milli,
         Micro,
         Nano
+    };
+    
+    class Distance
+    {
+      public:
+        float distance(Imperial unit);
+        float distance(SI unit);
+        virtual float distance() = 0;
     };
 }
 #endif
