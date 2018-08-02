@@ -12,9 +12,22 @@ namespace devuino
         class Potentiometer : public InputAnalog
         {
           public:
-            Potentiometer(T pin, bool debounce = true, int bitresolution = 8);
+            Potentiometer(T pin, bool debounce = true, int bitresolution = 8)
+                : pin(pin), InputAnalog(bitresolution, debounce)
+            {
+                this->pin.initiate(pin::Mode::InputAnalog);
+            }
 
-            int value() override;
+            int value() override
+            {
+             /* if (debounce)
+                {
+                }
+                else */
+                {
+                    return pin.analogread();
+                }
+            }
 
           protected:
             T pin;

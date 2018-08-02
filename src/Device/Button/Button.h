@@ -13,14 +13,29 @@ namespace devuino
         class Button : public InputDigital
         {
           public:
-            Button(T pin, pin::Resistor pull, bool debounce = true);
+            Button(T pin, pin::Resistor pull, bool debounce = true)
+                : pin(pin), InputDigital(debounce)
+            {
+                this->pin.initiate(pin::Mode::InputDigital, pull);
+            }
 
-            bool value() override;
+            bool value() override
+            {
+                /*if (debounce)
+                {
+                }
+                else*/
+                {
+                    return pin.digitalread();
+                }
+            }
 
           protected:
             T pin;
         };
     }
 }
+
+#include "Button.cpp"
 
 #endif

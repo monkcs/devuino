@@ -11,15 +11,35 @@ namespace devuino
         class Switch : public OutputDigital
         {
           public:
-            Switch(T pin);
-            ~Switch();
+            Switch(T pin)
+                : pin(pin)
+            {
+                this->pin.initiate(pin::Mode::OutputDigital);
+                off();
+            }
+            ~Switch()
+            {
+                off();
+            }
 
-            void off() override;
-            void on() override;
+            void off() override
+            {
+                change(false);
+            }
+            
+            void on() override
+            {
+                change(true);
+            }
 
           protected:
-            void change(bool state);
             T pin;
+
+            void change(bool state)
+            {
+                active = state;
+                pin.digitalwrite(state);
+            }
         };
     }
 }
