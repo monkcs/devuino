@@ -36,6 +36,4 @@ namespace devuino
     }
 }
 
-#include "Button.cpp"
-
 #endif
