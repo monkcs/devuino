@@ -12,7 +12,7 @@ namespace devuino
         colour(r, g, b);
     }
 
-    void Rgb::colour(long hexadecimal)
+    void Rgb::colour(unsigned long hexadecimal)
     {
         colour((byte)(hexadecimal >> 16), (byte)(hexadecimal >> 8),
                (byte)(hexadecimal));

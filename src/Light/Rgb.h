@@ -11,7 +11,7 @@ namespace devuino
       public:
         Rgb();
         void brightness(int value) override;
-        void colour(long hexadecimal);
+        void colour(unsigned long hexadecimal);
         void colour(byte r, byte g, byte b);
         virtual void red(byte value) = 0;
         virtual void green(byte value) = 0;

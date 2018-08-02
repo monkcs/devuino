@@ -10,7 +10,7 @@ namespace devuino
     {
       public:
         void brightness(int value) override;
-        void colour(long hexadecimal);
+        void colour(unsigned long hexadecimal);
         void colour(byte red, byte green, byte blue, byte white);
         virtual void white(byte value) = 0;
 
