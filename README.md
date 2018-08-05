@@ -6,44 +6,79 @@ The goal with ths project is to create a clean and well-coded library for all ki
 
 Currently the source/roadmap file contain the layout for the library.
 
-Basic devices
+# Example code
+This is a basic example program where a pushbutton and the on-circutboard led (number 13) are used. When the button is pressed the led light up. The button is connected between arduino pin 3 and ground (because then the built-in pullup resistor can be used) and initiated by creating a *Button* object with a *Onboard* pin (onboard the Arduino board) set to use pin number 3. In the loop `button.value()` reads the boolean value if the button is pressed or not.
 
+```cpp
+#include <devuino.h>
 
+Button<Onboard> button(Onboard(3), Resistor::PullUp);
+Led<Onboard> led(Onboard(13));
 
+void setup()
+{
+}
 
-| **Ö**                | test                                        |
+void loop()
+{
+    if (button.value())
+    {
+        led.off();
+    }
+    else
+    {
+        led.on();
+    }
+}
+```
+
 
 # Devices implemented
 
-🔵 == Implemented fully  
+✅ == Implemented fully  
 🔴 == Not implemented but planned
 
 | Status | Device            | Description                                 |
-| :----: | :---              | :---                                        |
-| 🔵     | **Switch**        | Digital output to switch between on and off |
-| 🔵     | **Button**        | Digital input between on and off            |
-| 🔵     | **Potentiometer** | Analog input in bitsize range               |
+| :----: | :---------------- | :------------------------------------------ |
+| ✅      | **Switch**        | Digital output to switch between on and off |
+| ✅      | **Button**        | Digital input between on and off            |
+| ✅      | **Potentiometer** | Analog input in bitsize range               |
 
-| Mechanical   |                       |
-| ------------ | --------------------- |
-| 🔴 **Servo** | Control generic servo |
 
-| Light           |                                             |
-| --------------- | ------------------------------------------- |
-| 🔵 **Led**      | Light control on/off and brightness for led |
-| 🔵 **LedRgb**   | Same as Led but with 3-pin rgb              |
-| 🔵 **LedRgbw**  | Same as Led but with 4-pin rgbw             |
-| 🔴 **Neopixel** | Neopixel/WS2812 1-wire rgb/rgbw led         |
+## Mechanical
+---
+| Status | Mechanical | Description           |
+| :----: | :--------- | :-------------------- |
+| 🔴     | **Servo**  | Control generic servo |
 
-| Sound                |                |
-| -------------------- | -------------- |
-| 🔵 **BuzzerPassive** | Passive buzzer |
-| 🔵 **BuzzerActive**  | Active buzzer  |
 
-| Distance      |                         |
-| ------------- | ----------------------- |
-| 🔴 **HCSR04** | HC-SR04 distance sensor |
+## Light
+---
+| Status | Light        | Description                                 |
+| :----: | :----------- | :------------------------------------------ |
+| ✅      | **Led**      | Light control on/off and brightness for led |
+| ✅      | **LedRgb**   | Same as Led but with 3-pin rgb              |
+| ✅      | **LedRgbw**  | Same as Led but with 4-pin rgbw             |
+| 🔴     | **Neopixel** | Neopixel/WS2812 1-wire rgb/rgbw led         |
 
-| Display        |                                     |
-| -------------- | ----------------------------------- |
-| 🔴 **Max72xx** | Max 7219/7221 seven-segment display |
+
+## Sound
+---
+| Status | Sound             | Description    |
+| :----: | :---------------- | :------------- |
+| 🔵     | **BuzzerPassive** | Passive buzzer |
+| 🔵     | **BuzzerActive**  | Active buzzer  |
+
+
+## Messuarement
+---
+| Status | Messuarement | Description             |
+| :----: | :----------- | :---------------------- |
+| 🔴     | **HCSR04**   | HC-SR04 distance sensor |
+
+
+## Display
+---
+| Status | Display     | Description                         |
+| :----: | :---------- | :---------------------------------- |
+| 🔴     | **Max72xx** | Max 7219/7221 seven-segment display |
