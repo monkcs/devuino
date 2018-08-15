@@ -7,12 +7,11 @@ namespace devuino
 {
     namespace device
     {
-        /* Debounce not yet implemented */
         template <typename T>
         class Potentiometer : public InputAnalog
         {
           public:
-            Potentiometer(T pin, bool debounce = true, int bitresolution = 8)
+            Potentiometer(T pin, bool debounce = false, int bitresolution = 8)
                 : pin(pin), InputAnalog(bitresolution, debounce)
             {
                 this->pin.initiate(pin::Mode::InputAnalog);
@@ -20,10 +19,18 @@ namespace devuino
 
             int value() override
             {
-             /* if (debounce)
+                if (debounce)
                 {
+                    int reading = 0;
+                    const int iterations = 10;
+                    for (int counter = 0; counter < iterations; counter++)
+                    {
+                        reading += pin.analogread();
+                        delay(5);
+                    }
+                    return reading / iterations;
                 }
-                else */
+                else
                 {
                     return pin.analogread();
                 }
