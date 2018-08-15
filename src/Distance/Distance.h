@@ -3,7 +3,7 @@
 
 namespace devuino
 {
-        enum class Imperial
+    enum class Imperial
     {
         Nautical,
         Mile,
@@ -35,7 +35,7 @@ namespace devuino
       public:
         float distance(Imperial unit);
         float distance(SI unit);
-        virtual float distance() = 0;
+        virtual float metre() = 0;
     };
 }
 #endif
