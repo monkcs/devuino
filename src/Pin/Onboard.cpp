@@ -53,6 +53,7 @@ namespace devuino
                 case Mode::OutputDigital:
                 {
                     pinMode(pin, OUTPUT);
+                    digitalwrite(false);
                 }
                 break;
             }
