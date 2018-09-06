@@ -6,10 +6,10 @@ namespace devuino
     class Resolution final
     {
       public:
-        Resolution(int bits);
+        Resolution(unsigned int bits);
         
-        const int bits;
-        const int resolution;
+        const unsigned int bits;
+        const unsigned int resolution;
     };
 }
 
