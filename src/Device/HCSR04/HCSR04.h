@@ -20,6 +20,13 @@ namespace devuino
 
             float metre() override
             {
+                /*
+                   To trigger a distance reading, a 10 microsecond
+                   high on the trigger pin needs to happend.
+
+                   To get the distance in metre, divide the reading
+                   by 5800.
+                */
                 trigger.digitalwrite(false);
                 delayMicroseconds(5);
                 trigger.digitalwrite(true);
