@@ -66,6 +66,7 @@ Light devices include both analog and digital controlled light sources.
 
 ## Sound
 Sound devices include both buzzers to speakers and other primary sound-making devices.
+
 | Status | Sound             | Description    |
 | :----: | :---------------- | :------------- |
 | 🔴     | **BuzzerPassive** | Passive buzzer |
