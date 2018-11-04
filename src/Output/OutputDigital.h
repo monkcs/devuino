@@ -8,6 +8,7 @@ namespace devuino
       public:
         virtual void off() = 0;
         virtual void on() = 0;
+        void set(bool value);
         void toggle();
 
       protected:
