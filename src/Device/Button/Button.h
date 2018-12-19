@@ -1,8 +1,8 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "InputDigital.h"
-#include "Pin.h"
+#include "../../Input/InputDigital.h"
+#include "../../Pin/Pin.h"
 
 namespace devuino
 {
@@ -13,10 +13,10 @@ namespace devuino
         class Button : public InputDigital
         {
           public:
-            Button(T pin, pin::Resistor pull, bool debounce = true)
+            Button(T pin, devuino::pin::Resistor pull, bool debounce = true)
                 : pin(pin), InputDigital(debounce)
             {
-                this->pin.initiate(pin::Mode::InputDigital, pull);
+                this->pin.initiate(devuino::pin::Mode::InputDigital, pull);
             }
 
             bool value() override
