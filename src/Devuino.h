@@ -26,7 +26,20 @@
 
 */
 
+/* Include pins */
+#include "Pin/Onboard.h"
 
+/* Include devices */
+#include "Device/Button/Button.h"
+#include "Device/HCSR04/HCSR04.h"
+#include "Device/Led/Led.h"
+#include "Device/Led/LedRgb.h"
+#include "Device/Led/LedRgbw.h"
+#include "Device/Potentiometer/Potentiometer.h"
+#include "Device/Servo/Servo.h"
+#include "Device/Switch/Switch.h"
+
+/* Include I/O interfaces */
 
 
 /* Put all namespaces into scope */
