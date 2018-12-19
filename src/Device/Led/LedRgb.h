@@ -1,8 +1,8 @@
 #ifndef LEDRGB_H
 #define LEDRGB_H
 
-#include "OutputDigital.h"
-#include "Rgb.h"
+#include "../../Light/Rgb.h"
+#include "../../Output/OutputDigital.h"
 #include <Arduino.h>
 
 namespace devuino

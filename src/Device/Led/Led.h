@@ -1,9 +1,9 @@
 #ifndef LED_H
 #define LED_H
 
-#include "Light.h"
-#include "OutputDigital.h"
-#include "Pin.h"
+#include "../../Light/Light.h"
+#include "../../Output/OutputDigital.h"
+#include "../../Pin/Pin.h"
 
 namespace devuino
 {

@@ -2,7 +2,7 @@
 #define OUTPUTANALOG_H
 
 #include "OutputDigital.h"
-#include "Resolution.h"
+#include "../Resolution/Resolution.h"
 
 namespace devuino
 {

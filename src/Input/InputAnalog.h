@@ -1,7 +1,7 @@
 #ifndef INPUTANALOG_H
 #define INPUTANALOG_H
 
-#include "Resolution.h"
+#include "../Resolution/Resolution.h"
 
 namespace devuino
 {

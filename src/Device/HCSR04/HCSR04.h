@@ -1,7 +1,7 @@
 #ifndef HCSR04_H
 #define HCSR04_H
 
-#include "Distance.h"
+#include "../../Distance/Distance.h"
 
 namespace devuino
 {

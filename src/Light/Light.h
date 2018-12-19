@@ -1,7 +1,7 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
-#include "Resolution.h"
+#include "../Resolution/Resolution.h"
 #include <Arduino.h>
 
 namespace devuino
