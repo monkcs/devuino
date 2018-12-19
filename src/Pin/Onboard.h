@@ -11,14 +11,53 @@ namespace devuino
         class Onboard : public Pin
         {
           public:
-            Onboard(byte pin);
+            Onboard(byte pin)
+                : pin(pin){};
 
-            int analogread() override;
-            void analogwrite(int value) override;
-            bool digitalread() override;
-            void digitalwrite(bool value) override;
-            void initiate(devuino::pin::Mode mode, Resistor pull = Resistor::None) override;
-            
+            int analogread() override
+            {
+                return analogRead(pin);
+            };
+            void analogwrite(int value) override
+            {
+                analogWrite(pin, value);
+            };
+            bool digitalread() override
+            {
+                return digitalRead(pin);
+            };
+            void digitalwrite(bool value) override
+            {
+                digitalWrite(pin, value);
+            };
+            void initiate(devuino::pin::Mode mode, Resistor pull = Resistor::None) override
+            {
+                switch (mode)
+                {
+                    case Mode::InputAnalog:
+                    case Mode::InputDigital:
+                    {
+                        if (pull == Resistor::PullUp)
+                        {
+                            pinMode(pin, INPUT_PULLUP);
+                        }
+                        else
+                        {
+                            pinMode(pin, INPUT);
+                        }
+                    }
+                    break;
+
+                    case Mode::OutputAnalog:
+                    case Mode::OutputDigital:
+                    {
+                        pinMode(pin, OUTPUT);
+                        digitalwrite(false);
+                    }
+                    break;
+                }
+            };
+
             const byte pin;
         };
     }
