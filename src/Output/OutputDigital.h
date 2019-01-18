@@ -5,14 +5,36 @@ namespace devuino
 {
     class OutputDigital
     {
-      public:
-        virtual void off() = 0;
-        virtual void on() = 0;
-        void set(bool value);
-        void toggle();
+        public:
+            virtual void off() = 0;
+            virtual void on() = 0;
 
-      protected:
-        bool active = false;
+            void set(bool value)
+            {
+                if (value)
+                {
+                    on();
+                }
+                else
+                {
+                    off();
+                }
+            };
+
+            void toggle()
+            {
+                if ((active = !active))
+                {
+                    on();
+                }
+                else
+                {
+                    off();
+                }
+            };
+
+        protected:
+            bool active = false;
     };
 }
 
