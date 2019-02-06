@@ -10,7 +10,7 @@ namespace devuino
                Invoke update function to assign a target value.
                */
 
-            expired();
+            reached();
         }
 
         void Async::delay(uint32_t milliseconds)
@@ -27,7 +27,7 @@ namespace devuino
             target += delaytime;
         }
 
-        bool Async::expired()
+        bool Async::reached()
         {
             const time = millis();
 

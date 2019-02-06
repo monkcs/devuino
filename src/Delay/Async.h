@@ -10,8 +10,8 @@ namespace devuino
             public:
                 Async(uint32_t milliseconds);
 
-                bool expired();
                 void delay(uint32_t milliseconds);
+                bool reached();
 
             private:
                 uint32_t target;
