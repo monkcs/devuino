@@ -2,7 +2,7 @@
 
 /* 
    
-   -- Devuino -----------------------------------------------------------
+   —— Devuino ———————————————————————————————————————————————————————————
    Devuino (https://github.com/monkcs/devuino) created by Charlie habolin
    
    The Devuino standard library aims to unify the library implementations
@@ -12,16 +12,16 @@
    suggestion for a specific device, open a issue on the git project page.
 
 
-   -- License -----------------------------------------------------------
+   —— License ———————————————————————————————————————————————————————————
    All code, files or other assets in this project is licensed under the
    GNU Lesser General Public License v3.0.
-   ----------------------------------------------------------------------
+   ——————————————————————————————————————————————————————————————————————
 
-   -- This file ---------------------------------------------------------
+   —— This file —————————————————————————————————————————————————————————
    To make it easier to use this library by the everyday user, this file
    contains #import's and namespace import to put all the different parts
    into scope.
-   ----------------------------------------------------------------------
+   ——————————————————————————————————————————————————————————————————————
 
 
 */
@@ -40,9 +40,10 @@
 #include "Device/Switch/Switch.h"
 
 /* Include I/O interfaces */
-
+#include "Interface/I2C/Master.h"
 
 /* Put all namespaces into scope */
 using namespace devuino;
 using namespace devuino::pin;
 using namespace devuino::device;
+using namespace devuino::interface;
