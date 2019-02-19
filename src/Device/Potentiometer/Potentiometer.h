@@ -2,6 +2,7 @@
 #define POTENTIOMETER_H
 
 #include "../../Input/InputAnalog.h"
+#include "../../Delay/DelaySync.h"
 
 namespace devuino
 {
@@ -25,7 +26,7 @@ namespace devuino
                     for (int counter = 0; counter < iterations; counter++)
                     {
                         reading += pin.analogread();
-                        delay(5);
+                        DelaySync(5);
                     }
                     return reading / iterations;
                 }
