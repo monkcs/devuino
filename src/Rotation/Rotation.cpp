@@ -4,6 +4,6 @@ namespace devuino
 {
     void Rotation::radian(float rotate)
     {
-        degree(rotate * (180 / 3.1415));
+        degree(rotate * (180.0 / 3.1415));
     }
 }
