@@ -55,26 +55,27 @@ Devices
 
 🔴 Max72xx                  :: SegmentDisplay, SPI, Light
 
-🔴 HCSR04                   :: Distance
+🔵 HCSR04                   :: Distance
 
 
 System
 ══════
 
 🔴 Time
-    └─ 🔴 Uptime
+    ├─ 🔴 Uptime
 
 🔴 Control
     ├─ 🔴 Watchdog timer
-    └─ 🔴 Interrupt hardware
-    └─ 🔴 Interrupt software
+    ├─ 🔴 Interrupt hardware
+    ├─ 🔴 Interrupt software
+    └─ 🔵 Delay
 
 🔴 Power
     └─ 🔴 Power managment
         ├─ 🔴 Power saving modes
         └─ 🔴 Reset
 
-I/O
-	- SPI
-	- UART/Serial
-	- I2C
+🔴 Interfaces
+    ├─ 🔴 SPI
+    ├─ 🔴 UART/Serial
+    └─ 🔴 I2C
