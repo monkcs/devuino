@@ -22,14 +22,7 @@ void setup()
 
 void loop()
 {
-    if (button.value())
-    {
-        led.off();
-    }
-    else
-    {
-        led.on();
-    }
+    led.set(button.value());
 }
 ```
 
