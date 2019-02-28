@@ -6,13 +6,16 @@ namespace devuino
     class Resolution final
     {
         public:
-            constexpr Resolution(unsigned int bits)
-                : bits(bits), resolution(1u << bits)
-            {
-            };
 
-            const unsigned int bits;
-            const unsigned int resolution;
+            /* Set the bits and compute the resolution with a cap on 15 bits,
+             * (because currently we are using a uint16_t int to hold it. */
+
+            constexpr Resolution(uint8_t bits)
+                : bits((bits < 15) ? bits : 15), resolution(1u << (bits < 15) ? bits : 15)
+            { };
+
+            const uint8_t bits;
+            const uint16_t resolution;
     };
 }
 
