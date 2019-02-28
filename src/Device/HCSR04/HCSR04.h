@@ -2,6 +2,7 @@
 #define HCSR04_H
 
 #include "../../Distance/Distance.h"
+#include "../../Delay/DelaySync.h"
 
 namespace devuino
 {
@@ -28,9 +29,9 @@ namespace devuino
                    by 5800.
                 */
                 trigger.digitalwrite(false);
-                delayMicroseconds(5);
+                DelaySync(5);
                 trigger.digitalwrite(true);
-                delayMicroseconds(10);
+                DelaySync(10);
                 trigger.digitalwrite(false);
 
                 double reading = pulseIn(echo.pin, true, 70) / 5800.0;
