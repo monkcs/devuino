@@ -33,7 +33,7 @@ namespace devuino
                 Nano
             };
 
-            float distance(Imperial unit)
+            double distance(Imperial unit)
             {
                 switch (unit)
                 {
@@ -67,7 +67,7 @@ namespace devuino
                 }
             };
 
-            float distance(SI unit)
+            double distance(SI unit)
             {
                 switch (unit)
                 {
@@ -110,7 +110,7 @@ namespace devuino
                 }
             };
 
-            virtual float metre() = 0;
+            virtual double metre() = 0;
     };
 }
 #endif

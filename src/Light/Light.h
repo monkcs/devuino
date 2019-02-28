@@ -18,7 +18,7 @@ namespace devuino
                 return bright;
             };
 
-            void brightness(float percent)
+            void brightness(double percent)
             {
                 brightness((int)((bitsize.resolution - 1) * percent));
             };

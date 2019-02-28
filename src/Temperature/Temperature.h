@@ -6,9 +6,9 @@ namespace devuino
     class Temperature
     {
       public:
-        virtual float celsius() = 0;
-        float fahrenheit();
-        float kelvin();
+        virtual double celsius() = 0;
+        double fahrenheit();
+        double kelvin();
     };
 }
 

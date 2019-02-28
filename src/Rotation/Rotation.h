@@ -6,12 +6,12 @@ namespace devuino
     class Rotation
     {
       public:
-        virtual void degree(float rotate) = 0;
-        virtual void percent(float rotate) = 0;
-        void radian(float rotate);
+        virtual void degree(double rotate) = 0;
+        virtual void percent(double rotate) = 0;
+        void radian(double rotate);
 
       protected:
-        float rotation;
+        double rotation;
     };
 }
 #endif

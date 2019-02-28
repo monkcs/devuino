@@ -7,8 +7,8 @@ namespace devuino
     {
     }
 
-    float InputAnalog::percent()
+    double InputAnalog::percent()
     {
-        return (float)value() / (float)bitsize.resolution;
+        return (double)value() / (double)(bitsize.resolution - 1);
     }
 }

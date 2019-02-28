@@ -10,7 +10,7 @@ namespace devuino
       public:
         InputAnalog(int bitresolution, bool debounce);
 
-        float percent();
+        double percent();
         virtual int value() = 0;
 
       protected:

@@ -11,14 +11,14 @@ namespace devuino
         class HCSR04 : public Distance
         {
           public:
-            HCSR04(T trigger, T echo, float minimum = 0.02, float maximum = 4.0)
+            HCSR04(T trigger, T echo, double minimum = 0.02, double maximum = 4.0)
                 : trigger(trigger), echo(echo), minimum(minimum), maximum(maximum)
             {
                 this->trigger.initiate(pin::Mode::OutputDigital, pin::Resistor::None);
                 this->echo.initiate(pin::Mode::InputDigital, pin::Resistor::None);
             }
 
-            float metre() override
+            double metre() override
             {
                 /*
                    To trigger a distance reading, a 10 microsecond
@@ -33,7 +33,7 @@ namespace devuino
                 delayMicroseconds(10);
                 trigger.digitalwrite(false);
 
-                float reading = pulseIn(echo.pin, true, 70) / 5800.0;
+                double reading = pulseIn(echo.pin, true, 70) / 5800.0;
 
                 if (reading > maximum)
                 {
@@ -50,8 +50,8 @@ namespace devuino
             }
 
           private:
-            const float minimum;
-            const float maximum;
+            const double minimum;
+            const double maximum;
             T trigger;
             T echo;
         };
