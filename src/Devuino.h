@@ -36,7 +36,7 @@
 #include "Device/Led/LedRgb.h"
 #include "Device/Led/LedRgbw.h"
 #include "Device/Potentiometer/Potentiometer.h"
-#include "Device/ResistanceSensor/ResistanceSensor.h"
+#include "Device/Resistance/Resistance.h"
 #include "Device/Servo/Servo.h"
 #include "Device/Switch/Switch.h"
 
