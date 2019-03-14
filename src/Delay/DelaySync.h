@@ -5,7 +5,7 @@
 
 namespace devuino
 {
-    static void DelaySync(uint32_t milliseconds)
+    static void DelaySync(const uint32_t milliseconds)
     {
         delay(milliseconds);
     };

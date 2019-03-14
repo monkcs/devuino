@@ -9,8 +9,8 @@ namespace devuino
     class OutputAnalog : public OutputDigital
     {
       public:
-        OutputAnalog(int bitresolution);
-        virtual void analog(int value) = 0;
+        OutputAnalog(const int bitresolution);
+        virtual void analog(const int value) = 0;
 
       protected:
         const Resolution bitsize;

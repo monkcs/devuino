@@ -1,9 +1,9 @@
-#include "Async.h"
+#include "DelayAsync.h"
 #include <Arduino.h>
 
 namespace devuino
 {
-    DelayAsync::DelayAsync(uint32_t milliseconds) : delaytime(milliseconds)
+    DelayAsync::DelayAsync(const uint32_t milliseconds) : delaytime(milliseconds)
     {
         /*
            Invoke update function to assign a target value.
@@ -12,7 +12,7 @@ namespace devuino
         reached();
     }
 
-    void DelayAsync::delay(uint32_t milliseconds)
+    void DelayAsync::delay(const uint32_t milliseconds)
     {
         /*
            Before assigning a new delay, remove the old

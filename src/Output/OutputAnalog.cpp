@@ -2,7 +2,7 @@
 
 namespace devuino
 {
-    OutputAnalog::OutputAnalog(int bitresolution)
+    OutputAnalog::OutputAnalog(const int bitresolution)
         : bitsize(bitresolution)
     {
     }

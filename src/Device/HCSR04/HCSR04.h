@@ -12,7 +12,7 @@ namespace devuino
         class HCSR04 : public Distance
         {
           public:
-            HCSR04(T trigger, T echo, double minimum = 0.02, double maximum = 4.0)
+            HCSR04(const T trigger, const T echo, const double minimum = 0.02, const double maximum = 4.0)
                 : trigger(trigger), echo(echo), minimum(minimum), maximum(maximum)
             {
                 this->trigger.initiate(pin::Mode::OutputDigital, pin::Resistor::None);
@@ -34,7 +34,7 @@ namespace devuino
                 DelaySync(10);
                 trigger.digitalwrite(false);
 
-                double reading = pulseIn(echo.pin, true, 70) / 5800.0;
+                const double reading = pulseIn(echo.pin, true, 70) / 5800.0;
 
                 if (reading > maximum)
                 {

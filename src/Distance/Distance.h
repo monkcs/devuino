@@ -33,7 +33,7 @@ namespace devuino
                 Nano
             };
 
-            double distance(Imperial unit)
+            double distance(const Imperial unit) const
             {
                 switch (unit)
                 {
@@ -67,7 +67,7 @@ namespace devuino
                 }
             };
 
-            double distance(SI unit)
+            double distance(const SI unit) const
             {
                 switch (unit)
                 {

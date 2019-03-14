@@ -14,23 +14,23 @@ namespace devuino
             Onboard(byte pin)
                 : pin(pin){};
 
-            int analogread() override
+            int analogread() const override
             {
                 return analogRead(pin);
             };
-            void analogwrite(int value) override
+            void analogwrite(const int value) const override
             {
                 analogWrite(pin, value);
             };
-            bool digitalread() override
+            bool digitalread() const override
             {
                 return digitalRead(pin);
             };
-            void digitalwrite(bool value) override
+            void digitalwrite(const bool value) const override
             {
                 digitalWrite(pin, value);
             };
-            void initiate(devuino::pin::Mode mode, Resistor pull = Resistor::None) override
+            void initiate(const devuino::pin::Mode mode, const Resistor pull = Resistor::None) const override
             {
                 switch (mode)
                 {

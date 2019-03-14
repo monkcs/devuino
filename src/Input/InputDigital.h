@@ -6,7 +6,7 @@ namespace devuino
     class InputDigital
     {
       public:
-        InputDigital(bool debounce)
+        InputDigital(const bool debounce)
             : debounce(debounce){};
         virtual bool value() = 0;
 

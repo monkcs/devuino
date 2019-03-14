@@ -13,7 +13,7 @@ namespace devuino
         class LedRgbw : public OutputDigital, public Rgbw
         {
           public:
-            LedRgbw(T redpin, T greenpin, T bluepin, T whitepin)
+            LedRgbw(const T redpin, const T greenpin, const T bluepin, const T whitepin)
             {
                 pins[0] = redpin;
                 pins[1] = greenpin;
@@ -40,22 +40,22 @@ namespace devuino
                 brightness(255);
             }
 
-            void red(byte value) override
+            void red(const byte value) override
             {
                 change(pins[0], value);
             }
 
-            void green(byte value) override
+            void green(const byte value) override
             {
                 change(pins[1], value);
             }
 
-            void blue(byte value) override
+            void blue(const byte value) override
             {
                 change(pins[2], value);
             }
             
-            void white(byte value) override
+            void white(const byte value) override
             {
                 change(pins[3], value);
             }
@@ -63,7 +63,7 @@ namespace devuino
           protected:
             T pins[4];
 
-            void change(T pin, byte value)
+            void change(T pin, const byte value)
             {
                 pin.analogwrite((byte)(value * (bright / 255)));
             }

@@ -13,7 +13,7 @@ namespace devuino
         class Button : public InputDigital
         {
           public:
-            Button(T pin, devuino::pin::Resistor pull, bool debounce = true)
+            Button(const T pin, const devuino::pin::Resistor pull, const bool debounce = true)
                 : pin(pin), InputDigital(debounce)
             {
                 this->pin.initiate(devuino::pin::Mode::InputDigital, pull);

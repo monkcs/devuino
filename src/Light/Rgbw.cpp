@@ -2,18 +2,18 @@
 
 namespace devuino
 {
-    void Rgbw::brightness(int value)
+    void Rgbw::brightness(const int value)
     {
         bright = value;
         colour(r, g, b, w);
     }
 
-    void Rgbw::colour(unsigned long hexadecimal)
+    void Rgbw::colour(const unsigned long hexadecimal) const
     {
         colour((byte)(hexadecimal >> 24), (byte)(hexadecimal >> 16), (byte)(hexadecimal >> 8), (byte)(hexadecimal));
     }
 
-    void Rgbw::colour(byte r, byte g, byte b, byte w)
+    void Rgbw::colour(const byte r, const byte g, const byte b, const byte w)
     {
         Rgb::colour(r, g, b);
         this->w = w;

@@ -11,7 +11,7 @@ namespace devuino
         class Switch : public OutputDigital
         {
           public:
-            Switch(T pin)
+            Switch(const T pin)
                 : pin(pin)
             {
                 this->pin.initiate(pin::Mode::OutputDigital);
@@ -35,7 +35,7 @@ namespace devuino
           protected:
             T pin;
 
-            void change(bool state)
+            void change(const bool state)
             {
                 active = state;
                 pin.digitalwrite(state);

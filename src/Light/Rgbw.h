@@ -9,10 +9,10 @@ namespace devuino
     class Rgbw : public Rgb
     {
       public:
-        void brightness(int value) override;
-        void colour(unsigned long hexadecimal);
-        void colour(byte red, byte green, byte blue, byte white);
-        virtual void white(byte value) = 0;
+        void brightness(const int value) override;
+        void colour(const unsigned long hexadecimal) const;
+        void colour(const byte red, const byte green, const byte blue, const byte white);
+        virtual void white(const byte value) = 0;
 
       protected:
         byte w = 0;

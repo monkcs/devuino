@@ -24,11 +24,11 @@ namespace devuino
         class Pin
         {
           public:
-            virtual int analogread() = 0;
-            virtual void analogwrite(int value) = 0;
-            virtual bool digitalread() = 0;
-            virtual void digitalwrite(bool value) = 0;
-            virtual void initiate(devuino::pin::Mode mode, Resistor pull = Resistor::None) = 0;
+            virtual int analogread() const = 0;
+            virtual void analogwrite(const int value) const = 0;
+            virtual bool digitalread() const = 0;
+            virtual void digitalwrite(const bool value) const = 0;
+            virtual void initiate(const devuino::pin::Mode mode, const Resistor pull = Resistor::None) const = 0;
         };
     }
 }

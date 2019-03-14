@@ -10,9 +10,9 @@ namespace devuino
            expired.
            */
         public:
-            DelayAsync(uint32_t milliseconds);
+            DelayAsync(const uint32_t milliseconds);
 
-            void delay(uint32_t milliseconds);
+            void delay(const uint32_t milliseconds);
             bool reached();
 
         private:

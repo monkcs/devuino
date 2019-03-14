@@ -8,7 +8,7 @@ namespace devuino
     class Light
     {
         public:
-            Light(int bitresolution)
+            Light(const int bitresolution)
                 : bitsize(bitresolution)
             {
             };
@@ -18,12 +18,12 @@ namespace devuino
                 return bright;
             };
 
-            void brightness(double percent)
+            void brightness(const double percent) const
             {
                 brightness((int)((bitsize.resolution - 1) * percent));
             };
 
-            virtual void brightness(int value) = 0;
+            virtual void brightness(const int value) = 0;
 
         protected:
             int bright = 0;

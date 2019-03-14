@@ -3,6 +3,7 @@
 
 #include "../../Input/InputAnalog.h"
 #include "../../Delay/DelaySync.h"
+#include "../../Pin/Pin.h"
 
 namespace devuino
 {
@@ -12,7 +13,7 @@ namespace devuino
         class Potentiometer : public InputAnalog
         {
           public:
-            Potentiometer(T pin, bool debounce = false, uint8_t iterations = 10, uint8_t bitresolution = 8)
+            Potentiometer(const T pin, const bool debounce = false, const uint8_t iterations = 10, const uint8_t bitresolution = 8)
                 : pin(pin), iterations(iterations), InputAnalog(bitresolution, debounce)
             {
                 this->pin.initiate(pin::Mode::InputAnalog);

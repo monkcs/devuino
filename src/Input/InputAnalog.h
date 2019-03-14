@@ -8,10 +8,10 @@ namespace devuino
     class InputAnalog
     {
       public:
-        InputAnalog(int bitresolution, bool debounce)
+        InputAnalog(const int bitresolution, const bool debounce)
         : bitsize(bitresolution), debounce(debounce) {};
 
-        double percent()
+        double percent() const
         {
             return (double)value() / (double)(bitsize.resolution - 1);
         };

@@ -16,7 +16,7 @@ namespace devuino
             /* Make a reading of a analog input from (T signal) by powering on a resistor from the (T power) pin.
              * That to prevent for example powerdraw and corrosion on water sensors. */
 
-            Resistance(T signal, T power, bool debounce = false, uint8_t iterations = 10, uint8_t bitresolution = 8)
+            Resistance(const T signal, const T power, const bool debounce = false, const uint8_t iterations = 10, const uint8_t bitresolution = 8)
                 : signal(signal), power(power), iterations(iterations), InputAnalog(bitresolution, debounce)
             {
                 this->signal.initiate(pin::Mode::InputAnalog);
@@ -26,25 +26,24 @@ namespace devuino
             int value() override
             {
                 power.digitalwrite(true);
-                int value = 0;
 
                 if (debounce)
                 {
                     int reading = 0;
-                    for (uint8_t counter = 0; counter < iterations; counter++)
+                    for (auto counter = 0; counter < iterations; ++counter)
                     {
                         reading += signal.analogread();
                         DelaySync(5);
                     }
-                    value = reading / iterations;
+                    power.digitalwrite(false);
+                    return reading / iterations;
                 }
                 else
                 {
-                    value = signal.analogread();
+                    const int reading = signal.analogread();
+                    power.digitalwrite(false);
+                    return reading;
                 }
-
-                power.digitalwrite(false);
-                return value;
             }
 
           protected:
