@@ -23,7 +23,9 @@ namespace devuino
 
             void toggle()
             {
-                if ((active = !active))
+                active = !active;
+
+                if (active)
                 {
                     on();
                 }
