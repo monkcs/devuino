@@ -40,22 +40,22 @@ namespace devuino
                 brightness(255);
             }
 
-            void red(const byte value) override
+            void red(const uint8_t value) override
             {
                 change(pins[0], value);
             }
 
-            void green(const byte value) override
+            void green(const uint8_t value) override
             {
                 change(pins[1], value);
             }
 
-            void blue(const byte value) override
+            void blue(const uint8_t value) override
             {
                 change(pins[2], value);
             }
             
-            void white(const byte value) override
+            void white(const uint8_t value) override
             {
                 change(pins[3], value);
             }
@@ -63,9 +63,9 @@ namespace devuino
           protected:
             T pins[4];
 
-            void change(T pin, const byte value)
+            void change(T &pin, const uint8_t value)
             {
-                pin.analogwrite((byte)(value * (bright / 255)));
+                pin.analogwrite((uint8_t)(value * (bright / 255)));
             }
         };
     }
