@@ -7,8 +7,8 @@ namespace devuino
     {
       public:
         virtual double celsius() = 0;
-        double fahrenheit();
-        double kelvin();
+        double fahrenheit() const;
+        double kelvin() const;
     };
 }
 
