@@ -10,12 +10,12 @@ namespace devuino
     {
       public:
         void brightness(const int value) override;
-        void colour(const unsigned long hexadecimal) const;
-        void colour(const byte red, const byte green, const byte blue, const byte white);
-        virtual void white(const byte value) = 0;
+        void colour(const uint32_t hexadecimal) const;
+        void colour(const uint8_t red, const uint8_t green, const uint8_t blue, const uint8_t white);
+        virtual void white(const uint8_t value) = 0;
 
       protected:
-        byte w = 0;
+        uint8_t w = 0;
     };
 }
 

@@ -8,12 +8,12 @@ namespace devuino
         colour(r, g, b, w);
     }
 
-    void Rgbw::colour(const unsigned long hexadecimal) const
+    void Rgbw::colour(const uint32_t hexadecimal) const
     {
-        colour((byte)(hexadecimal >> 24), (byte)(hexadecimal >> 16), (byte)(hexadecimal >> 8), (byte)(hexadecimal));
+        colour((uint8_t)(hexadecimal >> 24), (uint8_t)(hexadecimal >> 16), (uint8_t)(hexadecimal >> 8), (uint8_t)(hexadecimal));
     }
 
-    void Rgbw::colour(const byte r, const byte g, const byte b, const byte w)
+    void Rgbw::colour(const uint8_t r, const uint8_t g, const uint8_t b, const uint8_t w)
     {
         Rgb::colour(r, g, b);
         this->w = w;

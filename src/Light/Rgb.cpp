@@ -12,13 +12,13 @@ namespace devuino
         colour(r, g, b);
     }
 
-    void Rgb::colour(const unsigned long hexadecimal) const
+    void Rgb::colour(const uint32_t hexadecimal) const
     {
-        colour((byte)(hexadecimal >> 16), (byte)(hexadecimal >> 8),
-               (byte)(hexadecimal));
+        colour((uint8_t)(hexadecimal >> 16), (uint8_t)(hexadecimal >> 8),
+               (uint8_t)(hexadecimal));
     }
 
-    void Rgb::colour(const byte r, const byte g, const byte b)
+    void Rgb::colour(const uint8_t r, const uint8_t g, const uint8_t b)
     {
         this->r = r;
         this->g = g;

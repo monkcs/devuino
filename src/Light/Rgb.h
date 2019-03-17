@@ -11,14 +11,14 @@ namespace devuino
       public:
         Rgb();
         void brightness(const int value) override;
-        void colour(const unsigned long hexadecimal) const;
-        void colour(const byte r, const byte g, const byte b);
-        virtual void red(const byte value) = 0;
-        virtual void green(const byte value) = 0;
-        virtual void blue(const byte value) = 0;
+        void colour(const uint32_t hexadecimal) const;
+        void colour(const uint8_t r, const uint8_t g, const uint8_t b);
+        virtual void red(const uint8_t value) = 0;
+        virtual void green(const uint8_t value) = 0;
+        virtual void blue(const uint8_t value) = 0;
 
       protected:
-        byte r, g, b = 0;
+        uint8_t r, g, b = 0;
     };
 }
 #endif
