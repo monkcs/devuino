@@ -13,7 +13,7 @@ namespace devuino
         class Led : public Light, public OutputDigital
         {
           public:
-            Led(const T pin, const int bitresolution = 8)
+            Led(const T pin, const int bitresolution = 10)
                 : pin(pin), Light(bitresolution)
             {
                 this->pin.initiate(pin::Mode::OutputAnalog);
