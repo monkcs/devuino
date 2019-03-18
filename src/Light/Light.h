@@ -20,7 +20,7 @@ namespace devuino
 
             void brightness(const double percent) const
             {
-                brightness((int)((bitsize.resolution - 1) * percent));
+                brightness(static_cast<int>((bitsize.resolution - 1) * percent));
             };
 
             virtual void brightness(const int value) = 0;

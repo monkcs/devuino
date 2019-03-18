@@ -13,7 +13,7 @@ namespace devuino
 
         double percent() const
         {
-            return (double)value() / (double)(bitsize.resolution - 1);
+            return static_cast<double>(value()) / static_cast<double>(bitsize.resolution - 1));
         };
 
         virtual int value() = 0;

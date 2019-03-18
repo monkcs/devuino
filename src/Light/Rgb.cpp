@@ -14,8 +14,8 @@ namespace devuino
 
     void Rgb::colour(const uint32_t hexadecimal) const
     {
-        colour((uint8_t)(hexadecimal >> 16), (uint8_t)(hexadecimal >> 8),
-               (uint8_t)(hexadecimal));
+        colour(static_cast<uint8_t>(hexadecimal >> 16), static_cast<uint8_t>(hexadecimal >> 8),
+               static_cast<uint8_t>(hexadecimal));
     }
 
     void Rgb::colour(const uint8_t r, const uint8_t g, const uint8_t b)
