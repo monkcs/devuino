@@ -65,7 +65,7 @@ namespace devuino
 
             void change(T &pin, const uint8_t value)
             {
-                pin.analogwrite((uint8_t)(value * (bright / 255)));
+                pin.analogwrite(static_cast<uint8_t>((value * (bright / 255))));
             }
         };
     }
