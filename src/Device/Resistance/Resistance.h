@@ -3,13 +3,15 @@
 
 #include "../../Input/InputAnalog.h"
 #include "../../Delay/DelaySync.h"
+#include "../Switch/Switch.h"
+#include "../Potentiometer/Potentiometer.h"
 
 namespace devuino
 {
     namespace device
     {
         template <typename T>
-        class Resistance : public InputAnalog
+        class Resistance
         {
           public:
 
@@ -17,39 +19,31 @@ namespace devuino
              * That to prevent for example powerdraw and corrosion on water sensors. */
 
             Resistance(const T signal, const T power, const bool debounce = false, const unsigned int iterations = 10, const uint8_t bitresolution = 10)
-                : signal(signal), power(power), iterations(iterations), InputAnalog(bitresolution, debounce)
+                : signal(Potentiometer<T>(signal, debounce, iterations, bitresolution)), power(Switch<T>(power))
             {
-                this->signal.initiate(pin::Mode::InputAnalog);
-                this->power.initiate(pin::Mode::OutputDigital);
             }
 
-            int value() override
+            int value() const
             {
-                power.digitalwrite(true);
+                power.on();
+                const auto reading = signal.value();
+                power.off();
 
-                if (debounce)
-                {
-                    int reading = 0;
-                    for (auto counter = 0; counter < iterations; ++counter)
-                    {
-                        reading += signal.analogread();
-                        DelaySync(5);
-                    }
-                    power.digitalwrite(false);
-                    return reading / iterations;
-                }
-                else
-                {
-                    const int reading = signal.analogread();
-                    power.digitalwrite(false);
-                    return reading;
-                }
+                return reading;
+            }
+
+            double percent() const
+            {
+                power.on();
+                const auto reading = signal.percent();
+                power.off();
+
+                return reading;
             }
 
           protected:
-            T signal;
-            T power;
-            const unsigned int iterations;
+            Potentiometer<T> signal;
+            Switch<T> power;
         };
     }
 }
