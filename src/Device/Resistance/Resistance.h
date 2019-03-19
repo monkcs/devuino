@@ -1,8 +1,6 @@
 #ifndef RESISTANCE_H
 #define RESISTANCE_H
 
-#include "../../Input/InputAnalog.h"
-#include "../../Delay/DelaySync.h"
 #include "../Switch/Switch.h"
 #include "../Potentiometer/Potentiometer.h"
 
