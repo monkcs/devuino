@@ -61,9 +61,6 @@ namespace devuino
                     case Imperial::Thou:
                         return metre() / 0.0000254;
                         break;
-
-                    default:
-                        return metre();
                 }
             };
 
@@ -104,9 +101,6 @@ namespace devuino
                     case SI::Nano:
                         return metre() * 1000000000.0;
                         break;
-
-                    default:
-                        return metre();
                 }
             };
 
