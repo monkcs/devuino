@@ -21,18 +21,12 @@ namespace devuino
                 }
             };
 
-            void toggle()
+            bool toggle()
             {
                 active = !active;
+                set(active);
 
-                if (active)
-                {
-                    on();
-                }
-                else
-                {
-                    off();
-                }
+                return active;
             };
 
         protected:
