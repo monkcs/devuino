@@ -14,7 +14,7 @@ namespace devuino
         {
           public:
             Button(const T pin, const devuino::pin::Resistor pull, const bool debounce = true)
-                : pin(pin), InputDigital(debounce)
+                : pin(pin), pull(pull), InputDigital(debounce)
             {
                 this->pin.initiate(devuino::pin::Mode::InputDigital, pull);
             }
@@ -26,12 +26,13 @@ namespace devuino
                 }
                 else*/
                 {
-                    return pin.digitalread();
+                    return (pull == devuino::pin::Resistor::PullUp) ? !pin.digitalread() : pin.digitalread();
                 }
             }
 
           protected:
             T pin;
+            const devuino::pin::Resistor pull;
         };
     }
 }
