@@ -5,16 +5,15 @@ namespace devuino
 {
     namespace pin
     {
-        enum class Mode
+        enum class Mode : uint8_t
         {
             InputAnalog,
             InputDigital,
             OutputAnalog,
             OutputDigital
-
         };
 
-        enum class Resistor
+        enum class Resistor : uint8_t
         {
             PullUp,
             PullDown,
