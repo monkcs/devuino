@@ -3,7 +3,7 @@
 
 #include "../../Light/Rgb.h"
 #include "../../Output/OutputDigital.h"
-#include <Arduino.h>
+#include "../../Pin/Pin.h"
 
 namespace devuino
 {
@@ -13,12 +13,8 @@ namespace devuino
         class LedRgb : public OutputDigital, public Rgb
         {
           public:
-            LedRgb(const T redpin, const T greenpin, const T bluepin)
+            LedRgb(const T redpin, const T greenpin, const T bluepin) : Rgb(), pins {redpin, greenpin, bluepin}
             {
-                pins[0] = redpin;
-                pins[1] = greenpin;
-                pins[2] = bluepin;
-
                 for (auto pin : pins)
                 {
                     pin.initiate(pin::Mode::OutputAnalog);
@@ -55,9 +51,9 @@ namespace devuino
             }
 
           protected:
-            T pins[3];
+            const T pins[3];
 
-            void change(T &pin, const uint8_t value)
+            void change(const T &pin, const uint8_t value)
             {
                 pin.analogwrite(static_cast<uint8_t>((value * (bright / 255))));
             }

@@ -13,13 +13,8 @@ namespace devuino
         class LedRgbw : public OutputDigital, public Rgbw
         {
           public:
-            LedRgbw(const T redpin, const T greenpin, const T bluepin, const T whitepin)
+            LedRgbw(const T redpin, const T greenpin, const T bluepin, const T whitepin) : Rgbw(), pins {redpin, greenpin, bluepin, whitepin}
             {
-                pins[0] = redpin;
-                pins[1] = greenpin;
-                pins[2] = bluepin;
-                pins[3] = whitepin;
-
                 for (auto pin : pins)
                 {
                     pin.initiate(pin::Mode::OutputAnalog);
@@ -61,9 +56,9 @@ namespace devuino
             }
 
           protected:
-            T pins[4];
+            const T pins[4];
 
-            void change(T &pin, const uint8_t value)
+            void change(const T &pin, const uint8_t value)
             {
                 pin.analogwrite(static_cast<uint8_t>((value * (bright / 255))));
             }
