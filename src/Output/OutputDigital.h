@@ -11,14 +11,7 @@ namespace devuino
 
             void set(const bool value) const
             {
-                if (value)
-                {
-                    on();
-                }
-                else
-                {
-                    off();
-                }
+                value ? on() : off();
             };
 
             bool toggle()
