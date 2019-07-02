@@ -31,7 +31,7 @@ namespace devuino
             }
 
           protected:
-            T pin;
+            const T pin;
             const devuino::pin::Resistor pull;
         };
     }
