@@ -33,7 +33,7 @@ namespace devuino
             }
 
           protected:
-            T pin;
+            const T pin;
 
             void change(const bool state)
             {

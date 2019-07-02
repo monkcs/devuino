@@ -53,8 +53,8 @@ namespace devuino
           private:
             const double minimum;
             const double maximum;
-            T trigger;
-            T echo;
+            const T trigger;
+            const T echo;
         };
     }
 }

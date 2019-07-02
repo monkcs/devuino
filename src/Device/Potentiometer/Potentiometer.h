@@ -38,7 +38,7 @@ namespace devuino
             }
 
           protected:
-            T pin;
+            const T pin;
             const unsigned int iterations;
         };
     }

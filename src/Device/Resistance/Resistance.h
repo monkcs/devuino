@@ -40,8 +40,8 @@ namespace devuino
             }
 
           protected:
-            Potentiometer<T> signal;
-            Switch<T> power;
+            const Potentiometer<T> signal;
+            const Switch<T> power;
         };
     }
 }
