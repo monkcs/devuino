@@ -30,15 +30,15 @@ namespace devuino
             }
             void off() override
             {
-                brightness(0);
+                brightness(bitsize.range.minimum);
             }
             void on() override
             {
-                brightness(bitsize.resolution - 1);
+                brightness(bitsize.range.maximum);
             }
 
           protected:
-            T pin;
+            const T pin;
         };
     }
 }

@@ -32,12 +32,12 @@ namespace devuino
 
             void off() override
             {
-                brightness(0);
+                brightness(bitsize.range.minimum);
             }
 
             void on() override
             {
-                brightness(255);
+                brightness(bitsize.range.maximum);
             }
 
             void red(const uint8_t value) override
