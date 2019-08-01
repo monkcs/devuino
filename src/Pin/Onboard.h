@@ -11,7 +11,7 @@ namespace devuino
         class Onboard : public Pin
         {
           public:
-            Onboard(uint8_t pin)
+            Onboard(const uint8_t pin)
                 : pin(pin){};
 
             int analogread() const override
