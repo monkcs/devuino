@@ -39,12 +39,14 @@
 #include "Device/Resistance/Resistance.h"
 #include "Device/Servo/Servo.h"
 #include "Device/Switch/Switch.h"
+#include "Display/Display.h"
+/*#include "Display/CharacterDisplay/SegmentDisplay/SegmentDisplay.h"*/
 
 /* Include I/O interfaces */
-#include "Interface/I2C/Master.h"
+//#include "Interface/I2C/Master.h"
 
 /* Put all namespaces into scope */
 using namespace devuino;
 using namespace devuino::pin;
 using namespace devuino::device;
-using namespace devuino::interface;
+//using namespace devuino::interface;
