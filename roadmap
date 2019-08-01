@@ -30,8 +30,8 @@ Interfaces
     └─ 🔵 Rgb (red, green, blue, color(rgb, hex))
         └─ 🔵 Rgbw (white, color(rgbw, hex))
 
-🔴 Display (direction, dimensions, justify, cursor, clear)
-    └─ 🔴 CharacterDisplay
+🔵 Display (dimensions, clear)
+    └─ 🔴 CharacterDisplay (direction, cursor)
         └─ 🔴 SegmentDisplay (struct_SevenSegmentCharacter, privat_input-to-struct, 
 
 🔵 Temperature (celsius, fahrenheit, kelvin)
