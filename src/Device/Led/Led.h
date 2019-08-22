@@ -23,6 +23,11 @@ namespace devuino
                 off();
             }
 
+            void operator= (const bool value) const
+            {
+                set(value);
+            }
+
             void brightness(const int value) override
             {
                 bright = value;

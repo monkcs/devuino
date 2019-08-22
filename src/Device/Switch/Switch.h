@@ -22,6 +22,11 @@ namespace devuino
                 off();
             }
 
+            void operator= (const bool value) const
+            {
+                set(value);
+            }
+
             void off() override
             {
                 change(false);
