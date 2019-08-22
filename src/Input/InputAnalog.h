@@ -8,12 +8,12 @@ namespace devuino
     class InputAnalog
     {
       public:
-        InputAnalog(const int bitresolution, const bool debounce)
+        InputAnalog(const uint8_t bitresolution, const bool debounce)
         : bitsize(bitresolution), debounce(debounce) {};
 
         double percent() const
         {
-            return static_cast<double>(value()) / static_cast<double>(bitsize.resolution - 1);
+            return static_cast<double>(value()) / static_cast<double>(bitsize.range.maximum);
         };
 
         virtual int value() = 0;
