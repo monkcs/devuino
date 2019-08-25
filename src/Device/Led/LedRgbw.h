@@ -3,7 +3,6 @@
 
 #include "../../Light/Rgbw.h"
 #include "../../Output/OutputDigital.h"
-#include <Arduino.h>
 
 namespace devuino
 {
