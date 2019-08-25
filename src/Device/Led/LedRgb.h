@@ -15,7 +15,7 @@ namespace devuino
           public:
             LedRgb(const T redpin, const T greenpin, const T bluepin) : Rgb(), pins {redpin, greenpin, bluepin}
             {
-                for (auto pin : pins)
+                for (auto &pin : pins)
                 {
                     pin.initiate(pin::Mode::OutputAnalog);
                 }

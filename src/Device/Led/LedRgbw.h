@@ -15,7 +15,7 @@ namespace devuino
           public:
             LedRgbw(const T redpin, const T greenpin, const T bluepin, const T whitepin) : Rgbw(), pins {redpin, greenpin, bluepin, whitepin}
             {
-                for (auto pin : pins)
+                for (auto &pin : pins)
                 {
                     pin.initiate(pin::Mode::OutputAnalog);
                 }
