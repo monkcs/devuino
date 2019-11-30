@@ -5,7 +5,7 @@ namespace devuino
 {
     class DelayAsync
     {
-        /* DelayAsync provice async delay by specifying a delaytime,
+        /* DelayAsync provide async delay by specifying a delaytime,
            and then polling the reached() method for if the time have
            expired.
            */

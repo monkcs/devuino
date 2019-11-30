@@ -3,7 +3,7 @@
 /* 
    
    —— Devuino ———————————————————————————————————————————————————————————
-   Devuino (https://github.com/monkcs/devuino) created by Charlie habolin
+   Devuino (https://github.com/monkcs/devuino) created by Charlie Habolin
    
    The Devuino standard library aims to unify the library implementations
    for different devices to make clearer code and promote code reuse.
@@ -39,14 +39,18 @@
 #include "Device/Resistance/Resistance.h"
 #include "Device/Servo/Servo.h"
 #include "Device/Switch/Switch.h"
+#include "Device/MAX7219/MAX7219.h"
+
 #include "Display/Display.h"
-/*#include "Display/CharacterDisplay/SegmentDisplay/SegmentDisplay.h"*/
+#include "Display/CharacterDisplay/SegmentDisplay/SegmentDisplay.h"
+
+#include "Light/Light.h"
 
 /* Include I/O interfaces */
-//#include "Interface/I2C/Master.h"
+#include "Interface/SPI.h"
 
 /* Put all namespaces into scope */
 using namespace devuino;
 using namespace devuino::pin;
 using namespace devuino::device;
-//using namespace devuino::interface;
+using namespace devuino::interface::spi;

@@ -32,12 +32,12 @@ namespace devuino
 
             void off() override
             {
-                brightness(bitsize.range.minimum);
+                brightness(bitsize.minimum);
             }
 
             void on() override
             {
-                brightness(bitsize.range.maximum);
+                brightness(bitsize.maximum);
             }
 
             void red(const uint8_t value) override
@@ -55,7 +55,7 @@ namespace devuino
                 change(pins[2], value);
             }
 
-          protected:
+          private:
             const T pins[3];
 
             void change(const T &pin, const uint8_t value)

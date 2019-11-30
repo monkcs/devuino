@@ -18,6 +18,7 @@ namespace devuino
             {
                 this->pin.initiate(pin::Mode::OutputAnalog);
             }
+
             ~Led()
             {
                 off();
@@ -28,18 +29,24 @@ namespace devuino
                 set(value);
             }
 
-            void brightness(const int value) override
+            unsigned int brightness() const override
             {
-                bright = value;
+                return pin.analogread();
+            }
+
+            void brightness(const unsigned int value) override
+            {
                 pin.analogwrite(value);
             }
+
             void off() override
             {
-                brightness(bitsize.range.minimum);
+                brightness(bitsize.minimum());
             }
+
             void on() override
             {
-                brightness(bitsize.range.maximum);
+                brightness(bitsize.maximum());
             }
 
           protected:

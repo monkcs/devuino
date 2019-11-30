@@ -4,7 +4,7 @@
 #include "../../Output/OutputDigital.h"
 #include "../../Rotation/Rotation.h"
 #include "../../Delay/DelayAsync.h"
-
+/*
 namespace devuino
 {
     namespace device
@@ -73,5 +73,5 @@ namespace devuino
                 }
         };
     }
-}
+}*/
 #endif

@@ -27,7 +27,7 @@ void setup() { }
 
 void loop()
 {
-    led.set(button.value());
+    led = button.value();
 }
 ```
 

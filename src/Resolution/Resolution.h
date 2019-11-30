@@ -8,27 +8,34 @@ namespace devuino
         public:
 
             /* Set the bits and compute the resolution with a cap on 15 bits,
-             * (because currently we are using a uint16_t int to hold it. */
+             * (because currently we are using a uint16_t int to return it. */
 
             constexpr Resolution(const uint8_t bits)
-                : bits((bits < 15) ? bits : 15),
-                  resolution(1u << (bits < 15) ? bits : 15),
-                  range(0, resolution - 1)
+            : bitresolution((bits < 15) ? bits : 15)
             { };
 
-            const uint8_t bits;
-            const uint16_t resolution;
-
-            struct Range final
+            constexpr uint8_t bits() const
             {
-                constexpr Range(const uint8_t minimum, const uint16_t maximum)
-                    : minimum(minimum), maximum(maximum)
-                { };
+                return bitresolution;
+            };
 
-                const uint8_t minimum;
-                const uint16_t maximum;
-            } const range;
+            constexpr uint16_t resolution() const
+            {
+                return 1 << bitresolution;
+            };
 
+            constexpr uint8_t minimum() const
+            {
+                return 0;
+            };
+
+            constexpr uint16_t maximum() const
+            {
+                return 1 << (bitresolution - 1);
+            };
+
+          private:
+            const uint8_t bitresolution;
     };
 }
 

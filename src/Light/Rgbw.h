@@ -9,7 +9,7 @@ namespace devuino
     class Rgbw : public Rgb
     {
       public:
-        void brightness(const int value) override
+        void brightness(const unsigned int value) override
         {
             bright = value;
             colour(r, g, b, w);

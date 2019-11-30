@@ -8,10 +8,10 @@ namespace devuino
 {
     namespace pin
     {
-        class Onboard : public Pin
+        class Onboard final : public Pin
         {
           public:
-            Onboard(const uint8_t pin)
+            constexpr Onboard(const uint8_t pin)
                 : pin(pin){};
 
             int analogread() const override
@@ -36,6 +36,7 @@ namespace devuino
 
             void initiate(const devuino::pin::Mode mode, const Resistor pull = Resistor::None) const override
             {
+                /* Not possible to use constexpr on this code
                 switch (mode)
                 {
                     case Mode::InputAnalog:
@@ -59,7 +60,17 @@ namespace devuino
                         digitalwrite(false);
                     }
                     break;
-                }
+                }*/
+
+                pinMode(pin, pinmode(mode, pull));
+            };
+
+          private:
+            constexpr uint8_t pinmode(const devuino::pin::Mode mode, const Resistor pull = Resistor::None)
+            {
+                return (mode == Mode::InputAnalog || mode == Mode::InputDigital)
+                        ? ((pull == Resistor::PullUp) ? (INPUT_PULLUP) : (INPUT))
+                        : (OUTPUT);
             };
 
             const uint8_t pin;

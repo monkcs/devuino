@@ -29,22 +29,21 @@ namespace devuino
 
             void off() override
             {
-                change(false);
+                pin.digitalwrite(false);
             }
             
             void on() override
             {
-                change(true);
+                pin.digitalwrite(true);
             }
 
           protected:
             const T pin;
 
-            void change(const bool state)
+            virtual bool status() const
             {
-                active = state;
-                pin.digitalwrite(state);
-            }
+                pin.digitalread();
+            };
         };
     }
 }

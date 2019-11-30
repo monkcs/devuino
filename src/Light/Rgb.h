@@ -2,7 +2,6 @@
 #define RGB_H
 
 #include "Light.h"
-#include <Arduino.h>
 
 namespace devuino
 {
@@ -12,7 +11,7 @@ namespace devuino
         Rgb() : Light(8)
         { };
 
-        void brightness(const int value) override
+        void brightness(const unsigned int value) override
         {
             bright = value;
             colour(r, g, b);
