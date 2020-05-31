@@ -6,25 +6,28 @@ namespace devuino
     class OutputDigital
     {
         public:
-            virtual void off() = 0;
-            virtual void on() = 0;
+            void off() const
+            {
+                set(false);
+            }
+
+            void on() const
+            {
+                set(true);
+            }
 
             void operator= (const bool value) const
             {
                 set(value);
             };
 
-            void toggle()
+            void toggle() const
             {
                 set(!status());
             };
 
         protected:
-            void set(const bool value) const
-            {
-                value ? on() : off();
-            };
-
+            virtual void set(const bool value) = 0;
             virtual bool status() const = 0;
     };
 }

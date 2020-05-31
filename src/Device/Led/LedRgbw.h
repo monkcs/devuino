@@ -29,16 +29,6 @@ namespace devuino
                 set(value);
             }
 
-            void off() override
-            {
-                brightness(bitsize.minimum);
-            }
-
-            void on() override
-            {
-                brightness(bitsize.maximum);
-            }
-
             void red(const uint8_t value) override
             {
                 change(pins[0], value);
@@ -64,7 +54,12 @@ namespace devuino
 
             void change(const T &pin, const uint8_t value)
             {
-                pin.analogwrite(static_cast<uint8_t>((value * (bright / 255))));
+                pin.analogwrite(static_cast<uint8_t>((value * (bright / 255.0))));
+            }
+
+            void set(const bool value) override
+            {
+                brightness(value ? bright : bitsize.minimum());
             }
         };
     }

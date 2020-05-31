@@ -11,30 +11,29 @@ namespace devuino
         class Onboard final : public Pin
         {
           public:
-            constexpr Onboard(const uint8_t pin)
-                : pin(pin){};
+            constexpr Onboard(const uint8_t pin) : pin(pin) {};
 
-            int analogread() const override
+            int analogread() const
             {
                 return analogRead(pin);
             };
 
-            void analogwrite(const int value) const override
+            void analogwrite(const int value) const
             {
                 analogWrite(pin, value);
             };
 
-            bool digitalread() const override
+            bool digitalread() const
             {
                 return digitalRead(pin);
             };
 
-            void digitalwrite(const bool value) const override
+            void digitalwrite(const bool value) const
             {
                 digitalWrite(pin, value);
             };
 
-            void initiate(const devuino::pin::Mode mode, const Resistor pull = Resistor::None) const override
+            void initiate(const devuino::pin::Mode mode, const Resistor pull = Resistor::None) const
             {
                 /* Not possible to use constexpr on this code
                 switch (mode)
@@ -57,20 +56,15 @@ namespace devuino
                     case Mode::OutputDigital:
                     {
                         pinMode(pin, OUTPUT);
-                        digitalwrite(false);
                     }
                     break;
                 }*/
 
-                pinMode(pin, pinmode(mode, pull));
-            };
-
-          private:
-            constexpr uint8_t pinmode(const devuino::pin::Mode mode, const Resistor pull = Resistor::None)
-            {
-                return (mode == Mode::InputAnalog || mode == Mode::InputDigital)
-                        ? ((pull == Resistor::PullUp) ? (INPUT_PULLUP) : (INPUT))
-                        : (OUTPUT);
+                pinMode(pin, ((mode == Mode::InputAnalog) || (mode == Mode::InputDigital))
+                              ? (
+                                  (pull == Resistor::PullUp) ? INPUT_PULLUP : INPUT
+                                )
+                              : OUTPUT);
             };
 
             const uint8_t pin;

@@ -33,7 +33,7 @@ namespace devuino
                               const devuino::interface::spi::Bitorder order = devuino::interface::spi::Bitorder::MSB,
                               const devuino::interface::spi::Mode mode = devuino::interface::spi::Mode::SPI0)
                 {
-                    this->configuration = SPISettings(clockspeed, (uint8_t)order, (uint8_t)mode);
+                    this->configuration = SPISettings(clockspeed, static_cast<uint8_t>(order), static_cast<uint8_t>(mode));
                 };
 
                 uint8_t transfer(const uint8_t data) const
@@ -64,10 +64,11 @@ namespace devuino
                     return result;
                 };
 
-                void transfer(void* buffer, const size_t lenght) const
+                template <size_t N>
+                void transfer(const uint8_t buffer[N]) const
                 {
                     start();
-                    SPI.transfer(buffer, lenght);
+                    SPI.transfer((void*)(buffer), N);
                     stop();
                 };
 
@@ -101,6 +102,7 @@ namespace devuino
                 {
                     SPI.begin();
                 };
+
                 ~Spi()
                 {
                     SPI.end();

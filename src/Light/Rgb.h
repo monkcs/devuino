@@ -2,44 +2,50 @@
 #define RGB_H
 
 #include "Light.h"
+#include "Colour.h"
 
 namespace devuino
 {
     class Rgb : public Light
     {
       public:
-        Rgb() : Light(8)
+        constexpr Rgb(const Colour colours) : Light(Resolution(8)), colours(colours)
         { };
 
         void brightness(const unsigned int value) override
         {
-            bright = value;
-            colour(r, g, b);
+            this->bright = value;
+            change();
         };
 
-        void colour(const uint32_t hexadecimal) const
+        void colour(const Colour colours)
         {
-            colour(static_cast<uint8_t>(hexadecimal >> 16),
-                   static_cast<uint8_t>(hexadecimal >> 8),
-                   static_cast<uint8_t>(hexadecimal));
+            this->colours = colours;
+            change();
         };
 
-        void colour(const uint8_t r, const uint8_t g, const uint8_t b)
+        void red(const uint8_t value)
         {
-            this->r = r;
-            this->g = g;
-            this->b = b;
-            red(r);
-            green(g);
-            blue(b);
+            colours.red = value;
+            change();
         };
 
-        virtual void red(const uint8_t value) = 0;
-        virtual void green(const uint8_t value) = 0;
-        virtual void blue(const uint8_t value) = 0;
+        void green(const uint8_t value)
+        {
+            colours.green = value;
+            change();
+        };
+
+        void blue(const uint8_t value)
+        {
+            colours.blue = value;
+            change();
+        };
 
       protected:
-        uint8_t r, g, b = 0;
+        Colour colours;
+
+        virtual void change() const = 0;
     };
 }
 #endif

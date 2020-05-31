@@ -5,103 +5,77 @@
 
 namespace devuino
 {
-    class SevenSegmentCharacter
+    class SevenSegmentCharacter final
     {
         public:
             enum class Encoding : uint8_t
             {
-                abcdefg,
-                gfedcba
+                None,
+                abcdefg
             };
 
-            SevenSegmentCharacter(const char character, const Encoding encoding = Encoding::gfedcba)
+            explicit constexpr SevenSegmentCharacter(const int character, const Encoding encoding = Encoding::abcdefg)
+                : character ((encoding == Encoding::None) ? static_cast<uint8_t>(character) : convert(character, encoding)) { };
+
+            explicit constexpr SevenSegmentCharacter(const char character, const Encoding encoding = Encoding::abcdefg)
                 : character(convert(character, encoding)) { };
 
-            const uint8_t character;
+            constexpr SevenSegmentCharacter()
+                : character(0x0) { };
+
+            constexpr explicit operator uint8_t() const { return character; };
 
       private:
-        /*uint8_t convert(const double character, const Encoding encoding) const
+        uint8_t character;
+
+        // TODO This is not an optimal solution
+        class Lookup final
         {
-            switch (character)
+          public:
+            constexpr const uint8_t operator[] (const unsigned int index) const
             {
-                case 0:
-                    return (encoding == Encoding::abcdefg) ? 0x7E : 0x3F;
-                    break;
-                case 1:
-                    return (encoding == Encoding::abcdefg) ? 0x30 : 0x06;
-                    break;
-                case 2:
-                    return (encoding == Encoding::abcdefg) ? 0x6D : 0x5B;
-                    break;
-                case 3:
-                    return (encoding == Encoding::abcdefg) ? 0x79 : 0x4F;
-                    break;
-                case 4:
-                    return (encoding == Encoding::abcdefg) ? 0x33 : 0x66;
-                    break;
-                case 5:
-                    return (encoding == Encoding::abcdefg) ? 0x5B : 0x6D;
-                    break;
-                case 6:
-                    return (encoding == Encoding::abcdefg) ? 0x5F : 0x7D;
-                    break;
-                case 7:
-                    return (encoding == Encoding::abcdefg) ? 0x70 : 0x07;
-                    break;
-                case 8:
-                    return (encoding == Encoding::abcdefg) ? 0x7F : 0x7F;
-                    break;
-                case 9:
-                    return (encoding == Encoding::abcdefg) ? 0x7B : 0x6F;
-                    break;
+                return table[index];
+            };
 
-                default:
-                    return 0x0;
-                    break;
-            }
-        };*/
+          private:
+            const uint8_t table[10] =
+            {
+                    0x7e, // 0
+                    0x30, // 1
+                    0x6d, // 2
+                    0x79, // 3
+                    0x33, // 4
+                    0x5b, // 5
+                    0x5f, // 6
+                    0x70, // 7
+                    0x7f, // 8
+                    0x7b, // 9
+            };
+        };
 
-        uint8_t convert(const char character, const Encoding encoding) const
+        constexpr uint8_t convert(const int character, const Encoding encoding) const
         {
-            switch (character)
-            {
-                case '0':
-                    return (encoding == Encoding::abcdefg) ? 0x7E : 0x3F;
-                    break;
-                case '1':
-                    return (encoding == Encoding::abcdefg) ? 0x30 : 0x06;
-                    break;
-                case '2':
-                    return (encoding == Encoding::abcdefg) ? 0x6D : 0x5B;
-                    break;
-                case '3':
-                    return (encoding == Encoding::abcdefg) ? 0x79 : 0x4F;
-                    break;
-                case '4':
-                    return (encoding == Encoding::abcdefg) ? 0x33 : 0x66;
-                    break;
-                case '5':
-                    return (encoding == Encoding::abcdefg) ? 0x5B : 0x6D;
-                    break;
-                case '6':
-                    return (encoding == Encoding::abcdefg) ? 0x5F : 0x7D;
-                    break;
-                case '7':
-                    return (encoding == Encoding::abcdefg) ? 0x70 : 0x07;
-                    break;
-                case '8':
-                    return (encoding == Encoding::abcdefg) ? 0x7F : 0x7F;
-                    break;
-                case '9':
-                    return (encoding == Encoding::abcdefg) ? 0x7B : 0x6F;
-                    break;
+            return (0 <= character && character < 10) ? lookup(character) : 0x0;
+        };
 
-                default:
-                    return 0x0;
-                    break;
-            }
+
+        constexpr uint8_t convert(const char character, const Encoding encoding) const
+        {
+            return (character >= 32 && character <= 126) ? lookup(character - 48) : 0x0;
+        };
+
+        constexpr uint8_t lookup(const int character) const
+        {
+            return Lookup()[character];
         };
     };
+
+    /* User defined litterals */
+    constexpr SevenSegmentCharacter operator""_char7s (const unsigned long long int character)    { return SevenSegmentCharacter { static_cast<int>(character) }; }
+    constexpr SevenSegmentCharacter operator""_char7s (const char character)                      { return SevenSegmentCharacter { character }; }
+
+
+
 
     template <typename TPosition, typename TCharacter>
     class SegmentDisplay : public CharacterDisplay<TPosition, TCharacter>
@@ -112,16 +86,8 @@ namespace devuino
                            const Direction direction)
             : CharacterDisplay<TPosition, TCharacter>(dimension, cursor, direction) {}
 
-        private:
-            void print(TCharacter number) const
-            {
-                //while (number > 0)
-                {
-                    //const T digit = number % 10;
-                    //number /= 10;
-                    //print digit
-                }
-            }
+            //virtual constexpr void print(TCharacter number) = 0;
+        protected:
     };
 }
 

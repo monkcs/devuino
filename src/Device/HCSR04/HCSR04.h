@@ -9,7 +9,7 @@ namespace devuino
     namespace device
     {
         template <typename T>
-        class HCSR04 : public DistanceOutput
+        class HCSR04 : public DistanceInput
         {
           public:
             HCSR04(const T trigger, const T echo, const Lenght minimum = 2_cm, const Lenght maximum = 4_metre)
@@ -34,7 +34,7 @@ namespace devuino
                 DelaySync(10);
                 trigger.digitalwrite(false);
 
-                const Lenght reading = Lenght(pulseIn(13/*echo.pin*/, true, 70) / 5800.0);
+                const Lenght reading = Lenght(pulseIn(echo.pin, true, 70) / 5800.0);
 
                 if (reading > maximum)
                 {

@@ -26,6 +26,8 @@
 
 */
 
+ #pragma interface
+
 /* Include pins */
 #include "Pin/Onboard.h"
 
@@ -34,7 +36,7 @@
 #include "Device/HCSR04/HCSR04.h"
 #include "Device/Led/Led.h"
 #include "Device/Led/LedRgb.h"
-#include "Device/Led/LedRgbw.h"
+//#include "Device/Led/LedRgbw.h"
 #include "Device/Potentiometer/Potentiometer.h"
 #include "Device/Resistance/Resistance.h"
 #include "Device/Servo/Servo.h"
@@ -44,7 +46,8 @@
 #include "Display/Display.h"
 #include "Display/CharacterDisplay/SegmentDisplay/SegmentDisplay.h"
 
-#include "Light/Light.h"
+/* Include Tools */
+#include "Light/Colour.h"
 
 /* Include I/O interfaces */
 #include "Interface/SPI.h"

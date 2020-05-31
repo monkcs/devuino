@@ -281,13 +281,13 @@ namespace devuino
     constexpr Lenght operator""_nautical (const unsigned long long int lenght)     { return Lenght(lenght * 1852.0); }
 
 
-    class DistanceOutput
+    class DistanceInput
     {
         public:
             virtual Lenght distance() = 0;
     };
 
-    class DistanceInput
+    class DistanceOutput
     {
         public:
             virtual void distance(Lenght lenght) = 0;

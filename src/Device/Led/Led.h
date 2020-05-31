@@ -10,11 +10,10 @@ namespace devuino
     namespace device
     {
         template <typename T>
-        class Led : public Light, public OutputDigital
+        class Led final : public Light, public OutputDigital
         {
           public:
-            Led(const T pin, const int bitresolution = 10)
-                : pin(pin), Light(bitresolution)
+            Led(const T pin, const Resolution bitresolution = Resolution(10)) : pin(pin), Light(bitresolution)
             {
                 this->pin.initiate(pin::Mode::OutputAnalog);
             }
@@ -31,26 +30,27 @@ namespace devuino
 
             unsigned int brightness() const override
             {
-                return pin.analogread();
+                return bright;
             }
 
             void brightness(const unsigned int value) override
             {
-                pin.analogwrite(value);
-            }
-
-            void off() override
-            {
-                brightness(bitsize.minimum());
-            }
-
-            void on() override
-            {
-                brightness(bitsize.maximum());
+                bright = value;
+                pin.analogwrite(bright);
             }
 
           protected:
             const T pin;
+
+            void set(const bool value) override
+            {
+                brightness(value ? bright : bitsize.minimum());
+            }
+
+            bool status() const override
+            {
+                return (bright != 0);
+            }
         };
     }
 }

@@ -10,8 +10,7 @@ namespace devuino
             /* Set the bits and compute the resolution with a cap on 15 bits,
              * (because currently we are using a uint16_t int to return it. */
 
-            constexpr Resolution(const uint8_t bits)
-            : bitresolution((bits < 15) ? bits : 15)
+            explicit constexpr Resolution(const uint8_t bits) : bitresolution((bits < 15) ? bits : 15)
             { };
 
             constexpr uint8_t bits() const
@@ -31,10 +30,10 @@ namespace devuino
 
             constexpr uint16_t maximum() const
             {
-                return 1 << (bitresolution - 1);
+                return (1 << bitresolution) - 1;
             };
 
-          private:
+        private:
             const uint8_t bitresolution;
     };
 }

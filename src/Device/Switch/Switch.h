@@ -11,8 +11,7 @@ namespace devuino
         class Switch : public OutputDigital
         {
           public:
-            Switch(const T pin)
-                : pin(pin)
+            Switch(const T pin) : pin(pin)
             {
                 this->pin.initiate(pin::Mode::OutputDigital);
                 off();
@@ -27,22 +26,19 @@ namespace devuino
                 set(value);
             }
 
-            void off() override
-            {
-                pin.digitalwrite(false);
-            }
-            
-            void on() override
-            {
-                pin.digitalwrite(true);
-            }
-
           protected:
             const T pin;
+            bool value;
 
-            virtual bool status() const
+            void set(const bool value) override
             {
-                pin.digitalread();
+                pin.digitalwrite(value);
+                this->value = value;
+            };
+
+            bool status() const override
+            {
+                return value;
             };
         };
     }

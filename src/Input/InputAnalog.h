@@ -8,7 +8,7 @@ namespace devuino
     class InputAnalog
     {
       public:
-        InputAnalog(const uint8_t bitresolution, const bool debounce)
+        InputAnalog(const Resolution bitresolution, const bool debounce)
         : bitsize(bitresolution), debounce(debounce) {};
 
         double percent() const

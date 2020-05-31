@@ -16,7 +16,11 @@ namespace devuino
             /* Make a reading of a analog input from (T signal) by powering on a resistor from the (T power) pin.
              * That to prevent for example powerdraw and corrosion on water sensors. */
 
-            Resistance(const T signal, const T power, const bool debounce = false, const unsigned int iterations = 10, const uint8_t bitresolution = 10)
+            Resistance(const T signal,
+                       const T power,
+                       const bool debounce = false,
+                       const unsigned int iterations = 10,
+                       const Resolution bitresolution = Resolution(10))
                 : signal(Potentiometer<T>(signal, debounce, iterations, bitresolution)), power(Switch<T>(power))
             {
             }

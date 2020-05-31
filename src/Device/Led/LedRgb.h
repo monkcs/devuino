@@ -13,12 +13,14 @@ namespace devuino
         class LedRgb : public OutputDigital, public Rgb
         {
           public:
-            LedRgb(const T redpin, const T greenpin, const T bluepin) : Rgb(), pins {redpin, greenpin, bluepin}
+            LedRgb(const T redpin, const T greenpin, const T bluepin, const Colour colours = { 0, 0, 0 })
+              : Rgb { colours }, pins { redpin, greenpin, bluepin }
             {
                 for (auto &pin : pins)
                 {
                     pin.initiate(pin::Mode::OutputAnalog);
                 }
+                change();
             }
             ~LedRgb()
             {
@@ -30,37 +32,44 @@ namespace devuino
                 set(value);
             }
 
-            void off() override
+            void operator= (const Colour colours)
             {
-                brightness(bitsize.minimum);
+                this->colours = colours;
+                change();
             }
 
-            void on() override
+            constexpr unsigned int brightness() const override
             {
-                brightness(bitsize.maximum);
+                return bright;
             }
 
-            void red(const uint8_t value) override
+            void brightness(const unsigned int value) override
             {
-                change(pins[0], value);
-            }
-
-            void green(const uint8_t value) override
-            {
-                change(pins[1], value);
-            }
-            
-            void blue(const uint8_t value) override
-            {
-                change(pins[2], value);
+                //Rgb::brightness(value);
+                this->bright = value;
+                change();
             }
 
           private:
             const T pins[3];
 
-            void change(const T &pin, const uint8_t value)
+            void change() const override
             {
-                pin.analogwrite(static_cast<uint8_t>((value * (bright / 255))));
+                for (auto index = 0; index < 3; index++)
+                {
+                    const auto value = static_cast<uint8_t>(colours[index] * (bright / 255.0));
+                    pins[index].analogwrite(value);
+                }
+            }
+
+            void set(const bool value) override
+            {
+                brightness(value ? bright : bitsize.minimum());
+            }
+
+            bool status() const override
+            {
+                return (bright != 0);
             }
         };
     }

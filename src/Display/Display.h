@@ -14,7 +14,7 @@ namespace devuino
           virtual void clear() = 0;
 
         protected:
-          Vector2D<T> dimension;
+          const Vector2D<T> dimension;
     };
 }
 

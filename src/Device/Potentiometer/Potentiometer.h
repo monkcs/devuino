@@ -13,7 +13,7 @@ namespace devuino
         class Potentiometer : public InputAnalog
         {
           public:
-            Potentiometer(const T pin, const bool debounce = false, const unsigned int iterations = 10, const unsigned int bitresolution = 10)
+            Potentiometer(const T pin, const bool debounce = false, const uint8_t iterations = 10, const Resolution bitresolution = Resolution(10))
                 : pin(pin), iterations(iterations), InputAnalog(bitresolution, debounce)
             {
                 this->pin.initiate(pin::Mode::InputAnalog);
@@ -23,7 +23,7 @@ namespace devuino
             {
                 if (debounce)
                 {
-                    int reading = 0;
+                    unsigned int reading = 0;
                     for (auto counter = 0; counter < iterations; counter++)
                     {
                         reading += pin.analogread();
@@ -39,7 +39,7 @@ namespace devuino
 
           protected:
             const T pin;
-            const unsigned int iterations;
+            const uint8_t iterations;
         };
     }
 }

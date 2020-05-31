@@ -17,8 +17,21 @@ namespace devuino
                            const Direction direction)
             : Display<TPosition>(dimension), cursor(cursor), direction(direction)  {}
 
-        protected:
           Cursor<TCharacter, TPosition> cursor;
+
+        protected:
+          void move(const int distance = 1)
+          {
+              if (direction.flow == Direction::Primary::Horizontal)
+              {
+                  cursor.x += (distance * static_cast<uint8_t>(direction.x));
+              }
+              else if (direction.flow == Direction::Primary::Vertical)
+              {
+                  cursor.y += (distance * static_cast<uint8_t>(direction.y));
+              }
+          }
+
           Direction direction;
     };
 }

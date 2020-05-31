@@ -6,26 +6,34 @@ namespace devuino
     class Direction
     {
         public:
-          enum class Horizontal : uint8_t
+          enum class Horizontal : int8_t
           {
-              None,
-              Left,
-              Center,
-              Right
+              None   = 0,
+              Left   = 1,
+              Center = 0,
+              Right  = -1
           };
 
-          enum class Vertical : uint8_t
+          enum class Vertical : int8_t
           {
-              None,
-              Up,
-              Center,
-              Down
+              None    = 0,
+              Up      = 1,
+              Center  = 0,
+              Down    = -1
           };
 
-          constexpr Direction(const Horizontal, const Vertical y) : x(x), y(y) {}
+          enum class Primary : uint8_t
+          {
+              Horizontal,
+              Vertical,
+              None
+          };
+
+          constexpr Direction(const Horizontal x, const Vertical y, const Primary flow) : x(x), y(y), flow(flow) {}
 
           Horizontal x;
           Vertical y;
+          Primary flow;
     };
 }
 
