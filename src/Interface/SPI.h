@@ -5,116 +5,118 @@
 
 namespace devuino
 {
-    namespace interface
-    {
-        namespace spi
-        {
-            enum class Bitorder : uint8_t
-            {
-                MSB = 1,
-                LSB = 0
-            };
+	namespace interface
+	{
+		namespace spi
+		{
+			enum class Bitorder : uint8_t
+			{
+				MSB = 1,
+				LSB = 0
+			};
 
-            enum class Mode : uint8_t
-            {
-                SPI0 = SPI_MODE0,
-                SPI1 = SPI_MODE1,
-                SPI2 = SPI_MODE2,
-                SPI3 = SPI_MODE3
-            };
+			enum class Mode : uint8_t
+			{
+				SPI0 = SPI_MODE0,
+				SPI1 = SPI_MODE1,
+				SPI2 = SPI_MODE2,
+				SPI3 = SPI_MODE3
+			};
 
-            template <typename T>
-            class Master
-            {
-              public:
-                friend class Spi;
+			template<typename T>
+			class Master
+			{
+				using devuino::interface::spi;
 
-                constexpr void initiate(const uint32_t clockspeed = 4000000,
-                              const devuino::interface::spi::Bitorder order = devuino::interface::spi::Bitorder::MSB,
-                              const devuino::interface::spi::Mode mode = devuino::interface::spi::Mode::SPI0)
-                {
-                    this->configuration = SPISettings(clockspeed, static_cast<uint8_t>(order), static_cast<uint8_t>(mode));
-                };
+			  public:
+				friend class Spi;
 
-                uint8_t transfer(const uint8_t data) const
-                {
-                    start();
-                    const auto result = SPI.transfer(data);
-                    stop();
+				void initiate(const uint32_t clockspeed = 4000000, const Bitorder order = Bitorder::MSB, const Mode mode = Mode::SPI0)
+				{
+					this->configuration = SPISettings(clockspeed, static_cast<uint8_t>(order), static_cast<uint8_t>(mode));
+				};
 
-                    return result;
-                };
+				uint8_t transfer(const uint8_t data) const
+				{
+					start();
+					const auto result = SPI.transfer(data);
+					stop();
 
-                uint8_t transfer(const uint8_t address, const uint8_t data) const
-                {
-                    start();
-                    SPI.transfer(address);
-                    const auto result = SPI.transfer(data);
-                    stop();
+					return result;
+				};
 
-                    return result;
-                };
+				uint8_t transfer(const uint8_t address, const uint8_t data) const
+				{
+					start();
+					SPI.transfer(address);
+					const auto result = SPI.transfer(data);
+					stop();
 
-                uint16_t transfer16(const uint16_t data) const
-                {
-                    start();
-                    const auto result = SPI.transfer16(data);
-                    stop();
+					return result;
+				};
 
-                    return result;
-                };
+				uint16_t transfer16(const uint16_t data) const
+				{
+					start();
+					const auto result = SPI.transfer16(data);
+					stop();
 
-                template <size_t N>
-                void transfer(const uint8_t buffer[N]) const
-                {
-                    start();
-                    SPI.transfer((void*)(buffer), N);
-                    stop();
-                };
+					return result;
+				};
 
-              private:
-                const T chipselect;
-                SPISettings configuration;
+				template<size_t N>
+				void transfer(const uint8_t buffer[N]) const
+				{
+					start();
+					SPI.transfer((void*)(buffer), N);
+					stop();
+				};
 
-                Master(const T chipselect) : chipselect(chipselect)
-                {
-                    this->chipselect.initiate(pin::Mode::OutputDigital);
-                    chipselect.digitalwrite(true);
-                };
+			  private:
+				const T chipselect;
+				SPISettings configuration;
 
-                void start() const
-                {
-                    SPI.beginTransaction(configuration);
-                    chipselect.digitalwrite(false);
-                };
+				Master(const T chipselect) : chipselect(chipselect)
+				{
+					this->chipselect.initiate(pin::Output::Digital);
+					chipselect.digitalwrite(true);
+				};
 
-                void stop() const
-                {
-                    chipselect.digitalwrite(true);
-                    SPI.endTransaction();
-                };
-            };
+			  public:
+				void start() const
+				{
+					SPI.beginTransaction(configuration);
+					chipselect.digitalwrite(false);
+				};
 
-            class Spi final
-            {
-              public:
-                Spi(const uint8_t interface)
-                {
-                    SPI.begin();
-                };
+				void stop() const
+				{
+					chipselect.digitalwrite(true);
+					SPI.endTransaction();
+				};
+			};
 
-                ~Spi()
-                {
-                    SPI.end();
-                };
+			class Spi final
+			{
+			  public:
+				Spi(const uint8_t interface)
+				{
+					SPI.begin();
+				};
 
-                template <typename T> Master<T> constexpr master(const T chipselect) const
-                {
-                    return Master<T>(chipselect);
-                };
-            };
-        }
-    }
+				~Spi()
+				{
+					SPI.end();
+				};
+
+				template<typename T>
+				Master<T> constexpr master(const T chipselect) const
+				{
+					return Master<T>(chipselect);
+				};
+			};
+		}
+	}
 }
 
 #endif
