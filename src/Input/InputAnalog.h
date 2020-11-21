@@ -9,14 +9,14 @@ namespace devuino
     {
       public:
         InputAnalog(const Resolution bitresolution, const bool debounce)
-        : bitsize(bitresolution), debounce(debounce) {};
+            : bitsize(bitresolution), debounce(debounce){};
 
-        double percent() const
+        [[nodiscard]] double percent() const
         {
-            return static_cast<double>(value()) / static_cast<double>(bitsize.maximum());
+            return static_cast<double>(value()) / static_cast<double>(bitsize.maximum);
         };
 
-        virtual int value() = 0;
+        virtual int value() const = 0;
 
       protected:
         const Resolution bitsize;
