@@ -5,42 +5,41 @@
 
 namespace devuino
 {
-    namespace device
-    {
-        template <typename T>
-        class Switch : public OutputDigital
-        {
-          public:
-            Switch(const T pin) : pin(pin)
-            {
-                this->pin.initiate(pin::Mode::OutputDigital);
-                off();
-            }
-            ~Switch()
-            {
-                off();
-            }
+	namespace device
+	{
+		template<class T>
+		class Switch : public OutputDigital
+		{
+		  public:
+			Switch(const T pin, const bool initial = false) : OutputDigital {initial}, pin {pin}
+			{
+				this->pin.initiate(pin::Output::Digital);
+				set(initial);
+			};
 
-            void operator= (const bool value) const
-            {
-                set(value);
-            }
+			~Switch()
+			{
+				set(false);
+			};
 
-          protected:
-            const T pin;
-            bool value;
+			void operator=(const bool value)
+			{
+				status = value;
+				set(value);
+			};
+			void operator=(const bool value) const
+			{
+				set(value);
+			};
 
-            void set(const bool value) override
-            {
-                pin.digitalwrite(value);
-                this->value = value;
-            };
+		  protected:
+			T pin;
 
-            bool status() const override
-            {
-                return value;
-            };
-        };
-    }
+			void set(const bool value) const override
+			{
+				pin.digitalwrite(value);
+			};
+		};
+	}
 }
 #endif

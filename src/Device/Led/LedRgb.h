@@ -7,72 +7,62 @@
 
 namespace devuino
 {
-    namespace device
-    {
-        template <typename T>
-        class LedRgb : public OutputDigital, public Rgb
-        {
-          public:
-            LedRgb(const T redpin, const T greenpin, const T bluepin, const Colour colours = { 0, 0, 0 })
-              : Rgb { colours }, pins { redpin, greenpin, bluepin }
-            {
-                for (auto &pin : pins)
-                {
-                    pin.initiate(pin::Mode::OutputAnalog);
-                }
-                change();
-            }
-            ~LedRgb()
-            {
-                off();
-            }
+	namespace device
+	{
+		template<typename T>
+		class LedRgb : public OutputDigital, public Rgb
+		{
+		  public:
+			LedRgb(const T redpin, const T greenpin, const T bluepin, const Colour colours = {0, 0, 0}, const bool initial = false) : OutputDigital {initial}, Rgb {colours}, pins {redpin, greenpin, bluepin}
+			{
+				for (auto& pin : pins)
+				{
+					pin.initiate(pin::Output::Analog);
+				}
 
-            void operator= (const bool value) const
-            {
-                set(value);
-            }
+				update();
+			}
+			~LedRgb()
+			{
+				off();
+			}
 
-            void operator= (const Colour colours)
-            {
-                this->colours = colours;
-                change();
-            }
+			void operator=(const bool value)
+			{
+				status = value;
+				set(value);
+			}
 
-            constexpr unsigned int brightness() const override
-            {
-                return bright;
-            }
+			void update() const override
+			{
+				if (status)
+				{
+					const double fraction = static_cast<double>(bright) / static_cast<double>(bitsize.maximum);
 
-            void brightness(const unsigned int value) override
-            {
-                //Rgb::brightness(value);
-                this->bright = value;
-                change();
-            }
+					for (auto index = 0; index < 3; index++)
+					{
+						const uint8_t calculated = static_cast<uint8_t>(colours[index] * fraction);
+						pins[index].analogwrite(calculated);
+					}
+				}
+				else
+				{
+					for (auto& pin : pins)
+					{
+						pin.analogwrite(0);
+					}
+				}
+			}
 
-          private:
-            const T pins[3];
+		  private:
+			T pins[3];
 
-            void change() const override
-            {
-                for (auto index = 0; index < 3; index++)
-                {
-                    const auto value = static_cast<uint8_t>(colours[index] * (bright / 255.0));
-                    pins[index].analogwrite(value);
-                }
-            }
-
-            void set(const bool value) override
-            {
-                brightness(value ? bright : bitsize.minimum());
-            }
-
-            bool status() const override
-            {
-                return (bright != 0);
-            }
-        };
-    }
+			void set(const bool value) override
+			{
+				update();
+			}
+		};
+	}
 }
 
 #endif
