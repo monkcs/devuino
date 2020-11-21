@@ -2,74 +2,81 @@
 #define ONBOARD_H
 
 #include "Pin.h"
+
 #include <Arduino.h>
+#include <stdint.h>
 
 namespace devuino
 {
-    namespace pin
-    {
-        class Onboard final : public Pin
-        {
-          public:
-            constexpr Onboard(const uint8_t pin) : pin(pin) {};
+	namespace pin
+	{
+		class Onboard final : public Pin
+		{
+		  public:
+			explicit Onboard(const uint8_t pin) : Pin {pin}, bitmask(digitalPinToBitMask(pin)), direction(*portModeRegister(digitalPinToPort(pin))), port(*portOutputRegister(digitalPinToPort(pin))), input(*portInputRegister(digitalPinToPort(pin))) {};
 
-            int analogread() const
-            {
-                return analogRead(pin);
-            };
+			int analogread() const
+			{
+				return analogRead(pin);
+			};
 
-            void analogwrite(const int value) const
-            {
-                analogWrite(pin, value);
-            };
+			void analogwrite(const int value) const
+			{
+				analogWrite(pin, value);
+			};
 
-            bool digitalread() const
-            {
-                return digitalRead(pin);
-            };
+			bool digitalread() const
+			{
+				return input & bitmask;
+			};
 
-            void digitalwrite(const bool value) const
-            {
-                digitalWrite(pin, value);
-            };
+			void digitalwrite(const bool value) const
+			{
+				if (value)
+				{
+					port |= bitmask;
+				}
+				else
+				{
+					port &= ~bitmask;
+				}
+			};
 
-            void initiate(const devuino::pin::Mode mode, const Resistor pull = Resistor::None) const
-            {
-                /* Not possible to use constexpr on this code
-                switch (mode)
-                {
-                    case Mode::InputAnalog:
-                    case Mode::InputDigital:
-                    {
-                        if (pull == Resistor::PullUp)
-                        {
-                            pinMode(pin, INPUT_PULLUP);
-                        }
-                        else
-                        {
-                            pinMode(pin, INPUT);
-                        }
-                    }
-                    break;
+			void digitaltoggle() const
+			{
+				port ^= bitmask;
+			};
 
-                    case Mode::OutputAnalog:
-                    case Mode::OutputDigital:
-                    {
-                        pinMode(pin, OUTPUT);
-                    }
-                    break;
-                }*/
+			void initiate(const pin::Input mode, const Resistor pull = Resistor::None) const
+			{
+				direction &= ~bitmask;
 
-                pinMode(pin, ((mode == Mode::InputAnalog) || (mode == Mode::InputDigital))
-                              ? (
-                                  (pull == Resistor::PullUp) ? INPUT_PULLUP : INPUT
-                                )
-                              : OUTPUT);
-            };
+				if (pull == Resistor::PullUp)
+				{
+					port |= bitmask;
+				}
+			};
 
-            const uint8_t pin;
-        };
-    }
+			void initiate(const pin::Output mode) const
+			{
+				/* There is an extra pinMode call in wiring_analog.c for compability
+				   reasons. That means it is not necessary to call pinMode when the
+				   pin is configured as an analog output. */
+
+				if (mode == pin::Output::Digital)
+				{
+					direction |= bitmask;
+					port &= ~bitmask;
+				}
+			};
+
+		  private:
+			uint8_t bitmask;
+			volatile uint8_t& direction;
+			volatile uint8_t& port;
+			volatile uint8_t& input;
+		};
+	};
 }
 
 #endif

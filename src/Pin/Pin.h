@@ -1,37 +1,46 @@
 #ifndef PIN_H
 #define PIN_H
 
+#include <stdint.h>
+
 namespace devuino
 {
-    namespace pin
-    {
-        enum class Mode : uint8_t
-        {
-            InputAnalog,
-            InputDigital,
-            OutputAnalog,
-            OutputDigital
-        };
+	namespace pin
+	{
+		enum class Input : uint8_t
+		{
+			Analog,
+			Digital
+		};
 
-        enum class Resistor : uint8_t
-        {
-            PullUp,
-            PullDown,
-            None
-        };
+		enum class Output : uint8_t
+		{
+			Analog,
+			Digital
+		};
 
-        class Pin
-        {
-          public:
+		enum class Resistor : uint8_t
+		{
+			PullUp,
+			PullDown,
+			None
+		};
 
-           /* virtual int analogread() = 0;
-            virtual void analogwrite(const int value) = 0;
-            virtual bool digitalread() = 0;
-            virtual void digitalwrite(const bool value) = 0;*/
+		class Pin
+		{
+		  public:
+			constexpr Pin(const uint8_t pin) : pin {pin} {};
 
-            //virtual void initiate(const devuino::pin::Mode mode, const devuino::pin::Resistor pull = Resistor::None) const = 0;
-        };
-    }
+			uint8_t pin;
+			/*virtual int analogread() const = 0;
+			 virtual void analogwrite(const int value) const = 0;
+			 virtual bool digitalread() const = 0;
+			 virtual void digitalwrite(const bool value) const = 0;
+
+			 virtual void initiate(const pin::Input mode, const Resistor pull) const = 0;
+			 virtual void initiate(const pin::Output mode) const = 0;*/
+		};
+	}
 }
 
 #endif
