@@ -8,10 +8,11 @@ namespace devuino
       public:
         InputDigital(const bool debounce)
             : debounce(debounce){};
-        virtual bool value() = 0;
+
+        virtual bool value() const = 0;
 
       protected:
-        const bool debounce;
+        bool debounce;
     };
 }
 
