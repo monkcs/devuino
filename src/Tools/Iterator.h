@@ -5,29 +5,29 @@
 
 namespace devuino
 {
-    namespace tools
-    {
-      template <typename T>
-      struct Iterator
-      {
-          T* pointer;
+	namespace tools
+	{
+		template<typename T>
+		struct Iterator final
+		{
+			T* pointer;
 
-          constexpr T& operator* ()
-          {
-              return *pointer;
-          };
+			constexpr T& operator*()
+			{
+				return *pointer;
+			};
 
-          constexpr bool operator!= (const Iterator &rhs) const
-          {
-              return pointer != rhs.pointer;
-          };
+			constexpr bool operator!=(const Iterator& rhs) const
+			{
+				return pointer != rhs.pointer;
+			};
 
-          void operator++ ()
-          {
-              ++pointer;
-          };
-      };
-    }
+			void operator++()
+			{
+				++pointer;
+			};
+		};
+	}
 }
 
 #endif
