@@ -8,31 +8,25 @@ namespace devuino
 {
     namespace device
     {
-        /* Debounce not yet implemented */
         template <typename T>
-        class Button : public InputDigital
+        class Button final : public InputDigital
         {
           public:
-            Button(const T pin, const devuino::pin::Resistor pull, const bool debounce = true)
-                : pin(pin), pull(pull), InputDigital(debounce)
+            Button(const T pin, const devuino::pin::Resistor pull)
+                : InputDigital(false), pin(pin), pull(pull)
             {
-                this->pin.initiate(devuino::pin::Mode::InputDigital, pull);
-            }
+                this->pin.initiate(devuino::pin::Input::Digital, pull);
+            };
 
-            bool value() override
+            bool value() const override
             {
-                /*if (debounce)
-                {
-                }
-                else*/
-                {
-                    return (pull == devuino::pin::Resistor::PullUp) ? !pin.digitalread() : pin.digitalread();
-                }
-            }
+                const bool reading = pin.digitalread();
+                return (pull == devuino::pin::Resistor::PullUp) ? !reading : reading;
+            };
 
           protected:
-            const T pin;
-            const devuino::pin::Resistor pull;
+            T pin;
+            devuino::pin::Resistor pull;
         };
     }
 }
