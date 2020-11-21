@@ -5,30 +5,49 @@ namespace devuino
 {
     class OutputDigital
     {
-        public:
-            void off() const
-            {
-                set(false);
-            }
+      public:
+        constexpr OutputDigital(const bool initial)
+            : status{initial} {};
 
-            void on() const
-            {
-                set(true);
-            }
+        void off()
+        {
+            status = false;
+            set(false);
+        };
+        void off() const
+        {
+            set(false);
+        };
 
-            void operator= (const bool value) const
-            {
-                set(value);
-            };
+        void on()
+        {
+            status = true;
+            set(true);
+        };
+        void on() const
+        {
+            set(true);
+        };
 
-            void toggle() const
-            {
-                set(!status());
-            };
+        void toggle()
+        {
+            status ? off() : on();
+        };
 
-        protected:
-            virtual void set(const bool value) = 0;
-            virtual bool status() const = 0;
+        /* Example operator= to use in final class */
+        void operator=(const bool value)
+        {
+            status = value;
+            set(value);
+        };
+        void operator=(const bool value) const
+        {
+            set(value);
+        };
+
+      protected:
+        virtual void set(const bool value) const = 0;
+        bool status;
     };
 }
 
