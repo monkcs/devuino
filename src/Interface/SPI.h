@@ -26,8 +26,6 @@ namespace devuino
 			template<typename T>
 			class Master
 			{
-				using devuino::interface::spi;
-
 			  public:
 				friend class Spi;
 
