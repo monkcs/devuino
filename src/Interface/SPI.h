@@ -71,7 +71,7 @@ namespace devuino
 				};
 
 			  private:
-				const T chipselect;
+				T chipselect;
 				SPISettings configuration;
 
 				Master(const T chipselect) : chipselect(chipselect)

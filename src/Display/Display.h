@@ -5,17 +5,19 @@
 
 namespace devuino
 {
-    template <typename T>
-    class Display
-    {
-        public:
-          constexpr Display(const Vector2D<T> dimension) : dimension(dimension) {}
+	template<typename T>
+	class Display
+	{
+	  public:
+		constexpr Display(const Vector2D<T> dimension) : dimension(dimension)
+		{
+		}
 
-          virtual void clear() = 0;
+		virtual void clear() = 0;
 
-        protected:
-          const Vector2D<T> dimension;
-    };
+	  protected:
+		Vector2D<T> dimension;
+	};
 }
 
 #endif
