@@ -10,27 +10,27 @@ namespace devuino
 {
 	namespace pin
 	{
-		class Onboard final : public Pin
+		class Onboard : public Pin
 		{
 		  public:
 			explicit Onboard(const uint8_t pin) : Pin {pin}, bitmask(digitalPinToBitMask(pin)), direction(*portModeRegister(digitalPinToPort(pin))), port(*portOutputRegister(digitalPinToPort(pin))), input(*portInputRegister(digitalPinToPort(pin))) {};
 
-			int analogread() const
+			int analog() const
 			{
 				return analogRead(pin);
 			};
 
-			void analogwrite(const int value) const
+			void analog(const int value) const
 			{
 				analogWrite(pin, value);
 			};
 
-			bool digitalread() const
+			bool digital() const
 			{
 				return input & bitmask;
 			};
 
-			void digitalwrite(const bool value) const
+			void digital(const bool value) const
 			{
 				if (value)
 				{
@@ -70,8 +70,9 @@ namespace devuino
 				}
 			};
 
-		  private:
+		  protected:
 			uint8_t bitmask;
+
 			volatile uint8_t& direction;
 			volatile uint8_t& port;
 			volatile uint8_t& input;
