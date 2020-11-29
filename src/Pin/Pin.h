@@ -31,7 +31,14 @@ namespace devuino
 		  public:
 			constexpr Pin(const uint8_t pin) : pin {pin} {};
 
+			constexpr uint8_t get() const
+			{
+				return pin;
+			}
+
+		  protected:
 			uint8_t pin;
+
 			/*virtual int analogread() const = 0;
 			 virtual void analogwrite(const int value) const = 0;
 			 virtual bool digitalread() const = 0;
