@@ -32,12 +32,17 @@ namespace devuino
 				set(value);
 			};
 
+			void toggle()
+			{
+				operator=(!status);
+			};
+
 		  protected:
 			T pin;
 
-			void set(const bool value) const override
+			void set(const bool value) const
 			{
-				pin.digitalwrite(value);
+				pin.digital(value);
 			};
 		};
 	}
