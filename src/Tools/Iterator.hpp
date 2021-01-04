@@ -1,5 +1,5 @@
-#ifndef ITERATOR_H
-#define ITERATOR_H
+#ifndef ITERATOR_HPP
+#define ITERATOR_HPP
 
 // https://www.nextptr.com/tutorial/ta1208652092/how-cplusplus-rangebased-for-loop-works
 

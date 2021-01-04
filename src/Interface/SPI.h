@@ -24,7 +24,7 @@ namespace devuino
 			};
 
 			template<typename T>
-			class Master
+			class Controller
 			{
 			  public:
 				friend class Spi;
@@ -74,7 +74,7 @@ namespace devuino
 				T chipselect;
 				SPISettings configuration;
 
-				Master(const T chipselect) : chipselect(chipselect)
+				Controller(const T chipselect) : chipselect(chipselect)
 				{
 					this->chipselect.initiate(pin::Output::Digital);
 					chipselect.digitalwrite(true);
@@ -108,9 +108,9 @@ namespace devuino
 				};
 
 				template<typename T>
-				Master<T> constexpr master(const T chipselect) const
+				Controller<T> constexpr controller(const T chipselect) const
 				{
-					return Master<T>(chipselect);
+					return Controller<T> {chipselect};
 				};
 			};
 		}

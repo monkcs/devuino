@@ -6,12 +6,11 @@
 #ifndef MAX7219_H
 #define MAX7219_H
 
-#include "../../Output/OutputDigital.h"
-#include "../../Light/Light.h"
-#include "../../Interface/SPI.h"
-#include "../../Display/CharacterDisplay/SegmentDisplay/SegmentDisplay.h"
 #include "../..//Display/Direction.h"
-
+#include "../../Display/CharacterDisplay/SegmentDisplay/SegmentDisplay.h"
+#include "../../Interface/SPI.h"
+#include "../../Light/Light.h"
+#include "../../Output/OutputDigital.h"
 
 namespace devuino
 {
@@ -29,31 +28,27 @@ namespace devuino
                 D01234567 = 0xff
             };
 
-            MAX7219(const devuino::interface::spi::Master<T> spi) :
-            Light(4),
-            spi(spi),
-            SegmentDisplay<uint8_t, SevenSegmentCharacter>
-            (
-                Vector2D<uint8_t>(8, 1),
-                Cursor<SevenSegmentCharacter, uint8_t>
-                (
-                    SevenSegmentCharacter('_'),
-                    false,
-                    Vector2D<uint8_t>(0, 0)
-                ),
-                Direction(Direction::Horizontal::Left, Direction::Vertical::None, Direction::Primary::Horizontal)
-            )
+            MAX7219(const devuino::interface::spi::Master<T> spi)
+                : OutputDigital(true),
+                  Light(Resolution{4}),
+                  SegmentDisplay<uint8_t, SevenSegmentCharacter>(
+                      Vector2D<uint8_t>(8, 1),
+                      Cursor<SevenSegmentCharacter, uint8_t>(
+                          SevenSegmentCharacter('_'),
+                          false,
+                          Vector2D<uint8_t>(0, 0)),
+                      Direction(Direction::Horizontal::Left, Direction::Vertical::None, Direction::Primary::Horizontal)),
+                  spi(spi)
             {
                 this->spi.initiate();
 
                 // Reset display
-                brightness(bitsize.maximum());
+                brightness(bitsize.maximum);
                 decode(Decode::None);
                 clear();
                 scanlimit(dimension.x);
                 test(false);
                 on();
-
             };
             ~MAX7219()
             {
@@ -62,12 +57,12 @@ namespace devuino
 
             /* Turn on or off the display to enter low-power mode.
             It is still possible to program the display in power-off mode. */
-            void operator= (const bool value) const
+            void operator=(const bool value) const
             {
                 set(value);
             };
 
-            unsigned int brightness() override
+            unsigned int brightness() const override
             {
                 return bright;
             };
@@ -85,7 +80,7 @@ namespace devuino
                 // TODO This will only clear the display if set to decode to code-b
                 for (auto& digit : backend)
                 {
-                    digit = SevenSegmentCharacter {};
+                    digit = SevenSegmentCharacter{};
                 }
                 push();
             }
@@ -109,19 +104,15 @@ namespace devuino
                 spi.transfer(0x0f, value);
             }
 
-
-
-
-
             SevenSegmentCharacter backend[8] = {};
 
-            SevenSegmentCharacter& operator[] (const uint8_t index)
+            SevenSegmentCharacter& operator[](const uint8_t index)
             {
                 const auto guard = (index < 9) ? index : 0;
                 return backend[guard];
             };
 
-            constexpr SevenSegmentCharacter operator[] (const uint8_t index) const
+            constexpr SevenSegmentCharacter operator[](const uint8_t index) const
             {
                 const auto guard = (index < 9) ? index : 0;
                 return backend[guard];
@@ -133,6 +124,7 @@ namespace devuino
                 {
                     backend[cursor.x] = number;
                     move();
+                    push();
                 }
             };
 
@@ -144,8 +136,6 @@ namespace devuino
                     spi.transfer(index + 1, static_cast<uint8_t>(backend[digit]));
                 }
             };
-
-
 
             constexpr uint8_t count(const unsigned long int number) const
             {
@@ -159,16 +149,14 @@ namespace devuino
 
             void print(const long int number)
             {
-                auto sign = [=]()
-                {
+                auto sign = [=]() {
                     if (number < 0)
                     {
                         print(SevenSegmentCharacter('-'));
                     }
                 };
 
-                auto send = [this](unsigned int number)
-                {
+                auto send = [this](unsigned int number) {
                     do
                     {
                         print(SevenSegmentCharacter(static_cast<int>(number % 10)));
@@ -215,23 +203,20 @@ namespace devuino
                 push();
             };
 
-
           protected:
-            bool active;
-            const devuino::interface::spi::Master<T> spi;
+            devuino::interface::spi::Master<T> spi;
 
             /* Turn on or off the display to enter low-power mode.
             It is still possible to program the display in power-off mode. */
-            void set(const bool value) override
+            void set(const bool value) const override
             {
                 spi.transfer(0x0c, value);
-                active = value;
             }
-
-            bool status() const override
+            void set(const bool value)
             {
-                return active;
-            };
+                spi.transfer(0x0c, value);
+                status = value;
+            }
         };
     }
 }

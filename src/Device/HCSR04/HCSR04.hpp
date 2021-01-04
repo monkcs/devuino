@@ -1,24 +1,29 @@
-#ifndef HCSR04_H
-#define HCSR04_H
+#ifndef HCSR04_HPP
+#define HCSR04_HPP
 
 #include "../../Delay/DelaySync.h"
-#include "../../Distance/Distance.h"
+#include "../../Distance/Distance.hpp"
+#include "../Switch/Switch.hpp"
 
 namespace devuino
 {
 	namespace device
 	{
-		template<typename T>
+		template<class Trigger, class Echo = Trigger>
 		class HCSR04 : public DistanceInput
 		{
 		  public:
-			HCSR04(const T trigger, const T echo, const Distance minimum = 2_centimetre, const Distance maximum = 4_metre) : trigger(trigger), echo(echo), minimum(minimum), maximum(maximum)
+			HCSR04(const Trigger trigger, const Echo echo, const Distance minimum = 2_centimetre, const Distance maximum = 4_metre) : trigger {Switch<Trigger> {trigger}}, echo {echo}, minimum {minimum}, maximum {maximum}
 			{
-				this->trigger.initiate(pin::Output::Digital);
 				this->echo.initiate(pin::Input::Digital, pin::Resistor::None);
 			}
 
-			Distance distance() const override
+			operator Distance() const
+			{
+				return distance();
+			};
+
+			Distance distance() const
 			{
 				/*
 				   To trigger a distance reading, a 10 microsecond
@@ -27,13 +32,12 @@ namespace devuino
 				   To get the distance in metre, divide the reading
 				   by 5800.
 				*/
-				trigger.digitalwrite(false);
-				DelaySync(5);
-				trigger.digitalwrite(true);
-				DelaySync(10);
-				trigger.digitalwrite(false);
 
-				const Distance reading = Distance {pulseIn(echo.pin, true, 70) / 5800.0};
+				trigger = true;
+				DelaySync(10);
+				trigger = false;
+
+				const auto reading = Distance {pulseIn(echo.get(), true, 70) / 5800.0};
 
 				if (reading > maximum)
 				{
@@ -49,11 +53,12 @@ namespace devuino
 				}
 			}
 
-		  private:
+		  protected:
+			Switch<Trigger> trigger;
+			Echo echo;
+
 			Distance minimum;
 			Distance maximum;
-			T trigger;
-			T echo;
 		};
 	}
 }

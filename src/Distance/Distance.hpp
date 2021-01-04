@@ -1,14 +1,12 @@
-#ifndef DISTANCE_H
-#define DISTANCE_H
+#ifndef DISTANCE_HPP
+#define DISTANCE_HPP
 
 namespace devuino
 {
 	class Distance
 	{
 	  public:
-		explicit constexpr Distance(const long double metre) : metre(metre)
-		{
-		}
+		explicit constexpr Distance(const long double metre) : metre(metre) {};
 
 		// Untill C++20
 		// constexpr auto operator<=>(const Distance&) const = default;
@@ -157,7 +155,7 @@ namespace devuino
 			}
 		}
 
-	  private:
+	  protected:
 		long double metre;
 	};
 
@@ -425,7 +423,7 @@ namespace devuino
 	class DistanceInput
 	{
 	  public:
-		virtual Distance distance() const = 0;
+		// virtual Distance distance() const = 0;
 	};
 
 	class DistanceOutput

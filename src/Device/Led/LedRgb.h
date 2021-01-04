@@ -2,8 +2,8 @@
 #define LEDRGB_H
 
 #include "../../Light/Rgb.h"
-#include "../../Output/OutputDigital.h"
-#include "../../Pin/Pin.h"
+#include "../../Output/OutputDigital.hpp"
+#include "../../Pin/Pin.hpp"
 
 namespace devuino
 {
@@ -13,53 +13,70 @@ namespace devuino
 		class LedRgb : public OutputDigital, public Rgb
 		{
 		  public:
-			LedRgb(const T redpin, const T greenpin, const T bluepin, const Colour colours = {0, 0, 0}, const bool initial = false) : OutputDigital {initial}, Rgb {colours}, pins {redpin, greenpin, bluepin}
+			LedRgb(const T pins[3], const Colour colours = Colour {}, const bool initial = false) : LedRgb<T> {{pins[0], pins[1], pins[2]}, colours, initial} {};
+			LedRgb(const T redpin, const T greenpin, const T bluepin, const Colour colours = Colour {}, const bool initial = false) : OutputDigital {initial}, Rgb {colours}, pins {redpin, greenpin, bluepin}
 			{
 				for (auto& pin : pins)
 				{
 					pin.initiate(pin::Output::Analog);
 				}
 
-				update();
-			}
+				set(initial);
+			};
+
 			~LedRgb()
 			{
-				off();
+				set(false);
 			}
 
 			void operator=(const bool value)
 			{
 				status = value;
 				set(value);
-			}
-
-			void update() const override
+			};
+			void operator=(const bool value) const
 			{
-				if (status)
-				{
-					const double fraction = static_cast<double>(bright) / static_cast<double>(bitsize.maximum);
+				set(value);
+			};
 
-					for (auto index = 0; index < 3; index++)
+			void toggle()
+			{
+				operator=(!status);
+			};
+
+			void brightness(const unsigned int value)
+			{
+				bright = value;
+				set(status);
+			};
+
+			void fraction(const double value)
+			{
+				brightness(static_cast<unsigned int>(bitsize.maximum * value));
+			};
+
+		  protected:
+			T pins[3];
+
+			void set(const bool value) const
+			{
+				if (value)
+				{
+					const double fraction = static_cast<double>(bright) / bitsize.maximum;
+
+					for (uint8_t index = 0; index < 3; index++)
 					{
 						const uint8_t calculated = static_cast<uint8_t>(colours[index] * fraction);
-						pins[index].analogwrite(calculated);
+						pins[index].analog(calculated);
 					}
 				}
 				else
 				{
-					for (auto& pin : pins)
+					for (uint8_t index = 0; index < 3; index++)
 					{
-						pin.analogwrite(0);
+						pins[index].analog(0);
 					}
 				}
-			}
-
-		  private:
-			T pins[3];
-
-			void set(const bool value) override
-			{
-				update();
 			}
 		};
 	}

@@ -13,6 +13,8 @@ Interfaces
 
 🔵 Pin
     └─ 🔵 Onboard
+        ├─ Digital
+        └─ Analog
 
 🔵 Input
     ├─ 🔵 InputAnalog %(value, percent, ¤debounce)

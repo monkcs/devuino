@@ -1,5 +1,5 @@
-#ifndef OUTPUTDIGITAL_H
-#define OUTPUTDIGITAL_H
+#ifndef OUTPUTDIGITAL_HPP
+#define OUTPUTDIGITAL_HPP
 
 namespace devuino
 {

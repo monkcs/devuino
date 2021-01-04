@@ -1,14 +1,12 @@
-#ifndef TEMPERATURE_H
-#define TEMPERATURE_H
+#ifndef TEMPERATURE_HPP
+#define TEMPERATURE_HPP
 
 namespace devuino
 {
 	class Temperature
 	{
 	  public:
-		explicit constexpr Temperature(const long double celsius) : temperature(temperature)
-		{
-		}
+		explicit constexpr Temperature(const long double celsius) : temperature(temperature) {};
 
 		// Untill C++20
 		// constexpr auto operator<=>(const Temperature&) const = default;
@@ -47,7 +45,7 @@ namespace devuino
 
 		constexpr Temperature operator-() const
 		{
-			return Temperature(-this->temperature);
+			return Temperature {-this->temperature};
 		}
 
 		constexpr Temperature operator+() const
@@ -81,22 +79,22 @@ namespace devuino
 
 		constexpr friend Temperature operator+(Temperature const& lhs, Temperature const& rhs)
 		{
-			return Temperature(lhs.temperature + rhs.temperature);
+			return Temperature {lhs.temperature + rhs.temperature};
 		}
 
 		constexpr friend Temperature operator-(Temperature const& lhs, Temperature const& rhs)
 		{
-			return Temperature(lhs.temperature - rhs.temperature);
+			return Temperature {lhs.temperature - rhs.temperature};
 		}
 
 		constexpr friend Temperature operator*(Temperature const& lhs, Temperature const& rhs)
 		{
-			return Temperature(lhs.temperature * rhs.temperature);
+			return Temperature {lhs.temperature * rhs.temperature};
 		}
 
 		constexpr friend Temperature operator/(Temperature const& lhs, Temperature const& rhs)
 		{
-			return Temperature(lhs.temperature / rhs.temperature);
+			return Temperature {lhs.temperature / rhs.temperature};
 		}
 
 		constexpr friend bool operator==(Temperature const& lhs, Temperature const& rhs)
@@ -129,7 +127,7 @@ namespace devuino
 			return !(lhs < rhs);
 		}
 
-	  private:
+	  protected:
 		long double temperature;
 	};
 
@@ -137,53 +135,53 @@ namespace devuino
 
 	constexpr Temperature operator""_C(const long double celsius)
 	{
-		return Temperature(celsius);
+		return Temperature {celsius};
 	}
 	constexpr Temperature operator""_C(const unsigned long long int celsius)
 	{
-		return Temperature(celsius);
+		return Temperature {celsius};
 	}
 	constexpr Temperature operator""_celsius(const long double celsius)
 	{
-		return Temperature(celsius);
+		return Temperature {celsius};
 	}
 	constexpr Temperature operator""_celsius(const unsigned long long int celsius)
 	{
-		return Temperature(celsius);
+		return Temperature {celsius};
 	}
 
 	constexpr Temperature operator""_F(const long double fahrenheit)
 	{
-		return Temperature((fahrenheit - 32) * (5.0 / 9.0));
+		return Temperature {(fahrenheit - 32) * (5.0 / 9.0)};
 	}
 	constexpr Temperature operator""_F(const unsigned long long int fahrenheit)
 	{
-		return Temperature((fahrenheit - 32) * (5.0 / 9.0));
+		return Temperature {(fahrenheit - 32) * (5.0 / 9.0)};
 	}
 	constexpr Temperature operator""_fahrenheit(const long double fahrenheit)
 	{
-		return Temperature((fahrenheit - 32) * (5.0 / 9.0));
+		return Temperature {(fahrenheit - 32) * (5.0 / 9.0)};
 	}
 	constexpr Temperature operator""_fahrenheit(const unsigned long long int fahrenheit)
 	{
-		return Temperature((fahrenheit - 32) * (5.0 / 9.0));
+		return Temperature {(fahrenheit - 32) * (5.0 / 9.0)};
 	}
 
 	constexpr Temperature operator""_K(const long double kelvin)
 	{
-		return Temperature(kelvin - 273.15);
+		return Temperature {kelvin - 273.15};
 	}
 	constexpr Temperature operator""_K(const unsigned long long int kelvin)
 	{
-		return Temperature(kelvin - 273.15);
+		return Temperature {kelvin - 273.15};
 	}
 	constexpr Temperature operator""_kelvin(const long double kelvin)
 	{
-		return Temperature(kelvin - 273.15);
+		return Temperature {kelvin - 273.15};
 	}
 	constexpr Temperature operator""_kelvin(const unsigned long long int kelvin)
 	{
-		return Temperature(kelvin - 273.15);
+		return Temperature {kelvin - 273.15};
 	}
 }
 

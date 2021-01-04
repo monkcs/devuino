@@ -10,7 +10,7 @@ namespace devuino
 		   expired.
 		   */
 	  public:
-		DelayAsync(const uint32_t milliseconds) : delaytime(milliseconds), target(0)
+		DelayAsync(const uint32_t milliseconds) : delaytime {milliseconds}, target {0}
 		{
 			/*
 				Invoke update function to assign a target value.
@@ -48,7 +48,7 @@ namespace devuino
 			}
 		}
 
-	  private:
+	  protected:
 		uint32_t delaytime;
 		uint32_t target;
 	};

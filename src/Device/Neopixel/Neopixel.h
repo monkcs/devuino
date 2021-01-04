@@ -156,7 +156,7 @@ namespace devuino
 			// const pin::Onboard pin;
 			Colour pixels[(Individual ? N : 1)];
 
-			void set(const bool value) const override
+			void set(const bool value) const
 			{
 				update();
 			}
