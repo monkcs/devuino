@@ -29,22 +29,22 @@ namespace devuino
 			return (index == 0) ? red : ((index == 1) ? green : blue);
 		};
 
-		devuino::tools::Iterator<const Channel> begin() const
-		{
-			return {red};
-		}
-		devuino::tools::Iterator<const Channel> end() const
-		{
-			return {red + 3};
-		}
-		devuino::tools::Iterator<Channel> begin()
-		{
-			return {red};
-		}
-		devuino::tools::Iterator<Channel> end()
-		{
-			return {red + 3};
-		}
+		/*	devuino::tools::Iterator<const Channel> begin() const
+			{
+				return {red};
+			}
+			devuino::tools::Iterator<const Channel> end() const
+			{
+				return {red + 3};
+			}
+			devuino::tools::Iterator<Channel> begin()
+			{
+				return {red};
+			}
+			devuino::tools::Iterator<Channel> end()
+			{
+				return {red + 3};
+			}*/
 	};
 }
 
