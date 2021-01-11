@@ -19,18 +19,18 @@ namespace devuino
 
 			int value() const
 			{
-				power = true;
+				power.on();
 				const auto reading = signal.value();
-				power = false;
+				power.off();
 
 				return reading;
 			};
 
 			double fraction() const
 			{
-				power = true;
+				power.on();
 				const auto reading = signal.fraction();
-				power = false;
+				power.off();
 
 				return reading;
 			};

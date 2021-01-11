@@ -39,6 +39,24 @@ namespace devuino
 				set(value);
 			};
 
+			void off() const
+			{
+				operator=(false);
+			};
+			void off()
+			{
+				operator=(false);
+			};
+
+			void on() const
+			{
+				operator=(true);
+			};
+			void on()
+			{
+				operator=(true);
+			};
+
 			void toggle()
 			{
 				operator=(!status);

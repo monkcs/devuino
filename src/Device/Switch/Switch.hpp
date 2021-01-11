@@ -27,6 +27,16 @@ namespace devuino
 				set(value);
 			};
 
+			void off() const
+			{
+				operator=(false);
+			};
+
+			void on() const
+			{
+				operator=(true);
+			};
+
 			void toggle() const
 			{
 				pin.digitaltoggle();
