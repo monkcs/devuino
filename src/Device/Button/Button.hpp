@@ -21,6 +21,11 @@ namespace devuino
 
 			operator bool() const
 			{
+				return value();
+			};
+
+			bool value() const
+			{
 				return (pull == Resistor::PullUp) ? !pin.digital() : pin.digital();
 			};
 
