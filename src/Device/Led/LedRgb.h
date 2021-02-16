@@ -90,9 +90,9 @@ namespace devuino
 				}
 				else
 				{
-					for (uint8_t index = 0; index < 3; index++)
+					for (auto& pin : pins)
 					{
-						pins[index].analog(0);
+						pin.analog(0);
 					}
 				}
 			}
