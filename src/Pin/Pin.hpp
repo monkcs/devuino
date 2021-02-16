@@ -1,5 +1,4 @@
-#ifndef PIN_HPP
-#define PIN_HPP
+#pragma once
 
 #include <stdint.h>
 
@@ -27,5 +26,3 @@ namespace devuino
 		};
 	}
 }
-
-#endif

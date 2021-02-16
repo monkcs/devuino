@@ -1,5 +1,4 @@
-#ifndef LIGHT_HPP
-#define LIGHT_HPP
+#pragma once
 
 #include "../Resolution/Resolution.hpp"
 
@@ -15,5 +14,3 @@ namespace devuino
 		unsigned int bright;
 	};
 }
-
-#endif

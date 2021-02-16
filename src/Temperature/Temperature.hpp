@@ -1,5 +1,4 @@
-#ifndef TEMPERATURE_HPP
-#define TEMPERATURE_HPP
+#pragma once
 
 namespace devuino
 {
@@ -184,5 +183,3 @@ namespace devuino
 		return Temperature {kelvin - 273.15};
 	}
 }
-
-#endif

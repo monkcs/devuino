@@ -1,5 +1,4 @@
-#ifndef POTENTIOMETER_HPP
-#define POTENTIOMETER_HPP
+#pragma once
 
 #include "../../Delay/DelaySync.h"
 #include "../../Input/InputAnalog.hpp"
@@ -49,5 +48,3 @@ namespace devuino
 		};
 	}
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef LEDRGB_H
-#define LEDRGB_H
+#pragma once
 
 #include "../../Light/Rgb.h"
 #include "../../Output/OutputDigital.hpp"
@@ -78,6 +77,7 @@ namespace devuino
 
 			void set(const bool value) const
 			{
+				// TODO Make precompiled colours
 				if (value)
 				{
 					const double fraction = static_cast<double>(bright) / bitsize.maximum;
@@ -99,5 +99,3 @@ namespace devuino
 		};
 	}
 }
-
-#endif

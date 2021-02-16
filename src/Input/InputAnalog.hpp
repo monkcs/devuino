@@ -1,5 +1,4 @@
-#ifndef INPUTANALOG_H
-#define INPUTANALOG_H
+#pragma once
 
 #include "../Resolution/Resolution.hpp"
 
@@ -24,5 +23,3 @@ namespace devuino
 		bool debounce;
 	};
 }
-
-#endif

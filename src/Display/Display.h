@@ -1,5 +1,4 @@
-#ifndef DISPLAY_H
-#define DISPLAY_H
+#pragma once
 
 #include "Vector2D.h"
 
@@ -19,5 +18,3 @@ namespace devuino
 		Vector2D<T> dimension;
 	};
 }
-
-#endif

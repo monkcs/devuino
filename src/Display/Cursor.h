@@ -1,5 +1,4 @@
-#ifndef CURSOR_H
-#define CURSOR_H
+#pragma once
 
 #include "Vector2D.h"
 
@@ -17,5 +16,3 @@ namespace devuino
 		TPointer pointer;
 	};
 }
-
-#endif

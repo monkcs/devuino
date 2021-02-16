@@ -1,5 +1,4 @@
-#ifndef LED_HPP
-#define LED_HPP
+#pragma once
 
 #include "../../Light/Light.hpp"
 #include "../../Output/OutputDigital.hpp"
@@ -94,4 +93,3 @@ namespace devuino
 		};
 	}
 }
-#endif

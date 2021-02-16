@@ -1,5 +1,4 @@
-#ifndef SPI_H
-#define SPI_H
+#pragma once
 
 #include <SPI.h>
 
@@ -116,5 +115,3 @@ namespace devuino
 		}
 	}
 }
-
-#endif

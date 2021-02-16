@@ -1,5 +1,4 @@
-#ifndef DELAYSYNC_H
-#define DELAYSYNC_H
+#pragma once
 
 #include <Arduino.h>
 
@@ -10,5 +9,3 @@ namespace devuino
 		delay(milliseconds);
 	};
 }
-
-#endif

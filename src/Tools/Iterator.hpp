@@ -1,7 +1,6 @@
-#ifndef ITERATOR_HPP
-#define ITERATOR_HPP
+#pragma once
 
-// https://www.nextptr.com/tutorial/ta1208652092/how-cplusplus-rangebased-for-loop-works
+/* https://www.nextptr.com/tutorial/ta1208652092/how-cplusplus-rangebased-for-loop-works */
 
 namespace devuino
 {
@@ -29,5 +28,3 @@ namespace devuino
 		};
 	}
 }
-
-#endif

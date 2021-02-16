@@ -1,5 +1,4 @@
-#ifndef BUTTON_HPP
-#define BUTTON_HPP
+#pragma once
 
 #include "../../Input/InputDigital.h"
 #include "../../Pin/Pin.hpp"
@@ -35,5 +34,3 @@ namespace devuino
 		};
 	}
 }
-
-#endif

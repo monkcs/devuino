@@ -1,5 +1,4 @@
-#ifndef RGB_H
-#define RGB_H
+#pragma once
 
 #include "Colour.hpp"
 #include "Light.hpp"
@@ -16,4 +15,3 @@ namespace devuino
 		Colour colours;
 	};
 }
-#endif

@@ -1,5 +1,4 @@
-#ifndef HCSR04_HPP
-#define HCSR04_HPP
+#pragma once
 
 #include "../../Delay/DelaySync.h"
 #include "../../Distance/Distance.hpp"
@@ -62,5 +61,3 @@ namespace devuino
 		};
 	}
 }
-
-#endif

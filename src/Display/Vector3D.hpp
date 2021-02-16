@@ -1,5 +1,4 @@
-#ifndef VECTOR3D_HPP
-#define VECTOR3D_HPP
+#pragma once
 
 #include "Vector2D.hpp"
 
@@ -20,5 +19,3 @@ namespace devuino
 		}
 	};
 }
-
-#endif

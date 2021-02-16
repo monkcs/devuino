@@ -1,5 +1,4 @@
-#ifndef OUTPUTANALOG_H
-#define OUTPUTANALOG_H
+#pragma once
 
 #include "../Resolution/Resolution.h"
 #include "OutputDigital.h"
@@ -17,5 +16,3 @@ namespace devuino
 		Resolution bitsize;
 	};
 }
-
-#endif

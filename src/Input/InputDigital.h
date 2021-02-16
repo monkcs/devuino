@@ -1,5 +1,4 @@
-#ifndef INPUTDIGITAL_H
-#define INPUTDIGITAL_H
+#pragma once
 
 namespace devuino
 {
@@ -14,5 +13,3 @@ namespace devuino
 		bool debounce;
 	};
 }
-
-#endif

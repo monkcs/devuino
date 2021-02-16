@@ -1,5 +1,4 @@
-#ifndef DISTANCE_HPP
-#define DISTANCE_HPP
+#pragma once
 
 namespace devuino
 {
@@ -432,4 +431,3 @@ namespace devuino
 		virtual void distance(Distance lenght) = 0;
 	};
 }
-#endif

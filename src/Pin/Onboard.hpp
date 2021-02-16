@@ -1,5 +1,4 @@
-#ifndef ONBOARD_HPP
-#define ONBOARD_HPP
+#pragma once
 
 #include "Pin.hpp"
 
@@ -85,5 +84,3 @@ namespace devuino
 		};
 	};
 }
-
-#endif

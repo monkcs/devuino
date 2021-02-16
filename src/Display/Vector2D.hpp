@@ -1,5 +1,4 @@
-#ifndef VECTOR2D_HPP
-#define VECTOR2D_HPP
+#pragma once
 
 namespace devuino
 {
@@ -18,5 +17,3 @@ namespace devuino
 		}
 	};
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef DELAYASYNC_H
-#define DELAYASYNC_H
+#pragma once
 
 namespace devuino
 {
@@ -53,4 +52,3 @@ namespace devuino
 		uint32_t target;
 	};
 }
-#endif

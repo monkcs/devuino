@@ -1,5 +1,4 @@
-#ifndef WS2812_HPP
-#define WS2812_HPP
+#pragma once
 
 namespace devuino
 {
@@ -36,5 +35,3 @@ namespace devuino
 		};
 	}
 }
-
-#endif

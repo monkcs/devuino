@@ -1,5 +1,4 @@
-#ifndef RESISTANCE_HPP
-#define RESISTANCE_HPP
+#pragma once
 
 #include "../Potentiometer/Potentiometer.hpp"
 #include "../Switch/Switch.hpp"
@@ -41,5 +40,3 @@ namespace devuino
 		};
 	}
 }
-
-#endif

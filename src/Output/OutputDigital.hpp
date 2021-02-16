@@ -1,5 +1,4 @@
-#ifndef OUTPUTDIGITAL_HPP
-#define OUTPUTDIGITAL_HPP
+#pragma once
 
 namespace devuino
 {
@@ -29,5 +28,3 @@ namespace devuino
 		bool status;
 	};
 }
-
-#endif

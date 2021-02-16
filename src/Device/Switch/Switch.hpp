@@ -1,5 +1,4 @@
-#ifndef SWITCH_HPP
-#define SWITCH_HPP
+#pragma once
 
 #include "../../Pin/Pin.hpp"
 
@@ -52,4 +51,3 @@ namespace devuino
 		};
 	}
 }
-#endif

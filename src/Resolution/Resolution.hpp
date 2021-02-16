@@ -1,5 +1,4 @@
-#ifndef RESOLUTION_HPP
-#define RESOLUTION_HPP
+#pragma once
 
 #include <stdint.h>
 
@@ -28,5 +27,3 @@ namespace devuino
 		};
 	};
 }
-
-#endif

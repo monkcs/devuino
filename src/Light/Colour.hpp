@@ -1,5 +1,4 @@
-#ifndef Colour_HPP
-#define Colour_HPP
+#pragma once
 
 #include "../Tools/Iterator.hpp"
 #include "Channel.hpp"
@@ -47,5 +46,3 @@ namespace devuino
 			}*/
 	};
 }
-
-#endif

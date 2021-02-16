@@ -1,5 +1,4 @@
-#ifndef SEGMENTDISPLAY_H
-#define SEGMENTDISPLAY_H
+#pragma once
 
 #include "../CharacterDisplay.h"
 
@@ -83,5 +82,3 @@ namespace devuino
 	  protected:
 	};
 }
-
-#endif

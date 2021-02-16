@@ -1,4 +1,4 @@
-
+#pragma once
 
 /*
 
@@ -33,7 +33,7 @@
 #include "Device/Button/Button.hpp"
 #include "Device/HCSR04/HCSR04.hpp"
 #include "Device/Led/Led.hpp"
-// #include "Device/Led/LedRgb.h"
+#include "Device/Led/LedRgb.h"
 #include "Device/Potentiometer/Potentiometer.hpp"
 #include "Device/Resistance/Resistance.hpp"
 // #include "Device/Servo/Servo.h"

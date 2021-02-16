@@ -1,5 +1,4 @@
-#ifndef CHANNEL_HPP
-#define CHANNEL_HPP
+#pragma once
 
 #include <stdint.h>
 
@@ -108,4 +107,3 @@ namespace devuino
 		return Channel {static_cast<uint8_t>(value)};
 	};
 }
-#endif

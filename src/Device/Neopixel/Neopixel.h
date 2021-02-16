@@ -1,5 +1,4 @@
-#ifndef NEOPIXEL_H
-#define NEOPIXEL_H
+#pragma once
 
 #include "../../Light/Colour.h"
 #include "../../Light/Light.h"
@@ -206,4 +205,3 @@ namespace devuino
 		};
 	}
 }
-#endif
