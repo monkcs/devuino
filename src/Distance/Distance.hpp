@@ -10,65 +10,49 @@ namespace devuino
 		// Untill C++20
 		// constexpr auto operator<=>(const Distance&) const = default;
 
-		constexpr Distance operator-() const { return Distance(-this->metre); }
+		constexpr Distance operator-() const { return Distance(-this->metre); };
 
-		constexpr Distance operator+() const { return *this; }
+		constexpr Distance operator+() const { return *this; };
 
 		Distance& operator+=(Distance const& rhs)
 		{
 			this->metre += rhs.metre;
 			return *this;
-		}
+		};
 
 		Distance& operator-=(Distance const& rhs)
 		{
 			this->metre -= rhs.metre;
 			return *this;
-		}
+		};
 
-		Distance& operator*=(Distance const& rhs)
-		{
-			this->metre *= rhs.metre;
-			return *this;
-		}
 		Distance& operator*=(const long double rhs)
 		{
 			this->metre *= rhs;
 			return *this;
-		}
+		};
 
-		Distance& operator/=(Distance const& rhs)
-		{
-			this->metre /= rhs.metre;
-			return *this;
-		}
 		Distance& operator/=(const long double rhs)
 		{
 			this->metre /= rhs;
 			return *this;
-		}
+		};
 
-		constexpr friend Distance operator+(Distance const& lhs, Distance const& rhs) { return Distance(lhs.metre + rhs.metre); }
+		constexpr friend Distance operator+(Distance const& lhs, Distance const& rhs) { return Distance(lhs.metre + rhs.metre); };
+		constexpr friend Distance operator-(Distance const& lhs, Distance const& rhs) { return Distance(lhs.metre - rhs.metre); };
 
-		constexpr friend Distance operator-(Distance const& lhs, Distance const& rhs) { return Distance(lhs.metre - rhs.metre); }
+		constexpr friend long double operator*(Distance const& lhs, Distance const& rhs) { return lhs.metre * rhs.metre; };
+		constexpr friend Distance operator*(Distance const& lhs, long double rhs) { return Distance(lhs.metre * rhs); };
 
-		constexpr friend Distance operator*(Distance const& lhs, Distance const& rhs) { return Distance(lhs.metre * rhs.metre); }
-		constexpr friend Distance operator*(Distance const& lhs, long double rhs) { return Distance(lhs.metre * rhs); }
+		constexpr friend long double operator/(Distance const& lhs, Distance const& rhs) { return lhs.metre / rhs.metre; };
+		constexpr friend Distance operator/(Distance const& lhs, long double rhs) { return Distance(lhs.metre / rhs); };
 
-		constexpr friend Distance operator/(Distance const& lhs, Distance const& rhs) { return Distance(lhs.metre / rhs.metre); }
-		constexpr friend Distance operator/(Distance const& lhs, long double rhs) { return Distance(lhs.metre / rhs); }
-
-		constexpr friend bool operator==(Distance const& lhs, Distance const& rhs) { return (lhs.metre == rhs.metre); }
-
-		constexpr friend bool operator!=(Distance const& lhs, Distance const& rhs) { return !(lhs == rhs); }
-
-		constexpr friend bool operator<(Distance const& lhs, Distance const& rhs) { return (lhs.metre < rhs.metre); }
-
-		constexpr friend bool operator>(Distance const& lhs, Distance const& rhs) { return rhs < lhs; }
-
-		constexpr friend bool operator<=(Distance const& lhs, Distance const& rhs) { return !(lhs > rhs); }
-
-		constexpr friend bool operator>=(Distance const& lhs, Distance const& rhs) { return !(lhs < rhs); }
+		constexpr friend bool operator==(Distance const& lhs, Distance const& rhs) { return (lhs.metre == rhs.metre); };
+		constexpr friend bool operator!=(Distance const& lhs, Distance const& rhs) { return !(lhs == rhs); };
+		constexpr friend bool operator<(Distance const& lhs, Distance const& rhs) { return (lhs.metre < rhs.metre); };
+		constexpr friend bool operator>(Distance const& lhs, Distance const& rhs) { return rhs < lhs; };
+		constexpr friend bool operator<=(Distance const& lhs, Distance const& rhs) { return !(lhs > rhs); };
+		constexpr friend bool operator>=(Distance const& lhs, Distance const& rhs) { return !(lhs < rhs); };
 
 		enum class Imperial
 		{
@@ -109,6 +93,8 @@ namespace devuino
 				case Imperial::Foot: return metre / 0.3048;
 				case Imperial::Inch: return metre / 0.0254;
 				case Imperial::Thou: return metre / 0.0000254;
+
+				default: return 0.0;
 			}
 		};
 
@@ -127,8 +113,10 @@ namespace devuino
 				case SI::Milli: return metre * 1000.0;
 				case SI::Micro: return metre * 1000000.0;
 				case SI::Nano: return metre * 1000000000.0;
+
+				default: return 0.0;
 			}
-		}
+		};
 
 	  protected:
 		long double metre;
