@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Devuino
+namespace devuino
 {
 	namespace tools
 	{
