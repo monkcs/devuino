@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../Input/InputDigital.h"
 #include "../../Pin/Pin.hpp"
 
 namespace devuino
@@ -10,27 +9,30 @@ namespace devuino
 		using namespace devuino::pin;
 
 		template<typename T>
-		class Button : public InputDigital
+		class Button
 		{
 		  public:
-			Button(const T pin, const Resistor pull) : InputDigital {false}, pin {pin}, pull {pull}
-			{
-				this->pin.initiate(Input::Digital, pull);
-			};
+			Button(const T pin, const Resistor pull, const bool debounce = false) : pin {pin}, pull {pull}, debounce {debounce} { this->pin.initiate(Input::Digital, pull); };
 
-			operator bool() const
-			{
-				return value();
-			};
+			operator bool() const { return value(); };
 
 			bool value() const
 			{
-				return (pull == Resistor::PullUp) ? !pin.digital() : pin.digital();
+				if (false /* debounce */)
+				{
+					// TODO IMPLEMENT DEBOUNCE
+					return false;
+				}
+				else
+				{
+					return (pull == Resistor::PullUp) ? !pin.digital() : pin.digital();
+				}
 			};
 
 		  protected:
 			T pin;
 			Resistor pull;
+			bool debounce;
 		};
 	}
 }
