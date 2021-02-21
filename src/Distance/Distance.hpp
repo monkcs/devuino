@@ -47,16 +47,16 @@ namespace devuino
 		constexpr friend long double operator/(Distance const& lhs, Distance const& rhs) { return lhs.metre / rhs.metre; };
 		constexpr friend Distance operator/(Distance const& lhs, long double rhs) { return Distance {lhs.metre / rhs}; };
 
-		constexpr friend bool operator==(Distance const& lhs, Distance const& rhs) { return (lhs.metre == rhs.metre};
+		constexpr friend bool operator==(Distance const& lhs, Distance const& rhs) { return lhs.metre == rhs.metre; };
 
-		constexpr friend bool operator!=(Distance const& lhs, Distance const& rhs) { return !(lhs == rhs};
+		constexpr friend bool operator!=(Distance const& lhs, Distance const& rhs) { return !(lhs == rhs); };
 
-		constexpr friend bool operator<(Distance const& lhs, Distance const& rhs) { return (lhs.metre < rhs.metre};
+		constexpr friend bool operator<(Distance const& lhs, Distance const& rhs) { return lhs.metre < rhs.metre; };
 
 		constexpr friend bool operator>(Distance const& lhs, Distance const& rhs) { return rhs < lhs; };
-		constexpr friend bool operator<=(Distance const& lhs, Distance const& rhs) { return !(lhs > rhs};
+		constexpr friend bool operator<=(Distance const& lhs, Distance const& rhs) { return !(lhs > rhs); };
 
-		constexpr friend bool operator>=(Distance const& lhs, Distance const& rhs) { return !(lhs < rhs};
+		constexpr friend bool operator>=(Distance const& lhs, Distance const& rhs) { return !(lhs < rhs); };
 
 		enum class Imperial
 		{
