@@ -1,47 +1,35 @@
 #pragma once
 
+#include "../../Output/OutputDigital.hpp"
 #include "../../Pin/Pin.hpp"
 
-namespace devuino
+namespace devuino::device
 {
-	namespace device
+	template<typename T>
+	class Switch : public OutputDigital
 	{
-		template<typename T>
-		class Switch
+	  public:
+		Switch(const T pin, const bool initial = false) : OutputDigital {initial}, pin {pin}
 		{
-		  public:
-			Switch(const T pin, const bool initial = false) : pin {pin}, status {initial}
-			{
-				this->pin.initiate(devuino::pin::Output::Digital);
-				set(initial);
-			};
-
-			~Switch() { set(false); };
-
-			constexpr operator bool() { return status; };
-
-			void operator=(const bool value) const { set(value); };
-			void operator=(const bool value) { set(value); };
-
-			void off() const { set(false); };
-			void off() { set(false); };
-
-			void on() const { set(true); };
-			void on() { set(true); };
-
-			void toggle() const { pin.digitaltoggle(); };
-			void toggle() { set(!status); };
-
-		  protected:
-			T pin;
-			bool status;
-
-			void set(const bool value) const { pin.digital(value); };
-			void set(const bool value)
-			{
-				status = value;
-				pin.digital(value);
-			};
+			this->pin.initiate(devuino::pin::Output::Digital);
+			set(initial);
 		};
-	}
+
+		~Switch() { set(false); };
+
+		constexpr operator bool() const { return status; };
+
+		void operator=(const bool value) const { set(value); };
+		void operator=(const bool value) { set(value); };
+
+	  protected:
+		T pin;
+
+		void set(const bool value) const override { pin.digital(value); };
+		void set(const bool value) override
+		{
+			status = value;
+			pin.digital(value);
+		};
+	};
 }

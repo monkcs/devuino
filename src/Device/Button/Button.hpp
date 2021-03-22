@@ -1,38 +1,38 @@
 #pragma once
 
+#include "../../Input/InputDigital.hpp"
 #include "../../Pin/Pin.hpp"
 
-namespace devuino
+namespace devuino::device
 {
-	namespace device
+	using namespace devuino::pin;
+
+	template<typename T>
+	class Button : public InputDigital
 	{
-		using namespace devuino::pin;
+	  public:
+		Button(const T pin, const Resistor pull, const bool debounce = false) : InputDigital {debounce}, pin {pin}, pull {pull} { this->pin.initiate(Input::Digital, pull); };
 
-		template<typename T>
-		class Button
+		/* Return true if button is pressed */
+		operator bool() const { return value(); };
+
+		/* Return true if button is pressed */
+		bool value() const override
 		{
-		  public:
-			Button(const T pin, const Resistor pull, const bool debounce = false) : pin {pin}, pull {pull}, debounce {debounce} { this->pin.initiate(Input::Digital, pull); };
-
-			operator bool() const { return value(); };
-
-			bool value() const
+			if (false /* debounce */)
 			{
-				if (false /* debounce */)
-				{
-					// TODO IMPLEMENT DEBOUNCE
-					return false;
-				}
-				else
-				{
-					return (pull == Resistor::PullUp) ? !pin.digital() : pin.digital();
-				}
-			};
-
-		  protected:
-			T pin;
-			Resistor pull;
-			bool debounce;
+				// TODO IMPLEMENT DEBOUNCE
+				return false;
+			}
+			else
+			{
+				return (pull == Resistor::PullUp) ? !pin.digital() : pin.digital();
+			}
 		};
-	}
+
+	  protected:
+		T pin;
+		Resistor pull;
+	};
+
 }

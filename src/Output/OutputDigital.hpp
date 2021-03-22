@@ -7,24 +7,25 @@ namespace devuino
 	  public:
 		constexpr OutputDigital(const bool initial) : status {initial} {};
 
-		/* Example operator= to use in final class */
-		/*
-		void operator=(const bool value)
-		{
-			status = value;
-			set(value);
-		};
-		void operator=(const bool value) const
-		{
-			set(value);
-		};
+		/* For use in derived class
+			constexpr operator bool() { return status; };
 
-		void toggle()
-		{
-			operator=(status);
-		}; */
+			void operator=(const bool value) const { set(value); };
+			void operator=(const bool value) { set(value); };
+		*/
+
+		void off() const { set(false); };
+		void off() { set(false); };
+
+		void on() const { set(true); };
+		void on() { set(true); };
+
+		void toggle() { set(!status); };
 
 	  protected:
 		bool status;
+
+		virtual void set(const bool value) const = 0;
+		virtual void set(const bool value) = 0;
 	};
 }
