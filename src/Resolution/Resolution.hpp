@@ -16,14 +16,8 @@ namespace devuino
 		uint16_t maximum;
 
 	  protected:
-		constexpr uint8_t guard(const uint8_t bit) const
-		{
-			return (bit < 15) ? bit : static_cast<uint8_t>(15);
-		};
+		constexpr uint8_t guard(const uint8_t bit) const { return (bit < 15) ? bit : static_cast<uint8_t>(15); };
 
-		constexpr uint16_t maxvalue(const uint8_t bit) const
-		{
-			return (1 << guard(bit)) - 1;
-		};
+		constexpr uint16_t maxvalue(const uint8_t bit) const { return (1 << guard(bit)) - 1; };
 	};
 }

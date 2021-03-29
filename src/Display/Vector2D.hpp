@@ -11,9 +11,6 @@ namespace devuino
 		T x;
 		T y;
 
-		constexpr T area() const
-		{
-			return x * y;
-		}
+		constexpr T area() const { return x * y; }
 	};
 }

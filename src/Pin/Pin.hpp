@@ -2,27 +2,24 @@
 
 #include <stdint.h>
 
-namespace devuino
+namespace devuino::pin
 {
-	namespace pin
+	enum class Input : uint8_t
 	{
-		enum class Input : uint8_t
-		{
-			Analog,
-			Digital
-		};
+		Analog,
+		Digital
+	};
 
-		enum class Output : uint8_t
-		{
-			Analog,
-			Digital
-		};
+	enum class Output : uint8_t
+	{
+		Analog,
+		Digital
+	};
 
-		enum class Resistor : uint8_t
-		{
-			PullUp,
-			PullDown,
-			None
-		};
-	}
+	enum class Resistor : uint8_t
+	{
+		PullUp,
+		PullDown,
+		None
+	};
 }
