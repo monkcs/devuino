@@ -62,8 +62,14 @@ namespace devuino
 			return *this;
 		}
 
-		constexpr friend Temperature operator+(Temperature const& lhs, Temperature const& rhs) { return Temperature {lhs.temperature + rhs.temperature}; }
-		constexpr friend Temperature operator-(Temperature const& lhs, Temperature const& rhs) { return Temperature {lhs.temperature - rhs.temperature}; }
+		constexpr friend Temperature operator+(Temperature const& lhs, Temperature const& rhs)
+		{
+			return Temperature {lhs.temperature + rhs.temperature};
+		}
+		constexpr friend Temperature operator-(Temperature const& lhs, Temperature const& rhs)
+		{
+			return Temperature {lhs.temperature - rhs.temperature};
+		}
 
 		constexpr friend Temperature operator*(const int lhs, Temperature const& rhs) { return Temperature {lhs * rhs.temperature}; }
 		constexpr friend Temperature operator*(Temperature const& lhs, const int rhs) { return Temperature {lhs.temperature * rhs}; }
@@ -87,15 +93,30 @@ namespace devuino
 	constexpr Temperature operator""_C(const long double celsius) { return Temperature {celsius}; }
 	constexpr Temperature operator""_C(const unsigned long long int celsius) { return Temperature {static_cast<long double>(celsius)}; }
 	constexpr Temperature operator""_celsius(const long double celsius) { return Temperature {celsius}; }
-	constexpr Temperature operator""_celsius(const unsigned long long int celsius) { return Temperature {static_cast<long double>(celsius)}; }
+	constexpr Temperature operator""_celsius(const unsigned long long int celsius)
+	{
+		return Temperature {static_cast<long double>(celsius)};
+	}
 
 	constexpr Temperature operator""_F(const long double fahrenheit) { return Temperature {(fahrenheit - 32) * (5.0 / 9.0)}; }
-	constexpr Temperature operator""_F(const unsigned long long int fahrenheit) { return Temperature {(static_cast<long double>(fahrenheit) - 32) * (5.0 / 9.0)}; }
+	constexpr Temperature operator""_F(const unsigned long long int fahrenheit)
+	{
+		return Temperature {(static_cast<long double>(fahrenheit) - 32) * (5.0 / 9.0)};
+	}
 	constexpr Temperature operator""_fahrenheit(const long double fahrenheit) { return Temperature {(fahrenheit - 32) * (5.0 / 9.0)}; }
-	constexpr Temperature operator""_fahrenheit(const unsigned long long int fahrenheit) { return Temperature {(static_cast<long double>(fahrenheit) - 32) * (5.0 / 9.0)}; }
+	constexpr Temperature operator""_fahrenheit(const unsigned long long int fahrenheit)
+	{
+		return Temperature {(static_cast<long double>(fahrenheit) - 32) * (5.0 / 9.0)};
+	}
 
 	constexpr Temperature operator""_K(const long double kelvin) { return Temperature {kelvin - 273.15}; }
-	constexpr Temperature operator""_K(const unsigned long long int kelvin) { return Temperature {static_cast<long double>(kelvin) - 273.15}; }
+	constexpr Temperature operator""_K(const unsigned long long int kelvin)
+	{
+		return Temperature {static_cast<long double>(kelvin) - 273.15};
+	}
 	constexpr Temperature operator""_kelvin(const long double kelvin) { return Temperature {kelvin - 273.15}; }
-	constexpr Temperature operator""_kelvin(const unsigned long long int kelvin) { return Temperature {static_cast<long double>(kelvin) - 273.15}; }
+	constexpr Temperature operator""_kelvin(const unsigned long long int kelvin)
+	{
+		return Temperature {static_cast<long double>(kelvin) - 273.15};
+	}
 }
