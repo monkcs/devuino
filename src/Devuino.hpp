@@ -26,14 +26,16 @@
 
 */
 
+//#pragma GCC optimize("O3")
+
 // Include pins
 #include "Pin/Onboard.hpp"
 
 // Include devices
 #include "Device/Button/Button.hpp"
 #include "Device/HCSR04/HCSR04.hpp"
-#include "Device/Led/Led.hpp"
-#include "Device/Led/LedRgb.h"
+#include "Device/Light/Light.hpp"
+#include "Device/Light/LightRgb.hpp"
 #include "Device/Potentiometer/Potentiometer.hpp"
 #include "Device/Resistance/Resistance.hpp"
 // #include "Device/Servo/Servo.h"
@@ -44,12 +46,16 @@
 //#include "Display/Display.h"
 //#include "Display/CharacterDisplay/SegmentDisplay/SegmentDisplay.h"
 //#include "Device/Neopixel/Neopixel.h"
-
+#include "Temperature/Temperature.hpp"
 // Include Tools
+#include "Distance/Distance.hpp"
 #include "Light/Colour.hpp"
+#include "Tools/Span.hpp"
 
 // Include I/O interfaces
 #include "Interface/SPI.h"
+
+//#pragma GCC reset_options
 
 // Put all namespaces into scope
 using namespace devuino;
