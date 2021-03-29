@@ -47,7 +47,6 @@ namespace devuino
 		constexpr friend long double operator/(Distance const& lhs, Distance const& rhs) { return lhs.metre / rhs.metre; };
 		constexpr friend Distance operator/(Distance const& lhs, long double rhs) { return Distance {lhs.metre / rhs}; };
 
-<<<<<<< HEAD
 		constexpr friend bool operator==(Distance const& lhs, Distance const& rhs) { return lhs.metre == rhs.metre; };
 
 		constexpr friend bool operator!=(Distance const& lhs, Distance const& rhs) { return !(lhs == rhs); };
@@ -58,18 +57,6 @@ namespace devuino
 		constexpr friend bool operator<=(Distance const& lhs, Distance const& rhs) { return !(lhs > rhs); };
 
 		constexpr friend bool operator>=(Distance const& lhs, Distance const& rhs) { return !(lhs < rhs); };
-=======
-		constexpr friend bool operator==(Distance const& lhs, Distance const& rhs) { return (lhs.metre == rhs.metre};
-
-		constexpr friend bool operator!=(Distance const& lhs, Distance const& rhs) { return !(lhs == rhs};
-
-		constexpr friend bool operator<(Distance const& lhs, Distance const& rhs) { return (lhs.metre < rhs.metre};
-
-		constexpr friend bool operator>(Distance const& lhs, Distance const& rhs) { return rhs < lhs; };
-		constexpr friend bool operator<=(Distance const& lhs, Distance const& rhs) { return !(lhs > rhs};
-
-		constexpr friend bool operator>=(Distance const& lhs, Distance const& rhs) { return !(lhs < rhs};
->>>>>>> ddbec9da0a67a2e65521107e67e6bcc011bce7b6
 
 		enum class Imperial
 		{
@@ -142,13 +129,19 @@ namespace devuino
 
 	constexpr Distance operator""_gigametre(const long double lenght) { return Distance {lenght * 1000000000.0}; }
 <<<<<<< HEAD
-	constexpr Distance operator""_gigametre(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) * 1000000000.0}; }
+	constexpr Distance operator""_gigametre(const unsigned long long int lenght)
+	{
+		return Distance {static_cast<double>(lenght) * 1000000000.0};
+	}
 
 	constexpr Distance operator""_Gm(const long double lenght) { return Distance {lenght * 1000000000.0}; }
 	constexpr Distance operator""_Gm(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) * 1000000000.0}; }
 
 	constexpr Distance operator""_megametre(const long double lenght) { return Distance {lenght * 1000000.0}; }
-	constexpr Distance operator""_megametre(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) * 1000000.0}; }
+	constexpr Distance operator""_megametre(const unsigned long long int lenght)
+	{
+		return Distance {static_cast<double>(lenght) * 1000000.0};
+	}
 
 	constexpr Distance operator""_Mm(const long double lenght) { return Distance {lenght * 1000000.0}; }
 	constexpr Distance operator""_Mm(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) * 1000000.0}; }
@@ -190,19 +183,28 @@ namespace devuino
 	constexpr Distance operator""_cm(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) / 100.0}; }
 
 	constexpr Distance operator""_millimetre(const long double lenght) { return Distance {lenght / 1000.0}; }
-	constexpr Distance operator""_millimetre(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) / 1000.0}; }
+	constexpr Distance operator""_millimetre(const unsigned long long int lenght)
+	{
+		return Distance {static_cast<double>(lenght) / 1000.0};
+	}
 
 	constexpr Distance operator""_mm(const long double lenght) { return Distance {lenght / 1000.0}; }
 	constexpr Distance operator""_mm(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) / 1000.0}; }
 
 	constexpr Distance operator""_micrometre(const long double lenght) { return Distance {lenght / 1000000.0}; }
-	constexpr Distance operator""_micrometre(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) / 1000000.0}; }
+	constexpr Distance operator""_micrometre(const unsigned long long int lenght)
+	{
+		return Distance {static_cast<double>(lenght) / 1000000.0};
+	}
 
 	constexpr Distance operator""_um(const long double lenght) { return Distance {lenght / 1000000.0}; }
 	constexpr Distance operator""_um(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) / 1000000.0}; }
 
 	constexpr Distance operator""_nanometre(const long double lenght) { return Distance {lenght / 1000000000.0}; }
-	constexpr Distance operator""_nanometre(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) / 1000000000.0}; }
+	constexpr Distance operator""_nanometre(const unsigned long long int lenght)
+	{
+		return Distance {static_cast<double>(lenght) / 1000000000.0};
+	}
 
 	constexpr Distance operator""_nm(const long double lenght) { return Distance {lenght / 1000000000.0}; }
 	constexpr Distance operator""_nm(const unsigned long long int lenght) { return Distance {static_cast<double>(lenght) / 1000000000.0}; }
