@@ -30,7 +30,9 @@ namespace devuino
 			MAX7219(const devuino::interface::spi::Master<T> spi) :
 				OutputDigital(true),
 				Light(Resolution {4}),
-				SegmentDisplay<uint8_t, SevenSegmentCharacter>(Vector2D<uint8_t>(8, 1), Cursor<SevenSegmentCharacter, uint8_t>(SevenSegmentCharacter('_'), false, Vector2D<uint8_t>(0, 0)), Direction(Direction::Horizontal::Left, Direction::Vertical::None, Direction::Primary::Horizontal)),
+				SegmentDisplay<uint8_t, SevenSegmentCharacter>(Vector2D<uint8_t>(8, 1),
+															   Cursor<SevenSegmentCharacter, uint8_t>(SevenSegmentCharacter('_'), false, Vector2D<uint8_t>(0, 0)),
+															   Direction(Direction::Horizontal::Left, Direction::Vertical::None, Direction::Primary::Horizontal)),
 				spi(spi)
 			{
 				this->spi.initiate();
@@ -43,22 +45,13 @@ namespace devuino
 				test(false);
 				on();
 			};
-			~MAX7219()
-			{
-				off();
-			};
+			~MAX7219() { off(); };
 
 			/* Turn on or off the display to enter low-power mode.
 			It is still possible to program the display in power-off mode. */
-			void operator=(const bool value) const
-			{
-				set(value);
-			};
+			void operator=(const bool value) const { set(value); };
 
-			unsigned int brightness() const override
-			{
-				return bright;
-			};
+			unsigned int brightness() const override { return bright; };
 
 			/* Set brightness from 0 to the bitsize.maximum() */
 			void brightness(const unsigned int value) override
@@ -79,23 +72,14 @@ namespace devuino
 			}
 
 			/* Set how many of the digits to decode using code-b */
-			void decode(const Decode mode) const
-			{
-				spi.transfer(0x09, static_cast<uint8_t>(mode));
-			}
+			void decode(const Decode mode) const { spi.transfer(0x09, static_cast<uint8_t>(mode)); }
 
 			/* Set how many digit to display from memory. */
-			void scanlimit(const uint8_t limit) const
-			{
-				spi.transfer(0x0b, limit - 1);
-			}
+			void scanlimit(const uint8_t limit) const { spi.transfer(0x0b, limit - 1); }
 
 			/* Test mode turns on all digits at full brightness.
 			   All programming is preserved while using this mode. */
-			void test(const bool value) const
-			{
-				spi.transfer(0x0f, value);
-			}
+			void test(const bool value) const { spi.transfer(0x0f, value); }
 
 			SevenSegmentCharacter backend[8] = {};
 
@@ -130,15 +114,9 @@ namespace devuino
 				}
 			};
 
-			constexpr uint8_t count(const unsigned long int number) const
-			{
-				return ((number == 0) ? 0 : (1 + count(number / 10)));
-			};
+			constexpr uint8_t count(const unsigned long int number) const { return ((number == 0) ? 0 : (1 + count(number / 10))); };
 
-			constexpr unsigned int absolute(int number) const
-			{
-				return (number < 0) ? -number : number;
-			};
+			constexpr unsigned int absolute(int number) const { return (number < 0) ? -number : number; };
 
 			void print(const long int number)
 			{
@@ -201,10 +179,7 @@ namespace devuino
 
 			/* Turn on or off the display to enter low-power mode.
 			It is still possible to program the display in power-off mode. */
-			void set(const bool value) const override
-			{
-				spi.transfer(0x0c, value);
-			}
+			void set(const bool value) const override { spi.transfer(0x0c, value); }
 			void set(const bool value)
 			{
 				spi.transfer(0x0c, value);
