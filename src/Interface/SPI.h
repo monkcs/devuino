@@ -73,13 +73,12 @@ namespace devuino
 				T chipselect;
 				SPISettings configuration;
 
-				Controller(const T chipselect) : chipselect(chipselect)
+				Controller(const T chipselect) : chipselect {chipselect}
 				{
 					this->chipselect.initiate(pin::Output::Digital);
 					chipselect.digitalwrite(true);
 				};
 
-			  public:
 				void start() const
 				{
 					SPI.beginTransaction(configuration);
@@ -93,18 +92,12 @@ namespace devuino
 				};
 			};
 
-			class Spi final
+			class Spi
 			{
 			  public:
-				Spi(const uint8_t interface)
-				{
-					SPI.begin();
-				};
+				Spi(const uint8_t interface) { SPI.begin(); };
 
-				~Spi()
-				{
-					SPI.end();
-				};
+				~Spi() { SPI.end(); };
 
 				template<typename T>
 				Controller<T> constexpr controller(const T chipselect) const
