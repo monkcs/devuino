@@ -1,15 +1,14 @@
 #pragma once
 
-#include "../../Output/OutputDigital.hpp"
 #include "../../Pin/Pin.hpp"
 
 namespace devuino::device
 {
 	template<typename T>
-	class Switch : public OutputDigital
+	class Switch
 	{
 	  public:
-		Switch(const T pin, const bool initial = false) : OutputDigital {initial}, pin {pin}
+		Switch(const T pin, const bool initial = false) : status {initial}, pin {pin}
 		{
 			this->pin.initiate(devuino::pin::Output::Digital);
 			set(initial);
@@ -17,16 +16,25 @@ namespace devuino::device
 
 		~Switch() { set(false); };
 
-		constexpr operator bool() const { return status; };
+		operator bool() { return status; };
 
 		void operator=(const bool value) const { set(value); };
 		void operator=(const bool value) { set(value); };
 
+		void off() const { set(false); };
+		void off() { set(false); };
+
+		void on() const { set(true); };
+		void on() { set(true); };
+
+		void toggle() { set(!status); };
+
 	  protected:
+		bool status;
 		T pin;
 
-		void set(const bool value) const override { pin.digital(value); };
-		void set(const bool value) override
+		void set(const bool value) const { pin.digital(value); };
+		void set(const bool value)
 		{
 			status = value;
 			pin.digital(value);

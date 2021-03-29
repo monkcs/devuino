@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../Delay/DelaySync.h"
-#include "../../Input/InputAnalog.hpp"
 #include "../../Pin/Pin.hpp"
 
 namespace devuino
@@ -9,26 +8,27 @@ namespace devuino
 	namespace device
 	{
 		template<typename T>
-		class Potentiometer : public InputAnalog
+		class Potentiometer
 		{
 		  public:
-			Potentiometer(const T pin, const bool debounce = false, const uint8_t iterations = 10, const Resolution bitresolution = Resolution {10}) : InputAnalog {bitresolution, debounce}, pin {pin}, iterations {iterations}
+			Potentiometer(const T pin,
+						  const bool debounce = false,
+						  const uint8_t iterations = 10,
+						  const Resolution bitresolution = Resolution {10}) :
+				pin {pin}, bitsize {bitresolution}, iterations {iterations}, debounce {debounce}
 			{
 				this->pin.initiate(pin::Input::Analog);
 			};
 
-			double fraction() const
-			{
-				return static_cast<double>(value()) / bitsize.maximum;
-			};
+			double fraction() const { return static_cast<double>(value()) / static_cast<double>(bitsize.maximum); };
 
-			int value() const
+			unsigned int value() const
 			{
-				if (debounce && iterations > 1)
+				if (debounce)
 				{
-					long int reading = 0;
+					unsigned long int reading = 0;
 
-					for (uint8_t counter = 0; counter < iterations; counter++)
+					for (uint8_t i = 0; i < iterations; i++)
 					{
 						reading += pin.analog();
 						DelaySync(5);
@@ -44,7 +44,9 @@ namespace devuino
 
 		  protected:
 			T pin;
+			Resolution bitsize;
 			uint8_t iterations;
+			bool debounce;
 		};
 	}
 }

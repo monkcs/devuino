@@ -4,37 +4,69 @@
 #include "../../Distance/Distance.hpp"
 #include "../Switch/Switch.hpp"
 
+#include <stdint.h>
+
 namespace devuino
 {
 	namespace device
 	{
 		template<class Trigger, class Echo = Trigger>
-		class HCSR04 : public DistanceInput
+		class HCSR04
 		{
 		  public:
-			HCSR04(const Trigger trigger, const Echo echo, const Distance minimum = 2_centimetre, const Distance maximum = 4_metre) : trigger {Switch<Trigger> {trigger}}, echo {echo}, minimum {minimum}, maximum {maximum}
+			HCSR04(const Trigger trigger,
+				   const Echo echo,
+				   const bool debounce = false,
+				   const Distance minimum = 2_centimetre,
+				   const Distance maximum = 4_metre) :
+				trigger {Switch<Trigger> {trigger}}, echo {echo}, debounce {debounce}, minimum {minimum}, maximum {maximum}
 			{
 				this->echo.initiate(pin::Input::Digital, pin::Resistor::None);
 			}
 
-			operator Distance() const
-			{
-				return distance();
-			};
+			operator Distance() const { return distance(); };
 
 			Distance distance() const
 			{
-				/*
-				   To trigger a distance reading, a 10 microsecond
-				   high on the trigger pin needs to happend.
+				if (debounce)
+				{
+					double reading {0};
 
-				   To get the distance in metre, divide the reading
-				   by 5800.
+					for (uint8_t i = 0; i < 10; i++)
+					{
+						reading += measurement().as(devuino::Distance::SI::Metre);
+					}
+
+					return Distance {reading / 10};
+				}
+				else
+				{
+					return measurement();
+				}
+			};
+
+		  protected:
+			Switch<Trigger> trigger;
+			Echo echo;
+
+			bool debounce;
+
+			Distance minimum;
+			Distance maximum;
+
+			Distance measurement() const
+			{
+				/*
+					To trigger a distance reading, a 10 microsecond
+					high on the trigger pin needs to happend.
+
+					To get the distance in metre, divide the reading
+					by 5800.
 				*/
 
-				trigger = true;
+				trigger.on();
 				DelaySync(10);
-				trigger = false;
+				trigger.off();
 
 				const auto reading = Distance {pulseIn(echo.get(), true, 70) / 5800.0};
 
@@ -51,13 +83,6 @@ namespace devuino
 					return reading;
 				}
 			}
-
-		  protected:
-			Switch<Trigger> trigger;
-			Echo echo;
-
-			Distance minimum;
-			Distance maximum;
 		};
 	}
 }
