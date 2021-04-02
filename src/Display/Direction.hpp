@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 namespace devuino
 {
 	class Direction
@@ -28,9 +30,7 @@ namespace devuino
 			None
 		};
 
-		constexpr Direction(const Horizontal x, const Vertical y, const Primary flow) : x(x), y(y), flow(flow)
-		{
-		}
+		constexpr Direction(const Horizontal x, const Vertical y, const Primary flow) : x {x}, y {y}, flow {flow} {};
 
 		Horizontal x;
 		Vertical y;
