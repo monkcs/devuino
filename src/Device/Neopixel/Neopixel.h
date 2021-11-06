@@ -18,7 +18,8 @@ namespace devuino
 			static_assert(N > 0, "Number of pixels cannot be zero");
 
 		  public:
-			Neopixel(/*const pin::Onboard pin, */ const Colour colour = {0, 0, 0}, const bool initial = false) : Light {Resolution(8)}, OutputDigital {initial}
+			Neopixel(/*const pin::Onboard pin, */ const Colour colour = {0, 0, 0}, const bool initial = false) :
+				Light {Resolution(8)}, OutputDigital {initial}
 			//,pin(pin)
 			{
 				for (auto& pixel : pixels)
@@ -30,25 +31,16 @@ namespace devuino
 				update();
 			}
 
-			~Neopixel()
-			{
-				off();
-			}
+			~Neopixel() { off(); }
 
 			void operator=(const bool value)
 			{
 				status = value;
 				set(value);
 			};
-			void operator=(const bool value) const
-			{
-				set(value);
-			};
+			void operator=(const bool value) const { set(value); };
 
-			unsigned int brightness() const
-			{
-				return bright;
-			}
+			unsigned int brightness() const { return bright; }
 
 			void brightness(const unsigned int value)
 			{
@@ -56,35 +48,17 @@ namespace devuino
 				set(status);
 			}
 
-			constexpr Colour operator[](const size_t index) const
-			{
-				return pixels[index];
-			};
+			constexpr Colour operator[](const size_t index) const { return pixels[index]; };
 
-			Colour& operator[](const size_t index)
-			{
-				return pixels[index];
-			};
+			Colour& operator[](const size_t index) { return pixels[index]; };
 
-			devuino::tools::Iterator<const Colour> begin() const
-			{
-				return {pixels};
-			}
+			devuino::tools::Iterator<const Colour> begin() const { return {pixels}; }
 
-			devuino::tools::Iterator<const Colour> end() const
-			{
-				return {pixels + N};
-			}
+			devuino::tools::Iterator<const Colour> end() const { return {pixels + N}; }
 
-			devuino::tools::Iterator<Colour> begin()
-			{
-				return {pixels};
-			}
+			devuino::tools::Iterator<Colour> begin() { return {pixels}; }
 
-			devuino::tools::Iterator<Colour> end()
-			{
-				return {pixels + N};
-			}
+			devuino::tools::Iterator<Colour> end() { return {pixels + N}; }
 
 			void update() const
 			{
@@ -155,14 +129,12 @@ namespace devuino
 			// const pin::Onboard pin;
 			Colour pixels[(Individual ? N : 1)];
 
-			void set(const bool value) const
-			{
-				update();
-			}
+			void set(const bool value) const { update(); }
 
 			void send(uint8_t data) const
 			{
-				auto write = [this](const bool value) {
+				auto write = [this](const bool value)
+				{
 					if (value)
 					{
 						asm volatile("sbi %[port], %[bit] \n\t"
@@ -173,7 +145,7 @@ namespace devuino
 									 ".rept %[off]        \n\t"
 									 "nop                 \n\t"
 									 ".endr               \n\t" ::[port] "I"(_SFR_IO_ADDR(PORTD)),
-									 [ bit ] "I"(2), [ on ] "I"(nop(Device::one::high) - 2), [ off ] "I"(nop(Device::one::low) - 2));
+									 [bit] "I"(2), [on] "I"(nop(Device::one::high) - 2), [off] "I"(nop(Device::one::low) - 2));
 					}
 					else
 					{
@@ -185,7 +157,7 @@ namespace devuino
 									 ".rept %[off]        \n\t"
 									 "nop                 \n\t"
 									 ".endr               \n\t" ::[port] "I"(_SFR_IO_ADDR(PORTD)),
-									 [ bit ] "I"(2), [ on ] "I"(nop(Device::zero::high) - 2), [ off ] "I"(nop(Device::zero::low) - 2));
+									 [bit] "I"(2), [on] "I"(nop(Device::zero::high) - 2), [off] "I"(nop(Device::zero::low) - 2));
 					}
 				};
 
@@ -198,10 +170,7 @@ namespace devuino
 			};
 
 			/* Calculates the number off nop instructions to run as a delay */
-			constexpr unsigned int nop(const unsigned int nanoseconds) const
-			{
-				return (nanoseconds / (1000000000ul / F_CPU));
-			};
+			constexpr unsigned int nop(const unsigned int nanoseconds) const { return (nanoseconds / (1000000000ul / F_CPU)); };
 		};
 	}
 }
