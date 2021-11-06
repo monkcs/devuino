@@ -27,6 +27,7 @@
 */
 
 //#pragma GCC optimize("O3")
+//#pragma GCC reset_options
 
 // Include pins
 #include "Pin/Onboard.hpp"
@@ -40,7 +41,7 @@
 #include "Device/Resistance/Resistance.hpp"
 // #include "Device/Servo/Servo.h"
 
-//#include "Device/MAX7219/MAX7219.h"
+#include "Device/MAX7219/MAX7219.hpp"
 #include "Device/Switch/Switch.hpp"
 
 //#include "Display/Display.h"
@@ -50,15 +51,17 @@
 // Include Tools
 #include "Distance/Distance.hpp"
 #include "Light/Colour.hpp"
+#include "Tools/Array.hpp"
 #include "Tools/Span.hpp"
+#include "Tools/String.hpp"
+#include "Tools/Stringview.hpp"
 
 // Include I/O interfaces
 #include "Interface/SPI.h"
 
-//#pragma GCC reset_options
-
 // Put all namespaces into scope
 using namespace devuino;
+using namespace devuino::tools;
 using namespace devuino::pin;
 using namespace devuino::device;
 using namespace devuino::interface::spi;
