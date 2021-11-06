@@ -26,7 +26,8 @@ namespace devuino::device
 			}
 			else
 			{
-				return (pull == Resistor::PullUp) ? !pin.digital() : pin.digital();
+				const bool reading = pin.digital();
+				return (pull == Resistor::PullUp) ? !reading : reading;
 			}
 		};
 
