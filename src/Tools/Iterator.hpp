@@ -5,14 +5,13 @@
 namespace devuino::tools
 {
 	template<typename T>
-	struct Iterator final
+	class Iterator final
 	{
+	  public:
 		T* pointer;
 
 		constexpr T& operator*() { return *pointer; };
-
 		constexpr bool operator!=(const Iterator& rhs) const { return pointer != rhs.pointer; };
-
 		void operator++() { ++pointer; };
 	};
 }
