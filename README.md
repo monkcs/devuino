@@ -20,8 +20,8 @@ The button is connected between pin 3 and ground (because then the built-in pull
 ```cpp
 #include <devuino.hpp>
 
-Button<Onboard> button(Onboard(3), Resistor::PullUp);
-Led<Onboard>    led(Onboard(13));
+Button<Onboard> button{Onboard{3}, Resistor::PullUp};
+Led<Onboard> led{Onboard{13}};
 
 void setup() { }
 
