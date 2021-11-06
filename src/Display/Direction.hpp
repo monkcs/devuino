@@ -9,18 +9,18 @@ namespace devuino
 	  public:
 		enum class Horizontal : int8_t
 		{
-			None = 0,
-			Left = 1,
-			Center = 0,
-			Right = -1
+			None,
+			Left,
+			Center,
+			Right
 		};
 
 		enum class Vertical : int8_t
 		{
-			None = 0,
-			Up = 1,
-			Center = 0,
-			Down = -1
+			None,
+			Up,
+			Center,
+			Down
 		};
 
 		enum class Primary : uint8_t
