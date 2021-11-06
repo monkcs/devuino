@@ -1,6 +1,8 @@
 #pragma once
 #include "Iterator.hpp"
 
+#include <stdint.h>
+
 namespace devuino::tools
 {
 	class String

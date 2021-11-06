@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SPI.h>
+#include <stdint.h>
 
 namespace devuino
 {

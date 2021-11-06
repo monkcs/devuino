@@ -2,6 +2,8 @@
 #include "Iterator.hpp"
 #include "String.hpp"
 
+#include <stdint.h>
+
 namespace devuino::tools
 {
 	class Stringview
