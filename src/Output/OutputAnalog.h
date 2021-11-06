@@ -1,20 +1,18 @@
-#ifndef OUTPUTANALOG_H
-#define OUTPUTANALOG_H
+#pragma once
 
-#include "OutputDigital.h"
 #include "../Resolution/Resolution.h"
+#include "OutputDigital.h"
 
 namespace devuino
 {
-    class OutputAnalog : public OutputDigital
-    {
-      public:
-        OutputAnalog(const int bitresolution);
-        virtual void analog(const int value) = 0;
+	class OutputAnalog : public OutputDigital
+	{
+	  public:
+		OutputAnalog(const Resolution bitresolution, const bool initial) : OutputDigital {initial}, bitsize {bitresolution} {};
 
-      protected:
-        const Resolution bitsize;
-    };
+		virtual void analog(const int value) = 0;
+
+	  protected:
+		Resolution bitsize;
+	};
 }
-
-#endif

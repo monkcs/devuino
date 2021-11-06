@@ -15,19 +15,19 @@ ___
 ## Example code
 This is a example program where a pushbutton and the on-circutboard led (number 13) are used. When the button is pressed the led light up.
 
-The button is connected between arduino pin 3 and ground (because then the built-in pullup resistor can be used) and initiated by creating a `Button` object with a `Onboard` pin (that is a pin onboard the Arduino board) set to use pin number 3. In the loop `button.value()` reads the boolean value if the button is pressed or not.
+The button is connected between pin 3 and ground (because then the built-in pullup resistor can be used) and initiated by creating a `Button` object with a `Onboard` pin (that is a pin onboard the Arduino board) set to use pin number 3. In the loop led = button` assigns the boolean value to led if the button is pressed,
 
 ```cpp
-#include <devuino.h>
+#include <devuino.hpp>
 
-Button<Onboard> button(Onboard(3), Resistor::PullUp);
-Led<Onboard>    led(Onboard(13));
+Button<Onboard> button{Onboard{3}, Resistor::PullUp};
+Led<Onboard> led{Onboard{13}};
 
 void setup() { }
 
 void loop()
 {
-    led.set(button.value());
+    led = button;
 }
 ```
 
@@ -64,7 +64,6 @@ Light devices include both analog and digital controlled light sources.
 | :----: | :----------- | :------------------------------------------ |
 | 🔵      | **Led**      | Light control on/off and brightness for led |
 | 🔵      | **LedRgb**   | Same as Led but with 3-pin rgb              |
-| 🔵      | **LedRgbw**  | Same as Led but with 4-pin rgbw             |
 | ⚫️     | **Neopixel** | Neopixel/WS2812 1-wire rgb/rgbw led         |
 
 

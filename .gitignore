@@ -35,7 +35,3 @@
 .vscode
 settings.json
 c_cpp_properties.json
-
-# Test folder
-prepared
-prepared.ino
