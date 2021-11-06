@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "../../Display/CharacterDisplay/SegmentDisplay/SegmentDisplay.h"
+#include "../../Display/CharacterDisplay/SegmentDisplay/SevenSegmentString.hpp"
 #include "../../Display/Direction.hpp"
 #include "../../Interface/SPI.h"
 #include "../../Resolution/Resolution.hpp"
@@ -39,8 +39,8 @@ namespace devuino::device
 			D01234567 = 7,
 		};
 
-		MAX7219(const devuino::interface::spi::Controller<ChipSelect> spi) :
-			spi {spi}, bitsize {4}, bright {static_cast<uint8_t>(bitsize.maximum)}, decoding {Decode::None}, status {true}
+		MAX7219(const devuino::interface::spi::Controller<ChipSelect> spi, const bool initial = true) :
+			spi {spi}, bitsize {4}, bright {static_cast<uint8_t>(bitsize.maximum)}, decoding {Decode::None}, status {initial}
 		{
 			/* Reset display */
 			brightness(bright);
@@ -48,11 +48,11 @@ namespace devuino::device
 			clear();
 			scanlimit(Scanlimit::D01234567);
 			test(false);
-			on();
+			set(status);
 		};
 
-		constexpr uint8_t lenght(const unsigned long int number) const { return ((number == 0) ? 0 : (1 + lenght(number / 10))); };
-		constexpr unsigned long int absolute(long int number) const { return (number < 0) ? -number : number; };
+		// constexpr uint8_t lenght(const unsigned long int number) const { return ((number == 0) ? 0 : (1 + lenght(number / 10))); };
+		// constexpr unsigned long int absolute(long int number) const { return (number < 0) ? -number : number; };
 
 		void print()
 		{
@@ -127,7 +127,7 @@ namespace devuino::device
 			spi.transfer(0x0c, value);
 		}
 
-		SevenSegmentCharacter buffer[8 * units] {};
+		SevenSegmentString<units * 8> buffer;
 
 	  protected:
 		devuino::interface::spi::Controller<ChipSelect> spi;
