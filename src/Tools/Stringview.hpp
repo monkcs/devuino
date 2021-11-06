@@ -58,7 +58,7 @@ namespace devuino::tools
 		{
 			if (lhs.size == rhs.size)
 			{
-				for (size_t i; i < lhs.size; i++)
+				for (size_t i = 0; i < lhs.size; i++)
 				{
 					if (lhs.backend[i] != rhs.backend[i])
 					{
