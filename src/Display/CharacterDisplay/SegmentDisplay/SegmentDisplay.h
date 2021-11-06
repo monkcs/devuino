@@ -6,7 +6,7 @@
 
 namespace devuino
 {
-	template<typename T>
+	/*template<typename T>
 	class SevenSegmentString
 	{
 	  public:
@@ -44,7 +44,7 @@ namespace devuino
 		devuino::tools::Iterator<SevenSegmentCharacter> end() { return {string + 6}; }
 
 		SevenSegmentCharacter string[6] {};	   // Calculates number of char for int + null terminator
-	};
+	};*/
 
 	template<typename Position, typename Character>
 	class SegmentDisplay : public CharacterDisplay<Position, Character>
