@@ -8,7 +8,7 @@ namespace devuino::device
 	class Switch
 	{
 	  public:
-		Switch(const T pin, const bool initial = false) : status {initial}, pin {pin}
+		Switch(const T pin, const bool initial = false) : pin {pin}, status {initial}
 		{
 			this->pin.initiate(devuino::pin::Output::Digital);
 			set(initial);
@@ -30,8 +30,8 @@ namespace devuino::device
 		void toggle() { set(!status); };
 
 	  protected:
-		bool status;
 		T pin;
+		bool status;
 
 		void set(const bool value) const { pin.digital(value); };
 		void set(const bool value)
