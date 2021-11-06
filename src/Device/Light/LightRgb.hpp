@@ -24,7 +24,11 @@ namespace devuino::device
 		Light<T> green;
 		Light<T> blue;
 
-		operator Colour() const { return {red, green, blue}; };
+		constexpr operator Colour() const
+		{
+			return {static_cast<uint8_t>(red.brightness()), static_cast<uint8_t>(green.brightness()),
+					static_cast<uint8_t>(blue.brightness())};
+		};
 
 		void operator=(const Colour colours) { colour(colours); };
 
@@ -51,8 +55,7 @@ namespace devuino::device
 			blue = colours.blue;
 		};
 
-		/*
-		void brightness(const unsigned int value)
+		void brightness(const uint8_t value)
 		{
 			red.brightness(value);
 			green.brightness(value);
@@ -65,7 +68,6 @@ namespace devuino::device
 			green.fraction(value);
 			blue.fraction(value);
 		};
-		*/
 
 		void set(const bool value) const
 		{
