@@ -26,15 +26,15 @@ namespace devuino
 			{
 				if (debounce)
 				{
-					unsigned long int reading = 0;
+					unsigned long int total = 0;
 
 					for (uint8_t i = 0; i < iterations; i++)
 					{
-						reading += pin.analog();
+						total += pin.analog();
 						DelaySync(5);
 					}
 
-					return reading / iterations;
+					return total / iterations;
 				}
 				else
 				{
