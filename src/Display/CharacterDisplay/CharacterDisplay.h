@@ -1,22 +1,20 @@
 #pragma once
 
-#include "../Cursor.h"
-#include "../Direction.h"
-#include "../Display.h"
-#include "../Vector2D.h"
+#include "../Cursor.hpp"
+#include "../Direction.hpp"
+#include "../Display.hpp"
+#include "../Vector2D.hpp"
 
 namespace devuino
 {
-	template<typename TPosition, typename TCharacter>
-	class CharacterDisplay : public Display<TPosition>
+	template<typename Position, typename Character>
+	class CharacterDisplay : public Display<Position>
 	{
 	  public:
-		CharacterDisplay(const Vector2D<TPosition> dimension, const Cursor<TCharacter, TPosition> cursor, const Direction direction) : Display<TPosition>(dimension), cursor(cursor), direction(direction)
-		{
-		}
+		CharacterDisplay(const Vector2D<Position> dimension, const Cursor<Character, Position> cursor, const Direction direction) :
+			Display<Position> {dimension}, cursor {cursor}, direction {direction} {};
 
-		Cursor<TCharacter, TPosition> cursor;
-
+		Cursor<Character, Position> cursor;
 		Direction direction;
 
 	  protected:
@@ -24,11 +22,47 @@ namespace devuino
 		{
 			if (direction.flow == Direction::Primary::Horizontal)
 			{
-				cursor.x += (distance * static_cast<uint8_t>(direction.x));
+				switch (direction.x)
+				{
+					case Direction::Horizontal::Left:
+					{
+						cursor.x += distance;
+						break;
+					}
+
+					case Direction::Horizontal::Right:
+					{
+						cursor.x -= distance;
+						break;
+					}
+
+					default:
+					{
+						break;
+					}
+				}
 			}
 			else if (direction.flow == Direction::Primary::Vertical)
 			{
-				cursor.y += (distance * static_cast<uint8_t>(direction.y));
+				switch (direction.y)
+				{
+					case Direction::Vertical::Up:
+					{
+						cursor.y += distance;
+						break;
+					}
+
+					case Direction::Vertical::Down:
+					{
+						cursor.y -= distance;
+						break;
+					}
+
+					default:
+					{
+						break;
+					}
+				}
 			}
 		}
 	};

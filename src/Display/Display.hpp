@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector2D.h"
+#include "Vector2D.hpp"
 
 namespace devuino
 {
@@ -8,11 +8,7 @@ namespace devuino
 	class Display
 	{
 	  public:
-		constexpr Display(const Vector2D<T> dimension) : dimension(dimension)
-		{
-		}
-
-		virtual void clear() = 0;
+		constexpr Display(const Vector2D<T> dimension) : dimension {dimension} { }
 
 	  protected:
 		Vector2D<T> dimension;

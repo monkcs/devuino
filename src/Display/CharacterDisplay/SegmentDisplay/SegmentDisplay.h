@@ -1,80 +1,57 @@
 #pragma once
 
+#include "../../../Tools/Iterator.hpp"
 #include "../CharacterDisplay.h"
+#include "SevenSegmentCharacter.hpp"
 
 namespace devuino
 {
-	static constexpr uint8_t table[15] = {
-		0x01,	 // -
-		0x0,	 // .
-		0x0,	 // /
-		0x7e,	 // 0
-		0x30,	 // 1
-		0x6d,	 // 2
-		0x79,	 // 3
-		0x33,	 // 4
-		0x5b,	 // 5
-		0x5f,	 // 6
-		0x70,	 // 7
-		0x7f,	 // 8
-		0x7b,	 // 9
-		0x10	 //:
-	};
-
-	class SevenSegmentCharacter final
+	template<typename T>
+	class SevenSegmentString
 	{
 	  public:
-		enum class Encoding : uint8_t
+		constexpr uint8_t count(const unsigned long int number) const { return ((number == 0) ? 0 : (1 + count(number / 10))); };
+
+		explicit SevenSegmentString(int number)
 		{
-			None,
-			abcdefg
+			size_t cursor = 0;
+
+			if (number < 0)
+			{
+				number = -number;
+
+				string[0] = '-';
+				cursor += 1;
+			}
+
+			const auto lenght = count(number);
+
+			for (cursor += lenght - 1; cursor >= 0; cursor--)
+			{
+				if (number == 0)
+				{
+					break;
+				}
+
+				string[cursor] = number % 10;
+				number /= 10;
+			}
 		};
 
-		explicit constexpr SevenSegmentCharacter(const int character, const Encoding encoding = Encoding::abcdefg) : character((encoding == Encoding::None) ? static_cast<uint8_t>(character) : convert(character, encoding)) {};
+		devuino::tools::Iterator<const SevenSegmentCharacter> begin() const { return {string}; }
+		devuino::tools::Iterator<const SevenSegmentCharacter> end() const { return {string + 6}; }
+		devuino::tools::Iterator<SevenSegmentCharacter> begin() { return {string}; }
+		devuino::tools::Iterator<SevenSegmentCharacter> end() { return {string + 6}; }
 
-		explicit constexpr SevenSegmentCharacter(const char character, const Encoding encoding = Encoding::abcdefg) : character(convert(character, encoding)) {};
-
-		constexpr SevenSegmentCharacter() : character(0x0) {};
-
-		constexpr explicit operator uint8_t() const
-		{
-			return character;
-		};
-
-	  private:
-		uint8_t character;
-
-		constexpr uint8_t convert(const int character, const Encoding encoding) const
-		{
-			return (0 <= character && character < 10) ? lookup(character + 3) : 0x0;
-		};
-
-		constexpr uint8_t convert(const char character, const Encoding encoding) const
-		{
-			return (character >= 32 && character <= 126) ? lookup(character - 45) : 0x0;
-		};
-
-		constexpr uint8_t lookup(const int character) const
-		{
-			return table[character];
-		};
+		SevenSegmentCharacter string[6] {};	   // Calculates number of char for int + null terminator
 	};
 
-	/* User defined litterals */
-	constexpr SevenSegmentCharacter operator""_char7s(const unsigned long long int character)
-	{
-		return SevenSegmentCharacter {static_cast<int>(character)};
-	}
-	constexpr SevenSegmentCharacter operator""_char7s(const char character)
-	{
-		return SevenSegmentCharacter {character};
-	}
-
-	template<typename TPosition, typename TCharacter>
-	class SegmentDisplay : public CharacterDisplay<TPosition, TCharacter>
+	template<typename Position, typename Character>
+	class SegmentDisplay : public CharacterDisplay<Position, Character>
 	{
 	  public:
-		SegmentDisplay(const Vector2D<TPosition> dimension, const Cursor<TCharacter, TPosition> cursor, const Direction direction) : CharacterDisplay<TPosition, TCharacter>(dimension, cursor, direction)
+		SegmentDisplay(const Vector2D<Position> dimension, const Cursor<Character, Position> cursor, const Direction direction) :
+			CharacterDisplay<Position, Character>(dimension, cursor, direction)
 		{
 		}
 
