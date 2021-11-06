@@ -30,14 +30,16 @@ namespace devuino
 			{
 				if (debounce)
 				{
-					double reading {0};
+					const unsigned int iterations {10};
 
-					for (uint8_t i = 0; i < 10; i++)
+					Distance total {0};
+
+					for (uint8_t i = 0; i < iterations; i++)
 					{
-						reading += measurement().as(devuino::Distance::SI::Metre);
+						total += measurement();
 					}
 
-					return Distance {reading / 10};
+					return total / iterations;
 				}
 				else
 				{
@@ -57,10 +59,10 @@ namespace devuino
 			Distance measurement() const
 			{
 				/*
-					To trigger a distance reading, a 10 microsecond
+					To trigger a distance measurement, a 10 microsecond
 					high on the trigger pin needs to happend.
 
-					To get the distance in metre, divide the reading
+					To get the distance in metre, divide the measurement
 					by 5800.
 				*/
 
