@@ -7,11 +7,9 @@ namespace devuino
 	class Spectrum
 	{
 	  public:
-		constexpr Spectrum(const Colour::Channel start) :
-			colour {(start == Colour::Channel::Red) ? 255 : 0, (start == Colour::Channel::Green) ? 255 : 0,
-					(start == Colour::Channel::Blue) ? 255 : 0} {};
+		constexpr Spectrum(const Colour start) : colour {start} {};
 
-		constexpr operator Colour() const { return {colour}; };
+		constexpr operator Colour() const { return current(); };
 
 		constexpr Colour current() const { return colour; };
 
