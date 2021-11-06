@@ -11,7 +11,10 @@ namespace devuino::tools
 		T* pointer;
 
 		constexpr T& operator*() { return *pointer; };
+		constexpr T& next() { return *(pointer + 1); };
+		constexpr T& previous() { return *(pointer - 1); };
 		constexpr bool operator!=(const Iterator& rhs) const { return pointer != rhs.pointer; };
 		void operator++() { ++pointer; };
+		void operator--() { --pointer; };
 	};
 }
