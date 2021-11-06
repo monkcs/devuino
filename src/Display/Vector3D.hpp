@@ -13,9 +13,6 @@ namespace devuino
 		T z;
 
 		constexpr T area() = delete;
-		constexpr T volume() const
-		{
-			return x * y * z;
-		}
+		constexpr T volume() const { return x * y * z; }
 	};
 }
