@@ -10,11 +10,11 @@ namespace devuino::tools
 		size_t size;
 		const char* backend;
 
-		constexpr size_t length(const char* string) const { return (*string) ? (1 + length(string + 1)) : 0; }
+		constexpr size_t calculate(const char* string) const { return (*string) ? (1 + calculate(string + 1)) : 0; }
 
 	  public:
 		/* Construct stringview to a raw char array that is null-terminated */
-		constexpr Stringview(const char* raw) : size {length(raw)}, backend {raw} { }
+		constexpr Stringview(const char* raw) : size {calculate(raw)}, backend {raw} { }
 
 		/* Construct string from raw char array where lenght is exclusive null-terminator */
 		constexpr Stringview(const char* raw, const size_t lenght) : size {lenght}, backend {raw} { }
