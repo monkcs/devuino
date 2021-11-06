@@ -74,7 +74,6 @@ namespace devuino
 		constexpr friend Temperature operator*(const int lhs, Temperature const& rhs) { return Temperature {lhs * rhs.temperature}; }
 		constexpr friend Temperature operator*(Temperature const& lhs, const int rhs) { return Temperature {lhs.temperature * rhs}; }
 
-		constexpr friend Temperature operator/(const int lhs, Temperature const& rhs) { return Temperature {lhs / rhs.temperature}; }
 		constexpr friend Temperature operator/(Temperature const& lhs, const int rhs) { return Temperature {lhs.temperature / rhs}; }
 
 		constexpr friend bool operator==(Temperature const& lhs, Temperature const& rhs) { return (lhs.temperature == rhs.temperature); }
