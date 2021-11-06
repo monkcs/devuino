@@ -76,18 +76,18 @@ namespace devuino
 				Controller(const T chipselect) : chipselect {chipselect}
 				{
 					this->chipselect.initiate(pin::Output::Digital);
-					chipselect.digitalwrite(true);
+					chipselect.digital(true);
 				};
 
 				void start() const
 				{
 					SPI.beginTransaction(configuration);
-					chipselect.digitalwrite(false);
+					chipselect.digital(false);
 				};
 
 				void stop() const
 				{
-					chipselect.digitalwrite(true);
+					chipselect.digital(true);
 					SPI.endTransaction();
 				};
 			};
@@ -100,7 +100,7 @@ namespace devuino
 				~Spi() { SPI.end(); };
 
 				template<typename T>
-				Controller<T> constexpr controller(const T chipselect) const
+				Controller<T> controller(const T chipselect) const
 				{
 					return Controller<T> {chipselect};
 				};
