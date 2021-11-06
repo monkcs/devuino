@@ -24,15 +24,6 @@ namespace devuino::device
 
 		~Light() { set(false); };
 
-		operator unsigned int() const { return bright; };
-
-		void operator=(const Light<T>& rhs)
-		{
-			bright = rhs.bright;
-			status = rhs.status;
-			set();
-		};
-
 		void operator=(const unsigned int value) { brightness(value); };
 
 		void operator+=(const unsigned int value)
@@ -63,6 +54,8 @@ namespace devuino::device
 			bright = value;
 			set();
 		};
+
+		constexpr unsigned int brightness() { return bright; };
 
 		void fraction(const double value) { brightness(static_cast<unsigned int>(bitsize.maximum * value)); };
 
