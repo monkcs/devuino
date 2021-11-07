@@ -9,7 +9,7 @@
 namespace devuino
 {
 	template<size_t lenght>
-	class SevenSegmentString : protected tools::Array<SevenSegmentCharacter, lenght>
+	class SevenSegmentString : public tools::Array<SevenSegmentCharacter, lenght>
 	{
 	  public:
 		constexpr SevenSegmentString() : devuino::tools::Array<SevenSegmentCharacter, lenght> {} { }
@@ -36,6 +36,11 @@ namespace devuino
 
 		SevenSegmentCharacter operator[](const size_t position) const { return this->buffer[position]; }
 		SevenSegmentCharacter& operator[](const size_t position) { return this->buffer[position]; }
+
+		tools::Iterator<const SevenSegmentCharacter> begin() const { return {this->buffer}; }
+		tools::Iterator<const SevenSegmentCharacter> end() const { return {this->buffer + lenght}; }
+		tools::Iterator<SevenSegmentCharacter> begin() { return {this->buffer}; }
+		tools::Iterator<SevenSegmentCharacter> end() { return {this->buffer + lenght}; }
 
 		bool operator==(const SevenSegmentString<lenght>& other) const
 		{
