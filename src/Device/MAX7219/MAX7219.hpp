@@ -9,6 +9,7 @@
 #include "../../Display/Direction.hpp"
 #include "../../Interface/SPI.h"
 #include "../../Resolution/Resolution.hpp"
+#include "../../Tools/Iterator.hpp"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -51,14 +52,11 @@ namespace devuino::device
 			set(status);
 		};
 
-		// constexpr uint8_t lenght(const unsigned long int number) const { return ((number == 0) ? 0 : (1 + lenght(number / 10))); };
-		// constexpr unsigned long int absolute(long int number) const { return (number < 0) ? -number : number; };
-
 		void print()
 		{
-			for (uint8_t i = 0; i < 8; i++)
+			for (uint8_t i = 0; i < units * 8; i++)
 			{
-				spi.transfer(i + 1, buffer[7 - i]);
+				spi.transfer(i + 1, buffer[(units * 8 - 1) - i]);
 			}
 		}
 
@@ -90,12 +88,8 @@ namespace devuino::device
 
 		void clear()
 		{
-			const uint8_t split = static_cast<uint8_t>(decoding);
-			/* Clear raw characters */
-			for (uint8_t i = split + 1; i <= 8; i++)
-			{
-				spi.transfer(i, 0);
-			}
+			buffer.fill('\0');
+			print();
 		};
 
 		constexpr uint8_t brightness() const { return bright; };
@@ -126,6 +120,20 @@ namespace devuino::device
 			status = value;
 			spi.transfer(0x0c, value);
 		}
+
+		void operator=(const tools::Stringview& string)
+		{
+			buffer = string;
+			print();
+		}
+
+		SevenSegmentCharacter operator[](const size_t position) const { return buffer[position]; }
+		SevenSegmentCharacter& operator[](const size_t position) { return buffer[position]; }
+
+		tools::Iterator<const SevenSegmentCharacter> begin() const { return buffer.begin(); }
+		tools::Iterator<const SevenSegmentCharacter> end() const { return buffer.end(); }
+		tools::Iterator<SevenSegmentCharacter> begin() { return buffer.begin(); }
+		tools::Iterator<SevenSegmentCharacter> end() { return buffer.end(); }
 
 		SevenSegmentString<units * 8> buffer;
 
