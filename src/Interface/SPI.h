@@ -23,7 +23,7 @@ namespace devuino
 				SPI3 = SPI_MODE3
 			};
 
-			template<typename T>
+			template<typename Type>
 			class Controller
 			{
 			  public:
@@ -71,10 +71,10 @@ namespace devuino
 				};
 
 			  private:
-				T chipselect;
+				Type chipselect;
 				SPISettings configuration;
 
-				Controller(const T chipselect) : chipselect {chipselect}
+				Controller(const Type chipselect) : chipselect {chipselect}
 				{
 					this->chipselect.initiate(pin::Output::Digital);
 					chipselect.digital(true);
@@ -100,10 +100,10 @@ namespace devuino
 
 				~Spi() { SPI.end(); };
 
-				template<typename T>
-				Controller<T> controller(const T chipselect) const
+				template<typename Type>
+				Controller<Type> controller(const Type chipselect) const
 				{
-					return Controller<T> {chipselect};
+					return Controller<Type> {chipselect};
 				};
 			};
 		}

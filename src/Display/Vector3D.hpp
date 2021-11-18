@@ -4,15 +4,15 @@
 
 namespace devuino
 {
-	template<typename T>
+	template<typename Type>
 	class Vector3D : public Vector2D
 	{
 	  public:
-		constexpr Vector3D(const T x, const T y, const T z) : Vector2D {x, y}, z {z} {};
+		constexpr Vector3D(const Type x, const Type y, const Type z) : Vector2D {x, y}, z {z} {};
 
-		T z;
+		Type z;
 
-		constexpr T area() = delete;
-		constexpr T volume() const { return x * y * z; }
+		constexpr Type area() = delete;
+		constexpr Type volume() const { return x * y * z; }
 	};
 }

@@ -4,13 +4,13 @@
 
 namespace devuino
 {
-	template<typename T>
+	template<typename Type>
 	class Display
 	{
 	  public:
-		constexpr Display(const Vector2D<T> dimension) : dimension {dimension} { }
+		constexpr Display(const Vector2D<Type> dimension) : dimension {dimension} { }
 
 	  protected:
-		Vector2D<T> dimension;
+		Vector2D<Type> dimension;
 	};
 }

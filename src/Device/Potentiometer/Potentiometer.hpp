@@ -7,11 +7,11 @@ namespace devuino
 {
 	namespace device
 	{
-		template<typename T>
+		template<typename Type>
 		class Potentiometer
 		{
 		  public:
-			Potentiometer(const T pin,
+			Potentiometer(const Type pin,
 						  const bool debounce = false,
 						  const uint8_t iterations = 10,
 						  const Resolution bitresolution = Resolution {10}) :
@@ -43,7 +43,7 @@ namespace devuino
 			};
 
 		  protected:
-			T pin;
+			Type pin;
 			Resolution bitsize;
 			uint8_t iterations;
 			bool debounce;

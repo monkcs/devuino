@@ -4,15 +4,15 @@
 
 namespace devuino::tools
 {
-	template<typename T>
+	template<typename Type>
 	class Iterator final
 	{
 	  public:
-		T* pointer;
+		Type* pointer;
 
-		constexpr T& operator*() { return *pointer; };
-		constexpr T& next() { return *(pointer + 1); };
-		constexpr T& previous() { return *(pointer - 1); };
+		constexpr Type& operator*() { return *pointer; };
+		constexpr Type& next() { return *(pointer + 1); };
+		constexpr Type& previous() { return *(pointer - 1); };
 		constexpr bool operator!=(const Iterator& rhs) const { return pointer != rhs.pointer; };
 		void operator++() { ++pointer; };
 		void operator--() { --pointer; };

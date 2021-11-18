@@ -15,7 +15,7 @@ namespace devuino
 {
 	namespace device
 	{
-		template<typename T>
+		template<typename Type>
 		class MAX7219 final : public OutputDigital, public Light, public SegmentDisplay<uint8_t, SevenSegmentCharacter>
 		{
 		  public:
@@ -27,7 +27,7 @@ namespace devuino
 				D01234567 = 0xff
 			};
 
-			MAX7219(const devuino::interface::spi::Controller<T> spi) :
+			MAX7219(const devuino::interface::spi::Controller<Type> spi) :
 				OutputDigital(true),
 				Light(Resolution {4}),
 				SegmentDisplay<uint8_t, SevenSegmentCharacter>(
@@ -91,14 +91,16 @@ namespace devuino
 
 			void print(const long int number)
 			{
-				auto sign = [=]() {
+				auto sign = [=]()
+				{
 					if (number < 0)
 					{
 						print(SevenSegmentCharacter('-'));
 					}
 				};
 
-				auto send = [this](unsigned int number) {
+				auto send = [this](unsigned int number)
+				{
 					do
 					{
 						print(SevenSegmentCharacter(static_cast<int>(number % 10)));

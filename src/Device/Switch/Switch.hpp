@@ -4,11 +4,11 @@
 
 namespace devuino::device
 {
-	template<typename T>
+	template<typename Type>
 	class Switch
 	{
 	  public:
-		Switch(const T pin, const bool initial = false) : pin {pin}, status {initial}
+		Switch(const Type pin, const bool initial = false) : pin {pin}, status {initial}
 		{
 			this->pin.initiate(devuino::pin::Output::Digital);
 			set(initial);
@@ -30,7 +30,7 @@ namespace devuino::device
 		void toggle() { set(!status); };
 
 	  protected:
-		T pin;
+		Type pin;
 		bool status;
 
 		void set(const bool value) const { pin.digital(value); };

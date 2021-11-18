@@ -2,19 +2,19 @@
 
 namespace devuino::tools
 {
-	template<class T>
+	template<class Type>
 	class Span
 	{
 	  public:
-		constexpr Span(const T minimum, const T maximum) : minimum {minimum}, maximum {maximum} {};
+		constexpr Span(const Type minimum, const Type maximum) : minimum {minimum}, maximum {maximum} {};
 
-		T minimum;
-		T maximum;
+		Type minimum;
+		Type maximum;
 
-		constexpr friend bool operator==(Span<T> const& lhs, T const& rhs) { return (rhs >= lhs.minimum) && (rhs <= lhs.maximum); }
-		constexpr friend bool operator==(T const& lhs, Span<T> const& rhs) { return (lhs >= rhs.minimum) && (lhs <= rhs.maximum); }
+		constexpr friend bool operator==(Span<Type> const& lhs, Type const& rhs) { return (rhs >= lhs.minimum) && (rhs <= lhs.maximum); }
+		constexpr friend bool operator==(Type const& lhs, Span<Type> const& rhs) { return (lhs >= rhs.minimum) && (lhs <= rhs.maximum); }
 
-		constexpr friend bool operator!=(Span<T> const& lhs, T const& rhs) { return !(lhs == rhs); }
-		constexpr friend bool operator!=(T const& lhs, Span<T> const& rhs) { return !(rhs == lhs); }
+		constexpr friend bool operator!=(Span<Type> const& lhs, Type const& rhs) { return !(lhs == rhs); }
+		constexpr friend bool operator!=(Type const& lhs, Span<Type> const& rhs) { return !(rhs == lhs); }
 	};
 }

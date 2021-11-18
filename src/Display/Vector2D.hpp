@@ -2,15 +2,15 @@
 
 namespace devuino
 {
-	template<typename T>
+	template<typename Type>
 	class Vector2D
 	{
 	  public:
-		constexpr Vector2D(const T x, const T y) : x {x}, y {y} {};
+		constexpr Vector2D(const Type x, const Type y) : x {x}, y {y} {};
 
-		T x;
-		T y;
+		Type x;
+		Type y;
 
-		constexpr T area() const { return x * y; }
+		constexpr Type area() const { return x * y; }
 	};
 }

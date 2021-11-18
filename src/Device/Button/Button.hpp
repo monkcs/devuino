@@ -6,11 +6,12 @@ namespace devuino::device
 {
 	using namespace devuino::pin;
 
-	template<typename T>
+	template<typename Type>
 	class Button
 	{
 	  public:
-		Button(const T pin, const Resistor pull, const bool debounce = false) : pin {pin}, pull {pull}, debounce {debounce}
+		Button(const Type pin, const Resistor pull = Resistor::None, const bool debounce = false) :
+			pin {pin}, pull {pull}, debounce {debounce}
 		{
 			this->pin.initiate(Input::Digital, pull);
 		};
@@ -32,7 +33,7 @@ namespace devuino::device
 		};
 
 	  protected:
-		T pin;
+		Type pin;
 		Resistor pull;
 		bool debounce;
 	};

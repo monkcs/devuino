@@ -5,17 +5,17 @@
 
 namespace devuino::device
 {
-	template<class T>
+	template<class Type>
 	class Light
 	{
 	  public:
-		Light(const T pin, const unsigned int brightness, const bool initial = false, const Resolution bitresolution = Resolution {8}) :
+		Light(const Type pin, const unsigned int brightness, const bool initial = false, const Resolution bitresolution = Resolution {8}) :
 			pin {pin}, bitsize {bitresolution}, bright {brightness}, status {initial}
 		{
 			this->pin.initiate(devuino::pin::Output::Analog);
 			set(initial);
 		};
-		Light(const T pin, const bool initial = false, const Resolution bitresolution = Resolution {8}) :
+		Light(const Type pin, const bool initial = false, const Resolution bitresolution = Resolution {8}) :
 			pin {pin}, bitsize {bitresolution}, bright {bitresolution.maximum}, status {initial}
 		{
 			this->pin.initiate(devuino::pin::Output::Analog);
@@ -75,7 +75,7 @@ namespace devuino::device
 		}
 
 	  protected:
-		T pin;
+		Type pin;
 		Resolution bitsize;
 		unsigned int bright;
 		bool status;
