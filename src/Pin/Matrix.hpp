@@ -58,10 +58,7 @@ namespace devuino::pin
 			return (pull == Resistor::PullUp) ? reading : !reading;
 		};
 
-		/* void digital(const bool value) const {}; */
-
 		/* Only for compability */
 		void initiate([[maybe_unused]] const Input mode, const Resistor pull = Resistor::None) const { this->pull = pull; };
-		// void initiate(const Output mode) const {};
 	};
 }
