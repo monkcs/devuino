@@ -1,6 +1,8 @@
 #pragma once
 #include "Iterator.hpp"
 
+#include <stdlib.h>
+
 namespace devuino::tools
 {
 	template<class Type, size_t lenght>
