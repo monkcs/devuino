@@ -20,7 +20,7 @@ namespace devuino::tools
 		Type& operator[](const size_t position) { return buffer[position]; }
 
 		/* Fill the array with specified value */
-		void fill(Type object)
+		void fill(const Type object)
 		{
 			for (auto& item : buffer)
 			{
