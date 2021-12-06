@@ -18,7 +18,7 @@ namespace devuino::tools
 		/* Construct stringview to a raw char array that is null-terminated */
 		constexpr Stringview(const char* raw) : size {calculate(raw)}, backend {raw} { }
 
-		/* Construct string from raw char array where lenght is exclusive null-terminator */
+		/* Construct stringview to a raw char array where lenght is exclusive null-terminator */
 		constexpr Stringview(const char* raw, const size_t lenght) : size {lenght}, backend {raw} { }
 
 		constexpr Stringview(const Stringview& other) : size {other.size}, backend {other.backend} { }
