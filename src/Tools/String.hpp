@@ -39,14 +39,18 @@ namespace devuino::tools
 			memcpy(buffer, other.buffer, size);
 		}
 
+		String(String&&) = default;
+
 		~String() { delete[] buffer; }
+
+		String& operator=(String&&) = default;
 
 		String& operator=(const String& other)
 		{
 			delete[] buffer;
 
 			size = other.size;
-			buffer = new char[size];
+			buffer = new char[other.size];
 			memcpy(buffer, other.buffer, other.size);
 
 			return *this;
@@ -75,7 +79,7 @@ namespace devuino::tools
 			return *this;
 		}
 
-		/* Bound checked index access */
+		/* Bound checked index access, access outside string returns null */
 		char at(const size_t position) const { return position < lenght() ? buffer[position] : '\0'; }
 
 		char operator[](const size_t position) const { return buffer[position]; }
