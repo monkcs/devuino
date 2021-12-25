@@ -87,9 +87,9 @@ namespace devuino::tools
 		char& operator[](const size_t position) { return buffer[position]; }
 
 		Iterator<const char> begin() const { return {buffer}; }
-		Iterator<const char> end() const { return {buffer + size}; }
+		Iterator<const char> end() const { return {buffer + size - 1}; }
 		Iterator<char> begin() { return {buffer}; }
-		Iterator<char> end() { return {buffer + size}; }
+		Iterator<char> end() { return {buffer + size - 1}; }
 
 		friend String operator+(const String& lhs, const String& rhs)
 		{
