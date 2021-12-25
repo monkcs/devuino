@@ -65,6 +65,7 @@ namespace devuino::tools
 		/* Append to the string */
 		String& operator+=(const String& other)
 		{
+			/* Decrement by one to account for the extra null-terminator */
 			const auto combined = size + other.size - 1;
 
 			const auto concatenated = new char[combined];
@@ -100,9 +101,9 @@ namespace devuino::tools
 
 		friend bool operator==(const String& lhs, const String& rhs)
 		{
-			if (lhs.size == rhs.size)
+			if (lhs.lenght() == rhs.lenght())
 			{
-				for (size_t i = 0; i < lhs.size; i++)
+				for (size_t i = 0; i < lhs.lenght(); i++)
 				{
 					if (lhs.buffer[i] != rhs.buffer[i])
 					{
