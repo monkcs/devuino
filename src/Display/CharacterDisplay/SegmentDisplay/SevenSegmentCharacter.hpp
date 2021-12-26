@@ -107,19 +107,39 @@ namespace devuino
 	class SevenSegmentCharacter
 	{
 	  public:
-		constexpr SevenSegmentCharacter() : character {0x0} {};
+		SevenSegmentCharacter() = default;
 		constexpr SevenSegmentCharacter(const char character, const bool raw = false) :
 			character {raw ? static_cast<uint8_t>(character) : convert(character)} {};
 
-		constexpr operator uint8_t() const { return character; };
+		SevenSegmentCharacter(const SevenSegmentCharacter&) = default;
+		SevenSegmentCharacter(SevenSegmentCharacter&&) = default;
+
+		constexpr explicit operator uint8_t() const { return character; };
+
+		SevenSegmentCharacter& operator=(const SevenSegmentCharacter&) = default;
+		SevenSegmentCharacter& operator=(SevenSegmentCharacter&&) = default;
 
 		SevenSegmentCharacter& operator=(const char character)
 		{
-			this->character = SevenSegmentCharacter(character);
+			*this = SevenSegmentCharacter {character};
 			return *this;
-		}
+		};
 
-	  private:
+		SevenSegmentCharacter operator|(const SevenSegmentCharacter& other) const
+		{
+			SevenSegmentCharacter result {*this};
+			result |= other;
+
+			return result;
+		};
+
+		SevenSegmentCharacter& operator|=(const SevenSegmentCharacter& other)
+		{
+			character |= other.character;
+			return *this;
+		};
+
+	  protected:
 		uint8_t character;
 
 		constexpr uint8_t convert(const char character) const
