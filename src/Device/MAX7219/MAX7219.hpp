@@ -16,7 +16,8 @@
 
 namespace devuino::device
 {
-	template<typename ChipSelect, unsigned int units = 1>
+	// TODO: Implement support for multiple units
+	template<typename ChipSelect>	 //, unsigned int units = 1>
 	class MAX7219
 	{
 	  public:
@@ -54,10 +55,22 @@ namespace devuino::device
 
 		void print()
 		{
+			// TODO: Implement support for multiple units
+
+			uint8_t index {8};
+
+			for (const auto& character : buffer)
+			{
+				spi.transfer(index, static_cast<uint8_t>(character));
+				--index;
+			}
+
+			/*
 			for (uint8_t i = 0; i < units * 8; i++)
 			{
 				spi.transfer(i + 1, buffer[(units * 8 - 1) - i]);
 			}
+			*/
 		}
 
 		/*  Test mode turns on all digits at full brightness.
@@ -135,7 +148,7 @@ namespace devuino::device
 		tools::Iterator<SevenSegmentCharacter> begin() { return buffer.begin(); }
 		tools::Iterator<SevenSegmentCharacter> end() { return buffer.end(); }
 
-		SevenSegmentString<units * 8> buffer;
+		SevenSegmentString</*units * */ 8> buffer;
 
 	  protected:
 		devuino::interface::spi::Controller<ChipSelect> spi;
