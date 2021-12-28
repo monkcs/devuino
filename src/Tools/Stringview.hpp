@@ -8,7 +8,6 @@ namespace devuino::tools
 {
 	class Stringview
 	{
-	  private:
 		size_t size;
 		const char* backend;
 
@@ -22,7 +21,6 @@ namespace devuino::tools
 		constexpr Stringview(const char* raw, const size_t lenght) : size {lenght}, backend {raw} { }
 
 		constexpr Stringview(const Stringview& other) : size {other.size}, backend {other.backend} { }
-
 		constexpr Stringview(const String& other) : size {other.size}, backend {other.buffer} { }
 
 		Stringview& operator=(const Stringview& other)
@@ -41,6 +39,7 @@ namespace devuino::tools
 			return *this;
 		}
 
+		/* Underlying raw char* from the owning String */
 		constexpr explicit operator const char*() const { return backend; }
 
 		/* Lenght of string exclusive null-terminator */
