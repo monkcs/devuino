@@ -1,11 +1,10 @@
 #pragma once
 
 #include "../../../Tools/Iterator.hpp"
-#include "../CharacterDisplay.h"
 
 namespace devuino
 {
-	static constexpr uint8_t table[] = {
+	static const constexpr uint8_t table[] = {
 		0x0,	 // ' '
 		0x0,	 // !
 		0x0,	 // "
@@ -108,11 +107,10 @@ namespace devuino
 	{
 	  public:
 		SevenSegmentCharacter() = default;
-		constexpr SevenSegmentCharacter(const char character, const bool raw = false) :
-			character {raw ? static_cast<uint8_t>(character) : convert(character)} {};
-
 		SevenSegmentCharacter(const SevenSegmentCharacter&) = default;
 		SevenSegmentCharacter(SevenSegmentCharacter&&) = default;
+		constexpr SevenSegmentCharacter(const char character, const bool raw = false) :
+			character {raw ? static_cast<uint8_t>(character) : convert(character)} {};
 
 		constexpr explicit operator uint8_t() const { return character; };
 
@@ -139,7 +137,7 @@ namespace devuino
 			return *this;
 		};
 
-	  protected:
+	  private:
 		uint8_t character;
 
 		constexpr uint8_t convert(const char character) const
