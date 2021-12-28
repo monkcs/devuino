@@ -12,7 +12,7 @@ namespace devuino
 	class SevenSegmentString : public tools::Array<SevenSegmentCharacter, lenght>
 	{
 	  public:
-		constexpr SevenSegmentString() : devuino::tools::Array<SevenSegmentCharacter, lenght> {} { }
+		constexpr SevenSegmentString() { }
 
 		SevenSegmentString(const tools::Stringview string)
 		{
