@@ -8,6 +8,8 @@ namespace devuino::tools
 	template<class Type, size_t lenght>
 	struct Array
 	{
+		static_assert(lenght > 0, "Lenght of Array cannot be zero");
+
 		Type buffer[lenght];
 
 		constexpr explicit operator const Type*() const { return buffer; }
@@ -30,9 +32,9 @@ namespace devuino::tools
 
 		void swap(Array<Type, lenght>& other)
 		{
-			for (size_t i; i < lenght; i++)
+			for (size_t i {0}; i < lenght; i++)
 			{
-				const Type temporary = other[i];
+				const Type temporary {other[i]};
 				other[i] = buffer[i];
 				buffer[i] = temporary;
 			}
