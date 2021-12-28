@@ -11,7 +11,6 @@ namespace devuino::tools
 	{
 		friend class Stringview;
 
-	  private:
 		size_t size;
 		char* buffer;
 
@@ -44,7 +43,6 @@ namespace devuino::tools
 		~String() { delete[] buffer; }
 
 		String& operator=(String&&) = default;
-
 		String& operator=(const String& other)
 		{
 			delete[] buffer;
@@ -81,7 +79,7 @@ namespace devuino::tools
 		}
 
 		/* Bound checked index access, access outside string returns null */
-		char at(const size_t position) const { return position < lenght() ? buffer[position] : '\0'; }
+		char at(const size_t position) const { return position < size ? buffer[position] : '\0'; }
 
 		char operator[](const size_t position) const { return buffer[position]; }
 		char& operator[](const size_t position) { return buffer[position]; }
@@ -101,9 +99,9 @@ namespace devuino::tools
 
 		friend bool operator==(const String& lhs, const String& rhs)
 		{
-			if (lhs.lenght() == rhs.lenght())
+			if (lhs.size == rhs.size)
 			{
-				for (size_t i = 0; i < lhs.lenght(); i++)
+				for (size_t i = 0; i < lhs.size; i++)
 				{
 					if (lhs.buffer[i] != rhs.buffer[i])
 					{
