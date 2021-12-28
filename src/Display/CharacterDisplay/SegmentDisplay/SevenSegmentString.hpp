@@ -22,14 +22,30 @@ namespace devuino
 			   in the buffer, as seven segment displays have a dedicated dot on each character.
 			*/
 
+			static_assert(lenght > 0, "Lenght of SevenSegmentString cannot be zero");
+			if (string.lenght() == 0)
+			{
+				return;
+			}
+
 			auto iterator_buffer = this->begin();
 			auto iterator_string = string.begin();
 
 			bool previously_merged = false;
 
+			/* Test if the first character is '.', as it cannot be merged with the previous character */
+			if (*iterator_string == '.')
+			{
+				previously_merged = true;
+			}
+
+			*iterator_buffer = *iterator_string;
+			++iterator_buffer;
+			++iterator_string;
+
 			while (iterator_buffer != this->end() && iterator_string != string.end())
 			{
-				if (*iterator_string == '.' && previously_merged == false && iterator_buffer != this->begin())
+				if (*iterator_string == '.' && previously_merged == false)
 				{
 					iterator_buffer.previous() |= '.';
 					previously_merged = true;
@@ -44,6 +60,7 @@ namespace devuino
 				++iterator_string;
 			}
 
+			/* Even if iterator_buffer is at end, a last '.' can be merged on the last character */
 			if (iterator_string != string.end())
 			{
 				if (*iterator_string == '.')
@@ -64,9 +81,6 @@ namespace devuino
 			return *this;
 		}
 
-		/* Number of characters */
-		constexpr size_t size() const { return lenght; }
-
 		/* Bound checked index access, access outside string returns empty character */
 		SevenSegmentCharacter at(const size_t position) const
 		{
@@ -75,11 +89,6 @@ namespace devuino
 
 		SevenSegmentCharacter operator[](const size_t position) const { return this->buffer[position]; }
 		SevenSegmentCharacter& operator[](const size_t position) { return this->buffer[position]; }
-
-		tools::Iterator<const SevenSegmentCharacter> begin() const { return {this->buffer}; }
-		tools::Iterator<const SevenSegmentCharacter> end() const { return {this->buffer + lenght}; }
-		tools::Iterator<SevenSegmentCharacter> begin() { return {this->buffer}; }
-		tools::Iterator<SevenSegmentCharacter> end() { return {this->buffer + lenght}; }
 
 		bool operator==(const SevenSegmentString<lenght>& other) const
 		{
