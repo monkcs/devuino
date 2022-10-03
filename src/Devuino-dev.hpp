@@ -2,15 +2,15 @@
 
 /*
 
-   —— Devuino ———————————————————————————————————————————————————————————
+   —— /dev/uino —————————————————————————————————————————————————————————
    Devuino (https://github.com/monkcs/devuino) created by Charlie Habolin
 
    The Devuino standard library aims to unify the library implementations
-   for different devices to make clearer code and promote code reuse.
+   for different devices to create clearer code and promote code reuse.
 
-   If you want to write or add a device to the library, or just give a
-   suggestion for a specific device, open a issue on the git project page.
-
+   If you want to write a device driver for the library, or just give a
+   suggestion for a specific device, please open a issue on the Github
+   project page.
 
    —— License ———————————————————————————————————————————————————————————
    All code, files or other assets in this project is licensed under the
@@ -23,46 +23,44 @@
    into scope.
    ——————————————————————————————————————————————————————————————————————
 
-
 */
 
-//#pragma GCC optimize("O3")
-//#pragma GCC reset_options
+/* Include onboard pins */
+#include "Onboard/Analog.hpp"
+#include "Onboard/Digital.hpp"
+#include "Onboard/Matrix.hpp"
+#include "Onboard/Pin.hpp"
 
-// Include pins
-#include "Pin/Matrix.hpp"
-#include "Pin/Onboard.hpp"
-
-// Include devices
+/* Include devices */
 #include "Device/Button/Button.hpp"
 #include "Device/HCSR04/HCSR04.hpp"
 #include "Device/Light/Light.hpp"
 #include "Device/Light/LightRgb.hpp"
+#include "Device/MAX7219/MAX7219.hpp"
 #include "Device/Potentiometer/Potentiometer.hpp"
 #include "Device/Resistance/Resistance.hpp"
-// #include "Device/Servo/Servo.h"
-
-//#include "Device/MAX7219/MAX7219.hpp"
 #include "Device/Switch/Switch.hpp"
 
-//#include "Display/Display.h"
-#include "Display/CharacterDisplay/SegmentDisplay/SevenSegmentString.hpp"
-//#include "Device/Neopixel/Neopixel.h"
-#include "Temperature/Temperature.hpp"
-// Include Tools
-#include "Distance/Distance.hpp"
-#include "Light/Colour.hpp"
-#include "Tools/Array.hpp"
-#include "Tools/Span.hpp"
-#include "Tools/String.hpp"
-#include "Tools/Stringview.hpp"
+/* Include Tools */
+#include "Utilities/Array/Array.hpp"
+#include "Utilities/Display/SegmentDisplay/SevenSegmentCharacter.hpp"
+#include "Utilities/Display/SegmentDisplay/SevenSegmentString.hpp"
+#include "Utilities/Lenght/Lenght.hpp"
+#include "Utilities/Light/Colour.hpp"
+#include "Utilities/Light/Spectrum.hpp"
+#include "Utilities/Resolution/Resolution.hpp"
+#include "Utilities/Span/Span.hpp"
+#include "Utilities/String/String.hpp"
+#include "Utilities/String/Stringview.hpp"
+#include "Utilities/Temperature/Temperature.hpp"
 
-// Include I/O interfaces
-//#include "Interface/SPI.h"
+/* Include I/O interfaces */
+#include "Onboard/SPI.hpp"
 
-// Put all namespaces into scope
+/* Put all namspaces in scope */
 using namespace devuino;
-using namespace devuino::tools;
 using namespace devuino::pin;
+using namespace devuino::onboard;
 using namespace devuino::device;
-// using namespace devuino::interface::spi;
+using namespace devuino::utilities;
+using namespace devuino::onboard::spi;

@@ -5,7 +5,7 @@ Spi port {0};
 
 /* Instantiate the display using the chip select pin 10.
    The display is by default turend on displaying nothing. */
-MAX7219<Onboard> display {port.controller(Onboard {10})};
+MAX7219<> display {port.controller({10})};
 
 void setup()
 {

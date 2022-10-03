@@ -1,11 +1,11 @@
-#include "../../src/Devuino.hpp"
+#include <Devuino.hpp>
 
 /* Instantiate a button connected between pin 3 and ground.
    By using the internal pull-up resistor no external resistor is needed */
-Button<Onboard> button {Onboard {3}, Resistor::PullUp};
+Button<> button {{3}, Resistor::PullUp};
 
 /* Instantiate the built-in led on the arduino uno board */
-Light<Onboard> led {Onboard {13}};
+Light<> led {{13}};
 
 void setup()
 {
