@@ -20,8 +20,8 @@ The button is connected between pin 3 and ground (because then the built-in pull
 ```cpp
 #include <devuino.hpp>
 
-Button<Onboard> button{Onboard{3}, Resistor::PullUp};
-Led<Onboard> led{Onboard{13}};
+Button<> button{{3}, Resistor::PullUp};
+Led<> led{{13}};
 
 void setup() { }
 
@@ -87,4 +87,4 @@ Sound devices include both buzzers to speakers and other primary sound-making de
 
 | Status | Display     | Description                         |
 | :----: | :---------- | :---------------------------------- |
-| ⚫️     | **Max72xx** | Max 7219/7221 seven-segment display |
+| 🔵     | **MAX7219** | Max 7219 seven-segment display |
