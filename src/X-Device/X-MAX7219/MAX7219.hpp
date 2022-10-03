@@ -41,8 +41,15 @@ namespace devuino::device
 			D01234567 = 7,
 		};
 
-		MAX7219(const devuino::interface::spi::Controller<ChipSelect> spi, const bool initial = true) :
-			spi {spi}, bitsize {4}, bright {static_cast<uint8_t>(bitsize.maximum)}, decoding {Decode::None}, status {initial}
+		MAX7219(const devuino::interface::spi::Controller<ChipSelect> spi,
+				const bool initial = true,
+				const SevenSegmentString<8> buffer = {}) :
+			buffer {buffer},
+			spi {spi},
+			bitsize {4},
+			bright {static_cast<uint8_t>(bitsize.maximum)},
+			decoding {Decode::None},
+			status {initial}
 		{
 			/* Reset display */
 			brightness(bright);
@@ -53,7 +60,13 @@ namespace devuino::device
 			set(status);
 		};
 
-		void print()
+		~MAX7219()
+		{
+			test(false);
+			off();
+		}
+
+		void print() const
 		{
 			// TODO: Implement support for multiple units
 
@@ -82,17 +95,25 @@ namespace devuino::device
 		{
 			decoding = mode;
 
-			if (mode == Decode::D0123)
+			switch (mode)
 			{
-				spi.transfer(0x09, 0x0f);
-			}
-			else if (mode == Decode::D01234567)
-			{
-				spi.transfer(0x09, 0xff);
-			}
-			else
-			{
-				spi.transfer(0x09, static_cast<uint8_t>(mode));
+				case Decode::D0123:
+				{
+					spi.transfer(0x09, 0x0f);
+					break;
+				}
+
+				case Decode::D01234567:
+				{
+					spi.transfer(0x09, 0xff);
+					break;
+				}
+
+				default:
+				{
+					spi.transfer(0x09, static_cast<uint8_t>(mode));
+					break;
+				}
 			}
 		}
 
@@ -101,7 +122,7 @@ namespace devuino::device
 
 		void clear()
 		{
-			buffer.fill('\0');
+			buffer.clear();
 			print();
 		};
 

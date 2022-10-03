@@ -18,7 +18,7 @@ namespace devuino::tools
 		/* Number of elements */
 		constexpr size_t size() const { return lenght; }
 
-		Type operator[](const size_t position) const { return buffer[position]; }
+		constexpr Type operator[](const size_t position) const { return buffer[position]; }
 		Type& operator[](const size_t position) { return buffer[position]; }
 
 		/* Fill the array with specified value */
@@ -32,7 +32,7 @@ namespace devuino::tools
 
 		void swap(Array<Type, lenght>& other)
 		{
-			for (size_t i {0}; i < lenght; i++)
+			for (size_t i {}; i < lenght; ++i)
 			{
 				const Type temporary {other[i]};
 				other[i] = buffer[i];
@@ -40,14 +40,24 @@ namespace devuino::tools
 			}
 		}
 
-		Iterator<const Type> begin() const { return {buffer}; }
-		Iterator<const Type> end() const { return {buffer + lenght}; }
+		constexpr Type front() const { return buffer[0]; }
+		Type& front() { return buffer[0]; }
+
+		constexpr Type back() const { return buffer[lenght - 1]; }
+		Type& back() { return buffer[lenght - 1]; }
+
+		constexpr Iterator<const Type> begin() const { return {buffer}; }
+		constexpr Iterator<const Type> end() const { return {buffer + lenght}; }
 		Iterator<Type> begin() { return {buffer}; }
 		Iterator<Type> end() { return {buffer + lenght}; }
 
-		bool operator==(const Array<Type, lenght>& other) const
+		bool operator==(const Array<Type, lenght>& other) const { return equals(other); }
+		bool operator!=(const Array<Type, lenght>& other) const { return !(this == other); }
+
+	  protected:
+		bool equals(const Array<Type, lenght>& other) const
 		{
-			for (size_t i; i < lenght; i++)
+			for (size_t i {}; i < lenght; ++i)
 			{
 				if (buffer[i] != other.buffer[i])
 				{
@@ -56,6 +66,5 @@ namespace devuino::tools
 			}
 			return true;
 		}
-		bool operator!=(const Array<Type, lenght>& other) const { return !(this == other); }
 	};
 }

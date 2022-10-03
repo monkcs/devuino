@@ -1,5 +1,6 @@
 #pragma once
 #include "Iterator.hpp"
+#include "Stringview.hpp"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -14,16 +15,19 @@ namespace devuino::tools
 		size_t size;
 		char* buffer;
 
+		/* Calculates string lenght exclusive null-terminator */
+		static constexpr size_t calculate(const char* string) { return (*string) ? (1 + calculate(string + 1)) : 0; }
+
 	  public:
 		/* Construct string from raw char */
-		explicit String(const char raw) : size {2}, buffer {new char[size]}
+		explicit String(const char raw) : size {2}, buffer {new char[2]}
 		{
 			buffer[0] = raw;
 			buffer[1] = '\0';
 		}
 
 		/* Construct string from raw char array that is null-terminated */
-		String(const char raw[]) : size {strlen(raw) + 1}, buffer {new char[size]} { memcpy(buffer, raw, size); }
+		String(const char raw[]) : size {calculate(raw) + 1}, buffer {new char[size]} { memcpy(buffer, raw, size); }
 
 		/* Construct string from raw char array where lenght is exclusive null-terminator */
 		String(const char raw[], const size_t lenght) : size {lenght + 1}, buffer {new char[size]}
@@ -32,17 +36,15 @@ namespace devuino::tools
 			buffer[size - 1] = '\0';
 		}
 
-		String(const String& other) : size {other.size}
+		String(const String& other) : size {other.size}, buffer {new char[other.size]} { memcpy(buffer, other.buffer, size); }
+		String(String&& other) : size {other.size}, buffer {other.buffer}
 		{
-			buffer = new char[size];
-			memcpy(buffer, other.buffer, size);
-		}
-
-		String(String&&) = default;
+			other.size = 0;
+			other.buffer = nullptr;
+		};
 
 		~String() { delete[] buffer; }
 
-		String& operator=(String&&) = default;
 		String& operator=(const String& other)
 		{
 			delete[] buffer;
@@ -50,6 +52,18 @@ namespace devuino::tools
 			size = other.size;
 			buffer = new char[other.size];
 			memcpy(buffer, other.buffer, other.size);
+
+			return *this;
+		}
+		String& operator=(String&& other)
+		{
+			delete[] buffer;
+
+			size = other.size;
+			buffer = other.buffer;
+
+			other.size = 0;
+			other.buffer = nullptr;
 
 			return *this;
 		}

@@ -105,30 +105,27 @@ namespace devuino
 
 	class SevenSegmentCharacter
 	{
+		uint8_t character {};
+
+		constexpr uint8_t convert(const char character) const
+		{
+			return (character >= 32 && character <= 126) ? table[character - 32] : 0x0;
+		};
+
 	  public:
 		SevenSegmentCharacter() = default;
-		SevenSegmentCharacter(const SevenSegmentCharacter&) = default;
-		SevenSegmentCharacter(SevenSegmentCharacter&&) = default;
+
 		constexpr SevenSegmentCharacter(const char character, const bool raw = false) :
 			character {raw ? static_cast<uint8_t>(character) : convert(character)} {};
 
 		constexpr explicit operator uint8_t() const { return character; };
 
-		SevenSegmentCharacter& operator=(const SevenSegmentCharacter&) = default;
-		SevenSegmentCharacter& operator=(SevenSegmentCharacter&&) = default;
+		constexpr bool operator==(const SevenSegmentCharacter& other) const { return character == other.character; }
+		constexpr bool operator!=(const SevenSegmentCharacter& other) const { return character != other.character; }
 
-		SevenSegmentCharacter& operator=(const char character)
+		constexpr SevenSegmentCharacter operator|(const SevenSegmentCharacter& other) const
 		{
-			*this = SevenSegmentCharacter {character};
-			return *this;
-		};
-
-		SevenSegmentCharacter operator|(const SevenSegmentCharacter& other) const
-		{
-			SevenSegmentCharacter result {*this};
-			result |= other;
-
-			return result;
+			return SevenSegmentCharacter {static_cast<char>(character | other.character), true};
 		};
 
 		SevenSegmentCharacter& operator|=(const SevenSegmentCharacter& other)
@@ -136,15 +133,6 @@ namespace devuino
 			character |= other.character;
 			return *this;
 		};
-
-	  private:
-		uint8_t character;
-
-		constexpr uint8_t convert(const char character) const
-		{
-			return (character >= 32 && character <= 126) ? table[character - 32] : 0x0;
-		};
-		constexpr uint8_t convert(const int number) const { return (number >= 0 && number < 10) ? table[number + 16] : 0x0; };
 	};
 
 	/* User defined litterals */

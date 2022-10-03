@@ -30,6 +30,7 @@
 //#pragma GCC reset_options
 
 // Include pins
+#include "Pin/Matrix.hpp"
 #include "Pin/Onboard.hpp"
 
 // Include devices
@@ -41,11 +42,11 @@
 #include "Device/Resistance/Resistance.hpp"
 // #include "Device/Servo/Servo.h"
 
-#include "Device/MAX7219/MAX7219.hpp"
+//#include "Device/MAX7219/MAX7219.hpp"
 #include "Device/Switch/Switch.hpp"
 
 //#include "Display/Display.h"
-//#include "Display/CharacterDisplay/SegmentDisplay/SegmentDisplay.h"
+#include "Display/CharacterDisplay/SegmentDisplay/SevenSegmentString.hpp"
 //#include "Device/Neopixel/Neopixel.h"
 #include "Temperature/Temperature.hpp"
 // Include Tools
@@ -57,11 +58,11 @@
 #include "Tools/Stringview.hpp"
 
 // Include I/O interfaces
-#include "Interface/SPI.h"
+//#include "Interface/SPI.h"
 
 // Put all namespaces into scope
 using namespace devuino;
 using namespace devuino::tools;
 using namespace devuino::pin;
 using namespace devuino::device;
-using namespace devuino::interface::spi;
+// using namespace devuino::interface::spi;

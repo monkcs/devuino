@@ -9,6 +9,13 @@ namespace devuino::pin
 {
 	class Onboard
 	{
+		uint8_t pin;
+		uint8_t bitmask;
+
+		volatile uint8_t& direction;
+		volatile uint8_t& port;
+		volatile uint8_t& input;
+
 	  public:
 		explicit Onboard(const uint8_t pin) :
 			pin {pin},
@@ -61,13 +68,5 @@ namespace devuino::pin
 		};
 
 		constexpr uint8_t get() const { return pin; }
-
-	  protected:
-		uint8_t pin;
-		uint8_t bitmask;
-
-		volatile uint8_t& direction;
-		volatile uint8_t& port;
-		volatile uint8_t& input;
 	};
 }
