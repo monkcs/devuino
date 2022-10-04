@@ -53,7 +53,7 @@ namespace devuino::utilities
 		Iterator<Type> end() { return {buffer + lenght}; }
 
 		bool operator==(const Array<Type, lenght>& other) const { return equals(other); }
-		bool operator!=(const Array<Type, lenght>& other) const { return !(this == other); }
+		bool operator!=(const Array<Type, lenght>& other) const { return !equals(other); }
 
 	  private:
 		bool equals(const Array<Type, lenght>& other) const
