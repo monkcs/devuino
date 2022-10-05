@@ -16,7 +16,11 @@ namespace devuino::device
 
 		operator bool() const { return pin; }
 
-		void operator=(const bool value) { pin = value; }
+		Switch& operator=(const bool value)
+		{
+			pin = value;
+			return *this;
+		}
 
 		void off() { operator=(false); }
 		void on() { operator=(true); }
