@@ -52,20 +52,17 @@ namespace devuino::utilities
 		Iterator<Type> begin() { return {buffer}; }
 		Iterator<Type> end() { return {buffer + lenght}; }
 
-		bool operator==(const Array<Type, lenght>& other) const { return equals(other); }
-		bool operator!=(const Array<Type, lenght>& other) const { return !equals(other); }
-
-	  private:
-		bool equals(const Array<Type, lenght>& other) const
+		bool operator==(const Array<Type, lenght>& other) const
 		{
-			for (size_t i {}; i < lenght; ++i)
+			for (size_t index {}; index < lenght; ++index)
 			{
-				if (buffer[i] != other.buffer[i])
+				if (buffer[index] != other.buffer[index])
 				{
 					return false;
 				}
 			}
 			return true;
 		}
+		bool operator!=(const Array<Type, lenght>& other) const { return !operator==(other); }
 	};
 }
