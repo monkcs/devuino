@@ -36,7 +36,11 @@ namespace devuino::device
 					static_cast<uint8_t>(blue.brightness())};
 		}
 
-		void operator=(const Colour colours) { colour(colours); }
+		LightRgb& operator=(const Colour colours)
+		{
+			colour(colours);
+			return *this;
+		}
 
 		const Light<AnalogBackend>& operator[](const uint8_t index) const { return (index == 0) ? red : ((index == 1) ? green : blue); }
 		Light<AnalogBackend>& operator[](const uint8_t index) { return (index == 0) ? red : ((index == 1) ? green : blue); }

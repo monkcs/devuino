@@ -33,30 +33,38 @@ namespace devuino::device
 
 		~Light() { set(false); }
 
-		void operator=(const unsigned int value) { brightness(value); }
+		Light& operator=(const bool value)
+		{
+			set(value);
+			return *this;
+		}
 
-		void operator+=(const unsigned int value)
+		Light& operator+=(const unsigned int value)
 		{
 			bright += value;
 			set();
+			return *this;
 		}
 
-		void operator-=(const unsigned int value)
+		Light& operator-=(const unsigned int value)
 		{
 			bright -= value;
 			set();
+			return *this;
 		}
 
-		void operator*=(const unsigned int change)
+		Light& operator*=(const unsigned int change)
 		{
 			bright *= change;
 			set();
+			return *this;
 		}
 
-		void operator/=(const unsigned int change)
+		Light& operator/=(const unsigned int change)
 		{
 			bright /= change;
 			set();
+			return *this;
 		}
 
 		void brightness(const unsigned int value)
