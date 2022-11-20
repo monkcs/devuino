@@ -24,6 +24,6 @@ namespace devuino::utilities
 			Colour {static_cast<uint8_t>(packed >> 16), static_cast<uint8_t>(packed >> 8), static_cast<uint8_t>(packed)} {};
 
 		constexpr uint8_t operator[](const uint8_t index) const { return index == 0 ? red : (index == 1 ? green : blue); }
-		uint8_t& operator[](const uint8_t index) { return index == 0 ? red : (index == 1 ? green : blue); }
+		constexpr uint8_t& operator[](const uint8_t index) { return index == 0 ? red : (index == 1 ? green : blue); }
 	};
 }

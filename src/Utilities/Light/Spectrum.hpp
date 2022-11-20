@@ -13,7 +13,7 @@ namespace devuino::utilities
 
 		constexpr operator Colour() const { return colour; }
 
-		[[nodiscard]] Colour next()
+		[[nodiscard]] constexpr Colour next()
 		{
 			if (colour.red > 0)
 			{
