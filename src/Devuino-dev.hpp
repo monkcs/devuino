@@ -36,7 +36,9 @@
 #include "Device/HCSR04/HCSR04.hpp"
 #include "Device/Light/Light.hpp"
 #include "Device/Light/LightRgb.hpp"
-#include "Device/MAX7219/MAX7219.hpp"
+#include "Device/MAX7219/DotMatrix.hpp"
+// #include "Device/MAX7219/DotMatrixMAX7219.hpp"
+// #include "Device/MAX7219/SegmentDisplayMAX7219.hpp"
 #include "Device/Potentiometer/Potentiometer.hpp"
 #include "Device/Resistance/Resistance.hpp"
 #include "Device/Switch/Switch.hpp"
@@ -46,6 +48,7 @@
 #include "Utilities/Display/SegmentDisplay/SevenSegmentCharacter.hpp"
 #include "Utilities/Display/SegmentDisplay/SevenSegmentString.hpp"
 #include "Utilities/Lenght/Lenght.hpp"
+#include "Utilities/Light/Animation.hpp"
 #include "Utilities/Light/Colour.hpp"
 #include "Utilities/Light/Spectrum.hpp"
 #include "Utilities/Resolution/Resolution.hpp"
@@ -56,6 +59,9 @@
 
 /* Include I/O interfaces */
 #include "Onboard/SPI.hpp"
+
+/* Architecture */
+#include "Onboard/Architecture/ATtinyX5.hpp"
 
 /* Put all namspaces in scope */
 using namespace devuino;
