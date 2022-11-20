@@ -20,9 +20,9 @@ namespace devuino::device
 				 const AnalogBackend bluepin,
 				 const Colour colours = Colour {},
 				 const bool initial = false) :
-			red {Light<AnalogBackend> {redpin, colours.red, initial, Resolution {8}}},
-			green {Light<AnalogBackend> {greenpin, colours.green, initial, Resolution {8}}},
-			blue {Light<AnalogBackend> {bluepin, colours.blue, initial, Resolution {8}}} {};
+			red {Light<AnalogBackend> {redpin, initial, colours.red}},
+			green {Light<AnalogBackend> {greenpin, initial, colours.green}},
+			blue {Light<AnalogBackend> {bluepin, initial, colours.blue}} {};
 
 		~LightRgb() { set(false); }
 
@@ -82,5 +82,7 @@ namespace devuino::device
 			green.set(value);
 			blue.set(value);
 		}
+
+		constexpr decltype(red.resolution()) resolution() const { return red.resolution(); }
 	};
 }

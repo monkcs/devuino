@@ -11,18 +11,14 @@ namespace devuino
 		class Potentiometer
 		{
 			AnalogBackend pin;
-			devuino::utilities::Resolution bitsize;
 			uint8_t iterations;
 			bool debounce;
 
 		  public:
-			Potentiometer(const AnalogBackend pin,
-						  const bool debounce = false,
-						  const uint8_t iterations = 10,
-						  const devuino::utilities::Resolution bitresolution = Resolution {10}) :
-				pin {pin}, bitsize {bitresolution}, iterations {iterations == 0 ? 1 : iterations}, debounce {debounce} {};
+			Potentiometer(const AnalogBackend pin, const bool debounce = false, const uint8_t iterations = 10) :
+				pin {pin}, iterations {iterations}, debounce {iterations < 2 ? false : debounce} {};
 
-			double fraction() const { return static_cast<double>(this->operator int()) / static_cast<double>(bitsize.maximum); }
+			double fraction() const { return static_cast<double>(this->operator int()) / static_cast<double>(pin.bitsize.maximum); }
 
 			operator int() const
 			{
@@ -43,6 +39,8 @@ namespace devuino
 					return pin;
 				}
 			}
+
+			constexpr decltype(pin.bitsize) resolution() const { return pin.bitsize; }
 		};
 	}
 }
