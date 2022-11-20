@@ -40,15 +40,15 @@ namespace devuino::utilities
 		/* Bound checked index access */
 		constexpr char at(const size_t position) const { return position < lenght() ? backend[position] : '\0'; }
 
-		char operator[](const size_t position) const { return backend[position]; }
+		constexpr char operator[](const size_t position) const { return backend[position]; }
 
 		constexpr char front() const { return backend[0]; }
 		constexpr char back() const { return backend[(size > 0) ? (size - 1) : 0]; }
 
-		Iterator<const char> begin() const { return {backend}; }
-		Iterator<const char> end() const { return {backend + size}; }
+		constexpr Iterator<const char> begin() const { return {backend}; }
+		constexpr Iterator<const char> end() const { return {backend + size}; }
 
-		friend bool operator==(const Stringview& lhs, const Stringview& rhs)
+		constexpr friend bool operator==(const Stringview& lhs, const Stringview& rhs)
 		{
 			if (lhs.size == rhs.size)
 			{
@@ -66,7 +66,7 @@ namespace devuino::utilities
 				return false;
 			}
 		}
-		friend bool operator!=(const Stringview& lhs, const Stringview& rhs) { return !(lhs == rhs); }
+		constexpr friend bool operator!=(const Stringview& lhs, const Stringview& rhs) { return !(lhs == rhs); }
 	};
 
 	constexpr Stringview operator"" _sv(const char* const raw, const size_t i) { return Stringview {raw, i}; }

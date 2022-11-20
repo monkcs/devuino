@@ -130,7 +130,7 @@ namespace devuino::utilities
 			return SevenSegmentCharacter {static_cast<char>(character | other.character), true};
 		};
 
-		SevenSegmentCharacter& operator|=(const SevenSegmentCharacter& other)
+		constexpr SevenSegmentCharacter& operator|=(const SevenSegmentCharacter& other)
 		{
 			character |= other.character;
 			return *this;

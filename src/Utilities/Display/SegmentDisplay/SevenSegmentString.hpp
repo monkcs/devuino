@@ -19,7 +19,7 @@ namespace devuino::utilities
 
 	  public:
 		SevenSegmentString() = default;
-		SevenSegmentString(const Stringview string)
+		constexpr SevenSegmentString(const Stringview string)
 		{
 			/*
 			   The constructor copy the characters from the stringview to SevenSegmentCharacters.
@@ -81,14 +81,14 @@ namespace devuino::utilities
 			}
 		}
 
-		SevenSegmentString& operator=(const Stringview& string)
+		constexpr SevenSegmentString& operator=(const Stringview& string)
 		{
 			*this = SevenSegmentString {string};
 			return *this;
 		}
 
 		/* Clear the array */
-		void clear() { this->fill('\0'); }
+		constexpr void clear() { this->fill('\0'); }
 
 		/* Bound checked index access, access outside string returns empty character */
 		constexpr SevenSegmentCharacter at(const size_t position) const
@@ -96,13 +96,13 @@ namespace devuino::utilities
 			return position < lenght ? this->buffer[position] : SevenSegmentCharacter {};
 		}
 
-		SevenSegmentCharacter operator[](const size_t position) const { return this->buffer[position]; }
-		SevenSegmentCharacter& operator[](const size_t position) { return this->buffer[position]; }
+		constexpr SevenSegmentCharacter operator[](const size_t position) const { return this->buffer[position]; }
+		constexpr SevenSegmentCharacter& operator[](const size_t position) { return this->buffer[position]; }
 
-		bool operator==(const SevenSegmentString<lenght>& other) const
+		constexpr bool operator==(const SevenSegmentString<lenght>& other) const
 		{
 			return equals(static_cast<Array<SevenSegmentCharacter, lenght>>(other));
 		}
-		bool operator!=(const SevenSegmentString<lenght>& other) const { return !(this == other); }
+		constexpr bool operator!=(const SevenSegmentString<lenght>& other) const { return !(this == other); }
 	};
 }
