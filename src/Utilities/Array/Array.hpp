@@ -20,10 +20,10 @@ namespace devuino::utilities
 		constexpr size_t size() const { return lenght; }
 
 		constexpr Type operator[](const size_t position) const { return buffer[position]; }
-		Type& operator[](const size_t position) { return buffer[position]; }
+		constexpr Type& operator[](const size_t position) { return buffer[position]; }
 
 		/* Fill the array with specified value */
-		void fill(const Type object)
+		constexpr void fill(const Type object)
 		{
 			for (auto& item : buffer)
 			{
@@ -31,7 +31,7 @@ namespace devuino::utilities
 			}
 		}
 
-		void swap(Array<Type, lenght>& other)
+		constexpr void swap(Array<Type, lenght>& other)
 		{
 			for (size_t i {}; i < lenght; ++i)
 			{
@@ -42,17 +42,17 @@ namespace devuino::utilities
 		}
 
 		constexpr Type front() const { return buffer[0]; }
-		Type& front() { return buffer[0]; }
+		constexpr Type& front() { return buffer[0]; }
 
 		constexpr Type back() const { return buffer[lenght - 1]; }
-		Type& back() { return buffer[lenght - 1]; }
+		constexpr Type& back() { return buffer[lenght - 1]; }
 
 		constexpr Iterator<const Type> begin() const { return {buffer}; }
 		constexpr Iterator<const Type> end() const { return {buffer + lenght}; }
-		Iterator<Type> begin() { return {buffer}; }
-		Iterator<Type> end() { return {buffer + lenght}; }
+		constexpr Iterator<Type> begin() { return {buffer}; }
+		constexpr Iterator<Type> end() { return {buffer + lenght}; }
 
-		bool operator==(const Array<Type, lenght>& other) const
+		constexpr bool operator==(const Array<Type, lenght>& other) const
 		{
 			for (size_t index {}; index < lenght; ++index)
 			{
@@ -63,6 +63,6 @@ namespace devuino::utilities
 			}
 			return true;
 		}
-		bool operator!=(const Array<Type, lenght>& other) const { return !operator==(other); }
+		constexpr bool operator!=(const Array<Type, lenght>& other) const { return !operator==(other); }
 	};
 }

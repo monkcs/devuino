@@ -10,21 +10,21 @@ namespace devuino::device
 		DigitalBackend pin;
 
 	  public:
-		Switch(const DigitalBackend pin, const bool initial = false) : pin {pin} { operator=(initial); }
+		constexpr Switch(const DigitalBackend pin, const bool initial = false) : pin {pin} { this->pin = initial; }
 
 		~Switch() { off(); }
 
-		operator bool() const { return pin; }
+		constexpr operator bool() const { return pin; }
 
-		Switch& operator=(const bool value)
+		constexpr Switch& operator=(const bool value)
 		{
 			pin = value;
 			return *this;
 		}
 
-		void off() { operator=(false); }
-		void on() { operator=(true); }
+		constexpr void off() { pin = false; }
+		constexpr void on() { pin = true; }
 
-		void toggle() { pin.toggle(); }
+		constexpr void toggle() { pin.toggle(); }
 	};
 }

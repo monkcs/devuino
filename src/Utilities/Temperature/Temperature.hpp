@@ -21,16 +21,16 @@ namespace devuino::utilities
 
 		constexpr long double as(const Unit unit) const
 		{
-			return (unit == Unit::Celsius) ? celsius() : ((unit == Unit::Fahrenheit) ? fahrenheit() : kelvin());
+			// return (unit == Unit::Celsius) ? celsius() : ((unit == Unit::Fahrenheit) ? fahrenheit() : kelvin());
 
-			/* After C++14
-				switch (unit)
-				{
-					case Unit::Celsius: return celsius();
-					case Unit::Fahrenheit: return fahrenheit();
-					case Unit::Kelvin: return kelvin();
-				}
-			*/
+			switch (unit)
+			{
+				case Unit::Fahrenheit: return fahrenheit();
+				case Unit::Kelvin: return kelvin();
+
+				case Unit::Celsius:
+				default: return celsius();
+			}
 		};
 
 		constexpr long double celsius() const { return temperature; };
@@ -40,25 +40,25 @@ namespace devuino::utilities
 		constexpr Temperature operator-() const { return Temperature {-this->temperature}; }
 		constexpr Temperature operator+() const { return *this; }
 
-		Temperature& operator+=(Temperature const& rhs)
+		constexpr Temperature& operator+=(Temperature const& rhs)
 		{
 			this->temperature += rhs.temperature;
 			return *this;
 		}
 
-		Temperature& operator-=(Temperature const& rhs)
+		constexpr Temperature& operator-=(Temperature const& rhs)
 		{
 			this->temperature -= rhs.temperature;
 			return *this;
 		}
 
-		Temperature& operator*=(const long double rhs)
+		constexpr Temperature& operator*=(const long double rhs)
 		{
 			this->temperature *= rhs;
 			return *this;
 		}
 
-		Temperature& operator/=(const long double rhs)
+		constexpr Temperature& operator/=(const long double rhs)
 		{
 			this->temperature /= rhs;
 			return *this;

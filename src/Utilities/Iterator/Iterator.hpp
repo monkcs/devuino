@@ -17,7 +17,7 @@ namespace devuino::utilities
 		constexpr bool operator==(const Iterator& rhs) const { return pointer == rhs.pointer; }
 		constexpr bool operator!=(const Iterator& rhs) const { return pointer != rhs.pointer; }
 
-		void operator++() { ++pointer; }
-		void operator--() { --pointer; }
+		constexpr void operator++() { ++pointer; }
+		constexpr void operator--() { --pointer; }
 	};
 }
