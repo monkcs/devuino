@@ -12,7 +12,24 @@ namespace devuino::utilities
 		const char* backend;
 
 		/* Calculates string lenght exclusive null-terminator */
-		constexpr static size_t calculate(const char* string) { return (*string) ? (1 + calculate(string + 1)) : 0; }
+		constexpr static size_t calculate(const char* string)
+		{
+			/* Use non-recursive algorithm to calculate lenght */
+			if (true)
+			{
+				size_t lenght = 0;
+				while (*string)
+				{
+					lenght += 1;
+					string += 1;
+				}
+				return lenght;
+			}
+			else
+			{
+				return (*string) ? (1 + calculate(string + 1)) : 0;
+			}
+		}
 
 	  public:
 		/* Construct stringview to a raw char array that is null-terminated */
