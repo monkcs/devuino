@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include "../../Onboard/SPI.hpp"
 #include "../../Utilities/Display/SegmentDisplay/SevenSegmentString.hpp"
 #include "../../Utilities/Iterator/Iterator.hpp"
 #include "../../Utilities/Resolution/Resolution.hpp"
@@ -17,7 +16,7 @@
 namespace devuino::device
 {
 	// TODO: Implement support for multiple units
-	template<typename ChipSelect = devuino::onboard::DigitalOutput>	   //, unsigned int units = 1>
+	template<typename SpiController>
 	class MAX7219
 	{
 	  public:
@@ -42,33 +41,25 @@ namespace devuino::device
 		};
 
 	  private:
-		devuino::onboard::spi::Controller<ChipSelect> spi;
-		Resolution bitsize;
+		SpiController spi;
+		Resolution<4> bitsize {};
 		uint8_t bright;
-		Decode decoding;
 		bool status;
 
 	  public:
-		SevenSegmentString</*units * */ 8> buffer;
+		SevenSegmentString<8> buffer;
 
-		MAX7219(const devuino::onboard::spi::Controller<ChipSelect> spi,
-				const bool initial = true,
-				const SevenSegmentString<8> buffer = {}) :
+		MAX7219(const SpiController spi, const bool initial = true, const Stringview string = {}) :
 
-			spi {spi},
-			bitsize {4},
-			bright {static_cast<uint8_t>(bitsize.maximum)},
-			decoding {Decode::None},
-			status {initial},
-			buffer {buffer}
+			spi {spi}, bright {static_cast<uint8_t>(bitsize.maximum)}, status {initial}, buffer {string}
 		{
 			/* Reset display */
 			brightness(bright);
-			decode(decoding);
-			clear();
+			decode(Decode::None);
 			scanlimit(Scanlimit::D01234567);
 			test(false);
-			set(status);
+			print();
+			set(initial);
 		}
 
 		~MAX7219()
@@ -79,23 +70,14 @@ namespace devuino::device
 
 		void print()
 		{
-			// TODO: Implement support for multiple units
-
 			auto transaction = spi.transaction();
 
 			uint8_t index {8};
-			for (const auto& character : buffer)
+			for (const auto character : buffer)
 			{
 				transaction.transfer(index, static_cast<uint8_t>(character));
 				--index;
 			}
-
-			/*
-			for (uint8_t i = 0; i < units * 8; i++)
-			{
-				spi.transfer(i + 1, buffer[(units * 8 - 1) - i]);
-			}
-			*/
 		}
 
 		/*  Test mode turns on all digits at full brightness.
@@ -109,8 +91,6 @@ namespace devuino::device
 		/* Set how many of the digits to decode using code-b */
 		void decode(const Decode mode)
 		{
-			decoding = mode;
-
 			auto transaction = spi.transaction();
 
 			switch (mode)
@@ -174,18 +154,26 @@ namespace devuino::device
 			transaction.transfer(0x0c, value);
 		}
 
-		void operator=(const devuino::utilities::Stringview& string)
+		constexpr void operator=(const SevenSegmentString<8> string)
 		{
 			buffer = string;
 			print();
 		}
 
-		SevenSegmentCharacter operator[](const size_t position) const { return buffer[position]; }
-		SevenSegmentCharacter& operator[](const size_t position) { return buffer[position]; }
+		void operator=(const devuino::utilities::Stringview string)
+		{
+			buffer = string;
+			print();
+		}
 
-		devuino::utilities::Iterator<const SevenSegmentCharacter> begin() const { return buffer.begin(); }
-		devuino::utilities::Iterator<const SevenSegmentCharacter> end() const { return buffer.end(); }
-		devuino::utilities::Iterator<SevenSegmentCharacter> begin() { return buffer.begin(); }
-		devuino::utilities::Iterator<SevenSegmentCharacter> end() { return buffer.end(); }
+		constexpr SevenSegmentCharacter operator[](const size_t position) const { return buffer[position]; }
+		constexpr SevenSegmentCharacter& operator[](const size_t position) { return buffer[position]; }
+
+		constexpr devuino::utilities::Iterator<const SevenSegmentCharacter> begin() const { return buffer.begin(); }
+		constexpr devuino::utilities::Iterator<const SevenSegmentCharacter> end() const { return buffer.end(); }
+		constexpr devuino::utilities::Iterator<SevenSegmentCharacter> begin() { return buffer.begin(); }
+		constexpr devuino::utilities::Iterator<SevenSegmentCharacter> end() { return buffer.end(); }
+
+		constexpr decltype(bitsize) resolution() const { return bitsize; }
 	};
 }
