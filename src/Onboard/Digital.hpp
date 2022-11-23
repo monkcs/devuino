@@ -17,7 +17,7 @@ namespace devuino::onboard
 		DigitalInput(const uint8_t pin, volatile uint8_t& port, volatile uint8_t& input, volatile uint8_t& ddr) :
 			bitmask {static_cast<uint8_t>(1 << pin)}, internal_resistor {port}, input {input}
 		{
-			ddr |= bitmask;
+			ddr &= ~bitmask;
 		}
 
 		/*
