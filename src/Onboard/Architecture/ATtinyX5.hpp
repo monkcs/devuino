@@ -2,6 +2,7 @@
 
 #include "../Analog.hpp"
 #include "../Digital.hpp"
+#include "../SpiATtiny.hpp"
 
 #include <Arduino.h>
 
@@ -174,10 +175,17 @@ namespace devuino::onboard
 			void disable() const { cli(); }
 		};
 
+		class USI
+		{
+		  public:
+			[[nodiscard]] auto spi() const { return SpiATtiny {DDRB, PB2, PB1, PB0}; }
+		};
+
 	  public:
 		const Analog analog {};
 		const Digital digital {};
 		const Interrupt interrupt {};
+		const USI usi {};
 	};
 
 	using ATtiny45 = ATtiny25;

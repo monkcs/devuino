@@ -38,7 +38,7 @@
 #include "Device/Light/LightRgb.hpp"
 #include "Device/MAX7219/DotMatrix.hpp"
 // #include "Device/MAX7219/DotMatrixMAX7219.hpp"
-// #include "Device/MAX7219/SegmentDisplayMAX7219.hpp"
+#include "Device/MAX7219/SegmentDisplayMAX7219.hpp"
 #include "Device/Potentiometer/Potentiometer.hpp"
 #include "Device/Resistance/Resistance.hpp"
 #include "Device/Switch/Switch.hpp"
@@ -58,9 +58,10 @@
 #include "Utilities/Temperature/Temperature.hpp"
 
 /* Include I/O interfaces */
-#include "Onboard/SPI.hpp"
+#include "Onboard/SpiATtiny.hpp"
 
 /* Architecture */
+#include "Device/MAX7219/DotMatrix.hpp"
 #include "Onboard/Architecture/ATtinyX5.hpp"
 
 /* Put all namspaces in scope */
@@ -69,4 +70,3 @@ using namespace devuino::pin;
 using namespace devuino::onboard;
 using namespace devuino::device;
 using namespace devuino::utilities;
-using namespace devuino::onboard::spi;
