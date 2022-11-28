@@ -54,7 +54,7 @@ namespace devuino::utilities
 		};
 
 	  public:
-		SevenSegmentCharacter() = default;
+		constexpr SevenSegmentCharacter() : character {0} {};
 
 		constexpr SevenSegmentCharacter(const char character, const bool raw = false) :
 			character {raw ? static_cast<uint8_t>(character) : convert(character)} {};
@@ -77,5 +77,5 @@ namespace devuino::utilities
 	};
 
 	/* User defined litterals */
-	constexpr SevenSegmentCharacter operator""_char7s(const char character) { return SevenSegmentCharacter {character}; }
+	constexpr SevenSegmentCharacter operator""_char7s(const char character) { return character; }
 }
