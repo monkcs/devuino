@@ -88,7 +88,7 @@ namespace devuino::utilities
 		}
 
 		/* Clear the array */
-		constexpr void clear() { this->fill('\0'); }
+		constexpr void clear() { this->fill(SevenSegmentCharacter {}); }
 
 		/* Bound checked index access, access outside string returns empty character */
 		constexpr SevenSegmentCharacter at(const size_t position) const
@@ -101,8 +101,8 @@ namespace devuino::utilities
 
 		constexpr bool operator==(const SevenSegmentString<lenght>& other) const
 		{
-			return equals(static_cast<Array<SevenSegmentCharacter, lenght>>(other));
+			return this->equals(static_cast<Array<SevenSegmentCharacter, lenght>>(other));
 		}
-		constexpr bool operator!=(const SevenSegmentString<lenght>& other) const { return !(this == other); }
+		constexpr bool operator!=(const SevenSegmentString<lenght>& other) const { return !operator==(other); }
 	};
 }

@@ -52,7 +52,11 @@ namespace devuino::utilities
 		constexpr Iterator<Type> begin() { return {buffer}; }
 		constexpr Iterator<Type> end() { return {buffer + lenght}; }
 
-		constexpr bool operator==(const Array<Type, lenght>& other) const
+		constexpr bool operator==(const Array<Type, lenght>& other) const { return equals(other); }
+		constexpr bool operator!=(const Array<Type, lenght>& other) const { return !operator==(other); }
+
+	  protected:
+		constexpr bool equals(const Array<Type, lenght>& other) const
 		{
 			for (size_t index {}; index < lenght; ++index)
 			{
@@ -63,6 +67,5 @@ namespace devuino::utilities
 			}
 			return true;
 		}
-		constexpr bool operator!=(const Array<Type, lenght>& other) const { return !operator==(other); }
 	};
 }
