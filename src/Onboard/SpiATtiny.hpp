@@ -29,7 +29,7 @@ namespace devuino::onboard
 			{
 				devuino::device::Switch<DigitalBackendTransaction>& chipselect;
 
-				uint8_t send(const uint8_t data) const
+				uint8_t sendrecive(const uint8_t data) const
 				{
 					/* Copy data into transmission register */
 					USIDR = data;
@@ -47,6 +47,23 @@ namespace devuino::onboard
 
 					/* Return incomming data from peripheral */
 					return USIBR;
+				}
+
+				void send(const uint8_t data) const
+				{
+					/* Copy data into transmission register */
+					USIDR = data;
+
+					/* Clear 'Counter Overflow Interrupt Flag' */
+					USISR = (1 << USIOIF);
+
+					// ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+					{
+						while (!(USISR & (1 << USIOIF)))
+						{
+							USICR |= (1 << USITC);
+						}
+					}
 				}
 
 			  public:
@@ -69,20 +86,35 @@ namespace devuino::onboard
 					}
 				}
 
-				uint8_t transfer(const uint8_t data) const
+				void transfer(const uint8_t data) const
 				{
 					chipselect.off();
-					const auto result = send(data);
+					send(data);
+					chipselect.on();
+				}
+
+				void transfer(const uint8_t address, const uint8_t data) const
+				{
+					chipselect.off();
+					send(address);
+					send(data);
+					chipselect.on();
+				}
+
+				uint8_t exchange(const uint8_t data) const
+				{
+					chipselect.off();
+					const auto result = sendrecive(data);
 					chipselect.on();
 
 					return result;
 				}
 
-				uint8_t transfer(const uint8_t address, const uint8_t data) const
+				uint8_t exchange(const uint8_t address, const uint8_t data) const
 				{
 					chipselect.off();
 					send(address);
-					const auto result = send(data);
+					const auto result = sendrecive(data);
 					chipselect.on();
 
 					return result;
@@ -127,7 +159,7 @@ namespace devuino::onboard
 		}
 
 		template<typename DigitalBackend = devuino::onboard::DigitalOutput>
-		[[nodiscard]] Controller<DigitalBackend> controller(const DigitalBackend chipselect, const SPI::Mode mode)
+		[[nodiscard]] Controller<DigitalBackend> controller(const DigitalBackend chipselect, const SPI::Mode mode) const
 		{
 			return {chipselect, mode};
 		}
