@@ -20,4 +20,21 @@ namespace devuino::utilities
 		constexpr void operator++() { ++pointer; }
 		constexpr void operator--() { --pointer; }
 	};
+
+	template<typename Type>
+	class ReverseIterator
+	{
+	  public:
+		Type* pointer;
+
+		constexpr Type& operator*() { return *pointer; }
+		constexpr Type& next() { return *(pointer - 1); }
+		constexpr Type& previous() { return *(pointer + 1); }
+
+		constexpr bool operator==(const ReverseIterator& rhs) const { return pointer == rhs.pointer; }
+		constexpr bool operator!=(const ReverseIterator& rhs) const { return pointer != rhs.pointer; }
+
+		constexpr void operator++() { --pointer; }
+		constexpr void operator--() { ++pointer; }
+	};
 }

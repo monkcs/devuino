@@ -52,6 +52,11 @@ namespace devuino::utilities
 		constexpr Iterator<Type> begin() { return {buffer}; }
 		constexpr Iterator<Type> end() { return {buffer + lenght}; }
 
+		constexpr ReverseIterator<const Type> rbegin() const { return {buffer + lenght - 1}; }
+		constexpr ReverseIterator<const Type> rend() const { return {buffer - 1}; }
+		constexpr ReverseIterator<Type> rbegin() { return {buffer + lenght - 1}; }
+		constexpr ReverseIterator<Type> rend() { return {buffer - 1}; }
+
 		constexpr bool operator==(const Array<Type, lenght>& other) const { return equals(other); }
 		constexpr bool operator!=(const Array<Type, lenght>& other) const { return !operator==(other); }
 
