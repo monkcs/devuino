@@ -21,16 +21,23 @@ namespace devuino::utilities::animation
 		Maximum
 	};
 
-	/* A LightSource needs to provide 'this->operator devuino::utilities::Resolution()'
-	   and this->brightness(integer) */
+	/// @brief Fade from Origin to Target
+	/// @tparam LightSource Needs to provide 'devuino::utilities::Resolution resolution()' and 'void brightness(integer)'
+	/// @param light Light to fade
+	/// @param origin Origin to fade from
+	/// @param target Target to fade to
 	template<typename LightSource>
 	static void fade(LightSource& light, const Origin origin, const Target target)
 	{
 		fade(light, origin, target, []() {});
 	};
 
-	/* A LightSource needs to provide 'this->operator devuino::utilities::Resolution()'
-	   and this->brightness(integer) */
+	/// @brief Fade from Origin to Target
+	/// @tparam LightSource Needs to provide 'devuino::utilities::Resolution resolution()' and 'void brightness(integer)'
+	/// @param light Light to fade
+	/// @param origin Origin to fade from
+	/// @param target Target to fade to
+	/// @param function Lambda to call after each fade step
 	template<typename LightSource, typename Lambda>
 	static void fade(LightSource& light, const Origin origin, const Target target, Lambda function)
 	{
