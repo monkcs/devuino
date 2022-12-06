@@ -18,28 +18,28 @@ namespace devuino::utilities
 	}
 
 	template<Bits size>
-	struct Storage;
+	struct ResolutionStorage;
 
 	template<>
-	struct Storage<Bits::bits8>
+	struct ResolutionStorage<Bits::bits8>
 	{
 		using type = uint_least8_t;
 	};
 
 	template<>
-	struct Storage<Bits::bits16>
+	struct ResolutionStorage<Bits::bits16>
 	{
 		using type = uint_least16_t;
 	};
 
 	template<>
-	struct Storage<Bits::bits32>
+	struct ResolutionStorage<Bits::bits32>
 	{
 		using type = uint_least32_t;
 	};
 
 	template<>
-	struct Storage<Bits::bits64>
+	struct ResolutionStorage<Bits::bits64>
 	{
 		using type = uint_least64_t;
 	};
@@ -52,7 +52,7 @@ namespace devuino::utilities
 
 	  public:
 		uint8_t bits = static_cast<uint8_t>(bitsize);
-		typename Storage<calculate(bitsize)>::type maximum;
+		typename ResolutionStorage<calculate(bitsize)>::type maximum;
 
 		/* Calculate the maximum value, provided the number of bits in template parameter */
 		constexpr Resolution() : maximum {static_cast<decltype(maximum)>((static_cast<uint_least64_t>(1) << bitsize) - 1)} { }
