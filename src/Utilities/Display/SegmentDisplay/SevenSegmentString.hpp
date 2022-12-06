@@ -12,13 +12,34 @@ namespace devuino::utilities
 	using devuino::utilities::Iterator;
 	using devuino::utilities::Stringview;
 
-	template<size_t lenght>
+	enum class SevenSegmentStringLayout
+	{
+		FirstCharacterFirst,
+		FirstCharacterLast
+	};
+
+	/// @brief Fixed size string of SevenSegmentCharacter
+	/// @tparam lenght Lenght of string
+	/// @tparam MSB Character layout order
+	template<size_t lenght, bool MSB = true>
 	class SevenSegmentString : public Array<SevenSegmentCharacter, lenght>
 	{
 		static_assert(lenght > 0, "Lenght of SevenSegmentString cannot be zero");
+		using Layout = SevenSegmentStringLayout;
 
 	  public:
 		SevenSegmentString() = default;
+		constexpr SevenSegmentString(const char character)
+		{
+			if (MSB)
+			{
+				this->front() = character;
+			}
+			else
+			{
+				this->back() = character;
+			}
+		}
 		constexpr SevenSegmentString(const Stringview string)
 		{
 			/*
@@ -41,42 +62,75 @@ namespace devuino::utilities
 					previously_merged = true;
 				}
 
-				auto iterator_buffer = this->begin();
-				auto iterator_string = string.begin();
-
-				*iterator_buffer = *iterator_string;
-				++iterator_buffer;
-				++iterator_string;
-
-				while (iterator_buffer != this->end() && iterator_string != string.end())
+				if (MSB == true)
 				{
-					if (*iterator_string == '.' && previously_merged == false)
-					{
-						iterator_buffer.previous() |= '.';
-						previously_merged = true;
-					}
-					else
-					{
-						*iterator_buffer = *iterator_string;
+					auto iterator_buffer = this->begin();
+					auto iterator_string = string.begin();
 
-						previously_merged = false;
-						++iterator_buffer;
-					}
+					*iterator_buffer = *iterator_string;
+					++iterator_buffer;
 					++iterator_string;
-				}
 
-				/* Even if iterator_buffer is at end, a last '.' can be merged on the last character */
-				if (iterator_string != string.end())
-				{
-					if (*iterator_string == '.')
+					while (iterator_buffer != this->end() && iterator_string != string.end())
 					{
-						iterator_buffer.previous() |= '.';
+						if (*iterator_string == '.' && previously_merged == false)
+						{
+							iterator_buffer.previous() |= '.';
+							previously_merged = true;
+						}
+						else
+						{
+							*iterator_buffer = *iterator_string;
+
+							previously_merged = false;
+							++iterator_buffer;
+						}
+						++iterator_string;
+					}
+
+					/* Even if iterator_buffer is at end, a last '.' can be merged on the last character */
+					if (iterator_string != string.end())
+					{
+						if (*iterator_string == '.')
+						{
+							iterator_buffer.previous() |= '.';
+						}
 					}
 				}
-
-				if (iterator_buffer != this->end())
+				else
 				{
-					*iterator_buffer = '\0';
+					auto iterator_buffer = this->rbegin();
+					auto iterator_string = string.begin();
+
+					*iterator_buffer = *iterator_string;
+					++iterator_buffer;
+					++iterator_string;
+
+					while (iterator_buffer != this->rend() && iterator_string != string.end())
+					{
+						if (*iterator_string == '.' && previously_merged == false)
+						{
+							iterator_buffer.previous() |= '.';
+							previously_merged = true;
+						}
+						else
+						{
+							*iterator_buffer = *iterator_string;
+
+							previously_merged = false;
+							++iterator_buffer;
+						}
+						++iterator_string;
+					}
+
+					/* Even if iterator_buffer is at end, a last '.' can be merged on the last character */
+					if (iterator_string != string.end())
+					{
+						if (*iterator_string == '.')
+						{
+							iterator_buffer.previous() |= '.';
+						}
+					}
 				}
 			}
 		}
@@ -87,10 +141,12 @@ namespace devuino::utilities
 			return *this;
 		}
 
-		/* Clear the array */
+		/// @brief Clear the array
 		constexpr void clear() { this->fill(SevenSegmentCharacter {}); }
 
-		/* Bound checked index access, access outside string returns empty character */
+		/// @brief Bound checked index access
+		/// @param position Position of character
+		/// @return Character at position, access outside string return empty character
 		constexpr SevenSegmentCharacter at(const size_t position) const
 		{
 			return position < lenght ? this->buffer[position] : SevenSegmentCharacter {};
