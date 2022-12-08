@@ -196,12 +196,20 @@ namespace devuino::onboard
 			}
 
 			/// @brief Read the value at the current address
-			uint8_t read(const uint8_t address) const
+			uint8_t read(const uint16_t address) const
 			{
 				/* Wait for completion of previous write */
 				while (EECR & (1 << EEPE)) { }
 
-				EEAR = address;
+				if (eeprom_size <= 256)
+				{
+					EEARL = address;
+				}
+				else
+				{
+					EEARH = address >> 8;
+					EEARL = address;
+				}
 
 				/* Start eeprom read by writing EERE */
 				EECR |= (1 << EERE);
@@ -209,12 +217,20 @@ namespace devuino::onboard
 				return EEDR;
 			}
 
-			void write(const uint8_t address, const uint8_t data)
+			void write(const uint16_t address, const uint8_t data)
 			{
 				/* Wait for completion of previous write */
 				while (EECR & (1 << EEPE)) { }
 
-				EEAR = address;
+				if (eeprom_size <= 256)
+				{
+					EEARL = address;
+				}
+				else
+				{
+					EEARH = address >> 8;
+					EEARL = address;
+				}
 				EEDR = data;
 
 				/* Write logical one to EEMPE */
@@ -236,5 +252,5 @@ namespace devuino::onboard
 
 	using ATtiny25 = ATtinyX5<2048, 128, 128>;
 	using ATtiny45 = ATtinyX5<4096, 256, 256>;
-	using ATtiny85 = ATtinyX5<8192, 512, 256>;
+	using ATtiny85 = ATtinyX5<8192, 512, 512>;
 }

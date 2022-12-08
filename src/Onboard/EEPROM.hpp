@@ -10,7 +10,7 @@ namespace devuino::onboard
 	class EEPROM
 	{
 		static_assert(lenght > 0, "Storage size of EEPROM needs to be larger than zero");
-		static_assert(lenght <= 256, "Current implementation cannot handle larger storage size than 256");
+		static_assert(lenght <= 512, "Current implementation cannot handle larger storage size than 65536");
 
 		EepromBackend backend;
 
@@ -25,10 +25,10 @@ namespace devuino::onboard
 			class ByteAccess
 			{
 				EepromBackend& backend;
-				uint8_t address;
+				uint16_t address;
 
 			  public:
-				constexpr ByteAccess(EepromBackend& backend, const uint8_t address) : backend {backend}, address {address} { }
+				constexpr ByteAccess(EepromBackend& backend, const uint16_t address) : backend {backend}, address {address} { }
 
 				operator uint8_t() const { return read(); }
 
@@ -130,9 +130,9 @@ namespace devuino::onboard
 			{
 			  public:
 				EepromBackend& backend;
-				int address;
+				uint16_t address;
 
-				constexpr Type operator*() { return Type {backend, static_cast<uint8_t>(address)}; }
+				constexpr Type operator*() { return Type {backend, address}; }
 
 				constexpr bool operator==(const Iterator& rhs) const { return address == rhs.address; }
 				constexpr bool operator!=(const Iterator& rhs) const { return !operator==(rhs); }
@@ -144,9 +144,9 @@ namespace devuino::onboard
 			{
 			  public:
 				EepromBackend& backend;
-				int address;
+				uint16_t address;
 
-				constexpr Type operator*() { return Type {backend, static_cast<uint8_t>(address)}; }
+				constexpr Type operator*() { return Type {backend, address}; }
 
 				constexpr bool operator==(const ReverseIterator& rhs) const { return address == rhs.address; }
 				constexpr bool operator!=(const ReverseIterator& rhs) const { return !operator==(rhs); }
@@ -189,8 +189,8 @@ namespace devuino::onboard
 			constexpr ReverseIterator<ByteAccess> rbegin() { return {backend, offset + allocation - 1}; }
 			constexpr ReverseIterator<ByteAccess> rend() { return {backend, offset - 1}; }
 
-			constexpr const ByteAccess operator[](const uint8_t address) const { return {backend, address}; }
-			constexpr ByteAccess operator[](const uint8_t address) { return {backend, address}; }
+			constexpr const ByteAccess operator[](const uint16_t address) const { return {backend, address}; }
+			constexpr ByteAccess operator[](const uint16_t address) { return {backend, address}; }
 		};
 
 	  public:
