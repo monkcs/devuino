@@ -2,13 +2,15 @@
 
 #include "../Analog.hpp"
 #include "../Digital.hpp"
+#include "../EEPROM.hpp"
 #include "../SpiATtiny.hpp"
 
 #include <Arduino.h>
 
 namespace devuino::onboard
 {
-	class ATtiny25
+	template<int flash_size, int eeprom_size, int sram_size>
+	class ATtinyX5
 	{
 	  public:
 		enum class Trigger : uint8_t
@@ -34,11 +36,11 @@ namespace devuino::onboard
 		  public:
 			/// Low-level access to analog output pin onboard device.
 			/// @param pin Arduino pin numbering.
-			[[nodiscard]] auto output(const ArduinoPin pin) const { return AnalogOutput {pin}; }
+			[[nodiscard]] auto output(const ArduinoPin pin) { return AnalogOutput {pin}; }
 
 			/// Low-level access to analog input pin onboard device.
 			/// @param pin Arduino analog pin numbering.
-			[[nodiscard]] auto input(const ArduinoPin pin) const
+			[[nodiscard]] auto input(const ArduinoPin pin)
 			{
 				switch (pin)
 				{
@@ -66,7 +68,7 @@ namespace devuino::onboard
 		  public:
 			/// Low-level access to digital output pin onboard device.
 			/// @param pin Arduino pin numbering.
-			[[nodiscard]] auto output(const ArduinoPin pin) const
+			[[nodiscard]] auto output(const ArduinoPin pin)
 			{
 				switch (pin)
 				{
@@ -83,7 +85,7 @@ namespace devuino::onboard
 
 			/// Low-level access to digital input pin onboard device.
 			/// @param pin Arduino pin numbering.
-			[[nodiscard]] auto input(const ArduinoPin pin) const
+			[[nodiscard]] auto input(const ArduinoPin pin)
 			{
 				switch (pin)
 				{
@@ -130,20 +132,20 @@ namespace devuino::onboard
 			  public:
 				/// Enable interrupt for pin change, located on (physical pin 1, 2, 3, 5, 6, 7), (arduino pin 0, 1, 2, 3, 4, 5),
 				/// (whole PORTB).
-				void enable() const { GIMSK |= (1 << PCIE); }
+				void enable() { GIMSK |= (1 << PCIE); }
 
 				/// Disable interrupt for pin change, located on (physical pin 1, 2, 3, 5, 6, 7), (arduino pin 0, 1, 2, 3, 4, 5),
 				/// (whole PORTB).
-				void disable() const { GIMSK &= ~(1 << PCIE); }
+				void disable() { GIMSK &= ~(1 << PCIE); }
 
 				/// Attach pin for interrupt on pin change, located on (physical pin 1, 2, 3, 5, 6, 7), (arduino pin 0, 1, 2, 3, 4,
 				/// 5), (whole PORTB).
 				/// @param pin Arduino pin numbering.
-				void attach(const ArduinoPin pin) const { PCMSK |= pin; }
+				void attach(const ArduinoPin pin) { PCMSK |= pin; }
 
 				/// Detach pin for interrupt on pin change.
 				/// @param pin Arduino pin numbering.
-				void detach(const ArduinoPin pin) const { PCMSK &= ~pin; }
+				void detach(const ArduinoPin pin) { PCMSK &= ~pin; }
 			};
 
 			class External
@@ -151,22 +153,22 @@ namespace devuino::onboard
 			  public:
 				/// Enable interrupt INT0, located on physical pin 7.
 				/// @param trigger Condition that will trigger an interrupt.
-				void enable(const Trigger trigger) const
+				void enable(const Trigger trigger)
 				{
 					MCUCR |= static_cast<uint8_t>(trigger);
 					GIMSK |= (1 << INT0);
 				}
 
 				/// Disable interrupt INT0, located on physical pin 7.
-				void disable() const { GIMSK &= ~(1 << INT0); }
+				void disable() { GIMSK &= ~(1 << INT0); }
 			};
 
 		  public:
 			/// Interrupt for pin change, located on (physical pin 1, 2, 3, 5, 6, 7), (arduino pin 0, 1, 2, 3, 4, 5), (whole PORTB).
-			const PinChange pinchange {};
+			PinChange pinchange {};
 
 			/// Interrupt INT0, located on physical pin 7.
-			const External external {};
+			External external {};
 
 			/// Enable global interrupts
 			void enable() const { sei(); }
@@ -178,16 +180,61 @@ namespace devuino::onboard
 		class USI
 		{
 		  public:
-			[[nodiscard]] auto spi() const { return SpiATtiny {DDRB, PB2, PB1, PB0}; }
+			USI(const USI&) = delete;
+			USI& operator=(const USI&) = delete;
+
+			[[nodiscard]] auto spi() { return SpiATtiny {DDRB, PB2, PB1, PB0}; }
+		};
+
+		class EepromBackend
+		{
+		  public:
+			EepromBackend()
+			{
+				/* Set Programming mode */
+				EECR = (0 << EEPM1) | (0 << EEPM0);
+			}
+
+			/// @brief Read the value at the current address
+			uint8_t read(const uint8_t address) const
+			{
+				/* Wait for completion of previous write */
+				while (EECR & (1 << EEPE)) { }
+
+				EEAR = address;
+
+				/* Start eeprom read by writing EERE */
+				EECR |= (1 << EERE);
+
+				return EEDR;
+			}
+
+			void write(const uint8_t address, const uint8_t data)
+			{
+				/* Wait for completion of previous write */
+				while (EECR & (1 << EEPE)) { }
+
+				EEAR = address;
+				EEDR = data;
+
+				/* Write logical one to EEMPE */
+				EECR |= (1 << EEMPE);
+
+				/* Start eeprom write by setting EEPE */
+				EECR |= (1 << EEPE);
+			}
 		};
 
 	  public:
-		const Analog analog {};
-		const Digital digital {};
-		const Interrupt interrupt {};
-		const USI usi {};
+		Analog analog {};
+		Digital digital {};
+		Interrupt interrupt {};
+		USI usi {};
+
+		[[nodiscard]] auto eeprom() { return EEPROM<eeprom_size, EepromBackend> {{}}; }
 	};
 
-	using ATtiny45 = ATtiny25;
-	using ATtiny85 = ATtiny25;
+	using ATtiny25 = ATtinyX5<2048, 128, 128>;
+	using ATtiny45 = ATtinyX5<4096, 256, 256>;
+	using ATtiny85 = ATtinyX5<8192, 512, 256>;
 }
