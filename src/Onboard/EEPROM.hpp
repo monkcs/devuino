@@ -12,7 +12,7 @@ namespace devuino::onboard
 		static_assert(lenght > 0, "Storage size of EEPROM needs to be larger than zero");
 		static_assert(lenght <= 512, "Current implementation cannot handle larger storage size than 65536");
 
-		EepromBackend backend;
+		mutable EepromBackend backend;
 
 		template<int allocation = lenght, int offset = 0>
 		class Allocation
@@ -30,7 +30,7 @@ namespace devuino::onboard
 			  public:
 				constexpr ByteAccess(EepromBackend& backend, const uint16_t address) : backend {backend}, address {address} { }
 
-				operator uint8_t() const { return read(); }
+				constexpr operator uint8_t() const { return read(); }
 
 				/// @brief Update the value if the new one is different from the old one
 				constexpr ByteAccess& operator=(const uint8_t data)
@@ -158,7 +158,7 @@ namespace devuino::onboard
 			constexpr Allocation(EepromBackend& backend) : backend {backend} { }
 
 			/// @brief Size in bytes of allocation
-			static constexpr int size() { return allocation; }
+			constexpr static int size() { return allocation; }
 
 			/// @brief Erase (set to zero) all bytes in allocation
 			constexpr void erase() { fill(0); }
@@ -194,7 +194,7 @@ namespace devuino::onboard
 		};
 
 	  public:
-		constexpr EEPROM(const EepromBackend backend) : backend {backend} { }
+		constexpr EEPROM(EepromBackend backend) : backend {backend} { }
 
 		EEPROM(const EEPROM&) = delete;
 		EEPROM& operator=(const EEPROM&) = delete;
@@ -223,12 +223,10 @@ namespace devuino::onboard
 			return Storage<Structure, Allocation<sizeof(Structure), offset>> {backend};
 		}
 
-		/*
 		template<typename Structure, int offset = 0>
 		constexpr auto managed() const
 		{
-			return StorageReadonly<Structure, Allocation<sizeof(Structure), offset>> {backend};
+			return StorageReadonly<Structure, const Allocation<sizeof(Structure), offset>> {backend};
 		}
-		*/
 	};
 }
