@@ -70,7 +70,7 @@ namespace devuino::utilities
 	  public:
 		/// @brief Storage is a generic frontend for storing a struct in byte-addressable memory. Constructor will load struct from backend
 		/// memory. Destructor will save struct to backend memory.
-		/// @param StorageBackend Byte-addressable memory backend
+		/// @param backend Byte-addressable memory backend
 		constexpr StorageReadonly(StorageBackend backend) : backend {backend} { load(); }
 
 		constexpr operator Structure() const { return data; }
