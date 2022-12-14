@@ -158,7 +158,7 @@ namespace devuino::onboard
 			constexpr Allocation(EepromBackend& backend) : backend {backend} { }
 
 			/// @brief Size in bytes of allocation
-			constexpr static int size() { return allocation; }
+			constexpr static int size() const { return allocation; }
 
 			/// @brief Erase (set to zero) all bytes in allocation
 			constexpr void erase() { fill(0); }
