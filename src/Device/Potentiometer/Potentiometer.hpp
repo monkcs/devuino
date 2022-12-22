@@ -15,12 +15,15 @@ namespace devuino
 			bool debounce;
 
 		  public:
-			Potentiometer(const AnalogBackend pin, const bool debounce = false, const uint8_t iterations = 10) :
+			constexpr Potentiometer(const AnalogBackend pin, const bool debounce = false, const uint8_t iterations = 10) :
 				pin {pin}, iterations {iterations}, debounce {iterations < 2 ? false : debounce} {};
 
-			double fraction() const { return static_cast<double>(this->operator int()) / static_cast<double>(pin.bitsize.maximum); }
+			constexpr double fraction() const
+			{
+				return static_cast<double>(this->operator int()) / static_cast<double>(pin.bitsize.maximum);
+			}
 
-			operator int() const
+			constexpr operator int() const
 			{
 				if (debounce)
 				{

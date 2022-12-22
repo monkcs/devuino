@@ -10,6 +10,9 @@ namespace devuino::device
 	using namespace devuino::utilities;
 	using devuino::utilities::Lenght;
 
+	/// @brief HCSR04 is a ultrasound distance sensor
+	/// @tparam Trigger Physical or logical trigger pin
+	/// @tparam Echo Physical or logical echo pin
 	template<typename Trigger = devuino::onboard::DigitalOutput, typename Echo = devuino::onboard::DigitalInput>
 	class HCSR04
 	{
@@ -22,19 +25,29 @@ namespace devuino::device
 		bool debounce;
 
 	  public:
-		HCSR04(const Trigger trigger,
-			   const Echo echo,
-			   const bool debounce = false,
-			   const Lenght minimum = 2_centimetre,
-			   const Lenght maximum = 4_metre) :
+		/// @brief HCSR04 is a ultrasound distance sensor
+		/// @param trigger Physical or logical trigger pin
+		/// @param echo Physical or logical echo pin
+		/// @param debounce Configure debounce mitigation by doing ten measurements
+		/// @param minimum Minimum distance device return, physical minimum 2 centimetre
+		/// @param maximum Maximum distance device return, physical maximum 4 metre
+		constexpr HCSR04(const Trigger trigger,
+						 const Echo echo,
+						 const bool debounce = false,
+						 const Lenght minimum = 2_centimetre,
+						 const Lenght maximum = 4_metre) :
 			trigger {Switch<Trigger> {trigger}}, echo {echo}, minimum {minimum}, maximum {maximum}, debounce {debounce}
 		{
 			this->echo.resistor(devuino::pin::Resistor::None);
 		}
 
-		operator Lenght() const { return distance(); };
+		/// @brief Get distance reading
+		/// @return Lenght in range [minimum..maximum]
+		constexpr operator Lenght() const { return distance(); };
 
-		Lenght distance() const
+		/// @brief Get distance reading
+		/// @return Lenght in range [minimum..maximum]
+		constexpr Lenght distance() const
 		{
 			if (debounce)
 			{
@@ -56,7 +69,9 @@ namespace devuino::device
 		};
 
 	  private:
-		Lenght measurement() const
+		/// @brief Get distance reading
+		/// @return Lenght in range [minimum..maximum]
+		constexpr Lenght measurement() const
 		{
 			/*
 				To trigger a distance measurement, a 10 microsecond

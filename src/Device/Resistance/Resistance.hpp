@@ -15,9 +15,9 @@ namespace devuino::device
 	  public:
 		/// Make a reading of a analog input from (T signal) by powering on a resistor from the (T power) pin.
 		/// That to prevent for example powerdraw and corrosion on water sensors.
-		Resistance(const Potentiometer<Signal> signal, const Switch<Power> power) : signal {signal}, power {power} {};
+		constexpr Resistance(const Potentiometer<Signal> signal, const Switch<Power> power) : signal {signal}, power {power} {};
 
-		operator int() const
+		constexpr operator int() const
 		{
 			power.on();
 			const int reading = signal;
@@ -26,7 +26,7 @@ namespace devuino::device
 			return reading;
 		}
 
-		double fraction() const
+		constexpr double fraction() const
 		{
 			power.on();
 			const auto reading = signal.fraction();

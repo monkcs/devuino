@@ -20,13 +20,13 @@ namespace devuino::device
 		/// @brief Light is a generic analog output for controlling light sources
 		/// @param pin Physical or logical pin
 		/// @param initial Configure light on or off
-		Light(const AnalogBackend pin, const bool initial = false) : Light {pin, initial, pin.bitsize.maximum} { }
+		constexpr Light(const AnalogBackend pin, const bool initial = false) : Light {pin, initial, pin.bitsize.maximum} { }
 
 		/// @brief Light is a generic analog output for controlling light sources
 		/// @param pin Physical or logical pin
 		/// @param initial Configure light on or off
 		/// @param brightness Configure light brightness
-		Light(const AnalogBackend pin, const bool initial, const decltype(pin.bitsize.maximum) brightness) :
+		constexpr Light(const AnalogBackend pin, const bool initial, const decltype(pin.bitsize.maximum) brightness) :
 			pin {pin}, bright {brightness}, status {initial}
 		{
 			set(initial);
@@ -34,12 +34,7 @@ namespace devuino::device
 
 		~Light() { off(); }
 
-		const Light& operator=(const bool value) const
-		{
-			value ? on() : off();
-			return *this;
-		}
-		Light& operator=(const bool value)
+		constexpr Light& operator=(const bool value)
 		{
 			set(value);
 			return *this;
@@ -47,24 +42,24 @@ namespace devuino::device
 
 		/// @brief Get status of light
 		/// @returns False if brightness is zero or the light is off
-		constexpr operator bool() { return bright == 0 ? false : status; }
+		constexpr operator bool() const { return bright == 0 ? false : status; }
 
 		/// @brief Increment brightness
-		Light& operator+=(const decltype(pin.bitsize.maximum) value)
+		constexpr Light& operator+=(const decltype(pin.bitsize.maximum) value)
 		{
 			bright += value;
 			set();
 			return *this;
 		}
 		/// @brief Decrement brightness
-		Light& operator-=(const decltype(pin.bitsize.maximum) value)
+		constexpr Light& operator-=(const decltype(pin.bitsize.maximum) value)
 		{
 			bright -= value;
 			set();
 			return *this;
 		}
 
-		void brightness(const decltype(pin.bitsize.maximum) value)
+		constexpr void brightness(const decltype(pin.bitsize.maximum) value)
 		{
 			bright = value;
 			set();
@@ -74,17 +69,15 @@ namespace devuino::device
 
 		/// @brief Set brightness
 		/// @param value New brightness in range [0..1]
-		void fraction(const double value) { brightness(static_cast<decltype(pin.bitsize.maximum)>(pin.bitsize.maximum * value)); }
+		constexpr void fraction(const double value) { brightness(static_cast<decltype(pin.bitsize.maximum)>(pin.bitsize.maximum * value)); }
 
-		void off() const { pin = 0; }
-		void off() { set(false); }
-		void on() const { pin = bright; }
-		void on() { set(true); }
+		constexpr void off() { set(false); }
+		constexpr void on() { set(true); }
 
-		void toggle() { set(!status); }
+		constexpr void toggle() { set(!status); }
 
-		void set() { pin = (status ? bright : 0); }
-		void set(const bool value)
+		constexpr void set() { pin = (status ? bright : 0); }
+		constexpr void set(const bool value)
 		{
 			status = value;
 			pin = (value ? bright : 0);
