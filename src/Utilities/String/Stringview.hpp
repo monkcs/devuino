@@ -38,10 +38,10 @@ namespace devuino::utilities
 		/* Construct stringview to a raw char array where lenght is exclusive null-terminator */
 		constexpr Stringview(const char* raw, const size_t lenght) : size {lenght}, backend {raw} { }
 
+		constexpr Stringview(const String& other) : size {other.size}, backend {other.buffer} { }
+
 		Stringview(const Stringview&) = default;
 		Stringview(Stringview&&) = default;
-
-		constexpr Stringview(const String& other) : size {other.size}, backend {other.buffer} { }
 
 		Stringview& operator=(const Stringview&) = default;
 		Stringview& operator=(Stringview&&) = default;
