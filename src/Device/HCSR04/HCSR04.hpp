@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../Utilities/Lenght/Lenght.hpp"
+#include "../../Utilities/Move/Move.hpp"
 #include "../Switch/Switch.hpp"
 
 #include <stdint.h>
@@ -31,12 +32,16 @@ namespace devuino::device
 		/// @param debounce Configure debounce mitigation by doing ten measurements
 		/// @param minimum Minimum distance device return, physical minimum 2 centimetre
 		/// @param maximum Maximum distance device return, physical maximum 4 metre
-		constexpr HCSR04(const Trigger trigger,
-						 const Echo echo,
+		constexpr HCSR04(Trigger&& trigger,
+						 Echo&& echo,
 						 const bool debounce = false,
 						 const Lenght minimum = 2_centimetre,
 						 const Lenght maximum = 4_metre) :
-			trigger {Switch<Trigger> {trigger}}, echo {echo}, minimum {minimum}, maximum {maximum}, debounce {debounce}
+			trigger {Switch<Trigger> {devuino::move(trigger)}},
+			echo {devuino::move(echo)},
+			minimum {minimum},
+			maximum {maximum},
+			debounce {debounce}
 		{
 			this->echo.resistor(devuino::pin::Resistor::None);
 		}
