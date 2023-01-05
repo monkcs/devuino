@@ -14,16 +14,44 @@ namespace devuino::utilities
 
 		mutable Structure data {};
 		StorageBackend backend;
+		bool valid = true;
 
 	  public:
 		/// @brief Storage is a generic frontend for storing a struct in byte-addressable memory. Constructor will load struct from backend
 		/// memory. Destructor will save struct to backend memory.
 		/// @param StorageBackend Byte-addressable memory backend
 		constexpr Storage(StorageBackend backend) : backend {backend} { load(); }
-		~Storage() { save(); }
+
+		Storage(Storage&) = delete;
+		Storage& operator=(Storage&) = delete;
+
+		constexpr Storage(Storage&& other) noexcept : data {other.data}, backend {devuino::move(other.backend)} { other.valid = false; }
+		constexpr Storage& operator=(Storage&& other) noexcept
+		{
+			if (valid)
+			{
+				save();
+			}
+
+			data = other.data;
+			backend = devuino::move(other.backend);
+
+			valid = true;
+			other.valid = false;
+
+			return *this;
+		}
+
+		~Storage()
+		{
+			if (valid)
+			{
+				save();
+			}
+		}
 
 		constexpr operator Structure() const { return data; }
-		constexpr const Structure* const operator->() const { return &data; }
+		constexpr Structure* operator->() const { return &data; }
 		constexpr Structure* operator->() { return &data; }
 
 		constexpr Storage& operator=(const Structure& structure)
@@ -64,20 +92,14 @@ namespace devuino::utilities
 	{
 		static_assert(sizeof(Structure) <= StorageBackend::size(), "Size of structure cannot be larger than backend storage");
 
-		mutable Structure data {};
+		Structure data {};
 		StorageBackend backend;
 
 	  public:
-		/// @brief Storage is a generic frontend for storing a struct in byte-addressable memory. Constructor will load struct from backend
-		/// memory. Destructor will save struct to backend memory.
+		/// @brief StorageReadonly is a generic read-only frontend for storing a struct in byte-addressable memory. Constructor
+		/// will load struct from backend memory.
 		/// @param backend Byte-addressable memory backend
-		constexpr StorageReadonly(StorageBackend backend) : backend {backend} { load(); }
-
-		constexpr operator Structure() const { return data; }
-		constexpr const Structure* const operator->() const { return &data; }
-
-		/// @brief Load struct from backend memory
-		constexpr void load() const
+		constexpr StorageReadonly(StorageBackend backend) : backend {backend}
 		{
 			char* bytes = reinterpret_cast<char*>(&data);
 
@@ -87,5 +109,8 @@ namespace devuino::utilities
 				bytes[i] = *iterator;
 			}
 		}
+
+		constexpr operator Structure() const { return data; }
+		constexpr Structure* operator->() const { return &data; }
 	};
 }

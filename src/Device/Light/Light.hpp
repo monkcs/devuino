@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../Onboard/Analog.hpp"
+#include "../../Utilities/Move/Move.hpp"
 #include "../../Utilities/Resolution/Resolution.hpp"
 
 namespace devuino::device
@@ -15,24 +16,50 @@ namespace devuino::device
 		AnalogBackend pin;
 		decltype(pin.bitsize.maximum) bright;
 		bool status;
+		bool valid = true;
 
 	  public:
 		/// @brief Light is a generic analog output for controlling light sources
 		/// @param pin Physical or logical pin
 		/// @param initial Configure light on or off
-		constexpr Light(const AnalogBackend pin, const bool initial = false) : Light {pin, initial, pin.bitsize.maximum} { }
+		constexpr Light(AnalogBackend&& pin, const bool initial = false) : Light {devuino::move(pin), initial, pin.bitsize.maximum} { }
 
 		/// @brief Light is a generic analog output for controlling light sources
 		/// @param pin Physical or logical pin
 		/// @param initial Configure light on or off
 		/// @param brightness Configure light brightness
-		constexpr Light(const AnalogBackend pin, const bool initial, const decltype(pin.bitsize.maximum) brightness) :
-			pin {pin}, bright {brightness}, status {initial}
+		constexpr Light(AnalogBackend&& pin, const bool initial, const decltype(pin.bitsize.maximum) brightness) :
+			pin {devuino::move(pin)}, bright {brightness}, status {initial}
 		{
 			set(initial);
 		}
 
-		~Light() { off(); }
+		constexpr Light(Light&& other) : pin {devuino::move(other.pin)}, bright {other.brightness}, status {other.initial}
+		{
+			other.valid = false;
+		}
+		constexpr Light& operator=(Light&& other)
+		{
+			pin = devuino::move(other.pin);
+			bright = other.bright;
+			status = other.status;
+			other.valid = false;
+
+			valid = true;
+
+			return *this;
+		}
+
+		Light(Light&) = delete;
+		Light& operator=(Light&) = delete;
+
+		~Light()
+		{
+			if (valid)
+			{
+				off();
+			}
+		}
 
 		constexpr Light& operator=(const bool value)
 		{

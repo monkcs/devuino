@@ -2,6 +2,7 @@
 
 #include "../../Onboard/Pin.hpp"
 #include "../../Utilities/Light/Colour.hpp"
+#include "../../Utilities/Move/Move.hpp"
 #include "Light.hpp"
 
 namespace devuino::device
@@ -12,19 +13,14 @@ namespace devuino::device
 	class LightRgb
 	{
 	  public:
-		constexpr LightRgb(const AnalogBackend pins[3], const Colour colours = Colour {}, const bool initial = false) :
-			LightRgb<AnalogBackend> {{pins[0], pins[1], pins[2]}, colours, initial} {};
-
-		constexpr LightRgb(const AnalogBackend redpin,
-						   const AnalogBackend greenpin,
-						   const AnalogBackend bluepin,
+		constexpr LightRgb(AnalogBackend&& redpin,
+						   AnalogBackend&& greenpin,
+						   AnalogBackend&& bluepin,
 						   const Colour colours = Colour {},
 						   const bool initial = false) :
-			red {Light<AnalogBackend> {redpin, initial, colours.red}},
-			green {Light<AnalogBackend> {greenpin, initial, colours.green}},
-			blue {Light<AnalogBackend> {bluepin, initial, colours.blue}} {};
-
-		~LightRgb() { set(false); }
+			red {Light<AnalogBackend> {devuino::move(redpin), initial, colours.red}},
+			green {Light<AnalogBackend> {devuino::move(greenpin), initial, colours.green}},
+			blue {Light<AnalogBackend> {devuino::move(bluepin), initial, colours.blue}} {};
 
 		Light<AnalogBackend> red;
 		Light<AnalogBackend> green;

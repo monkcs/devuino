@@ -1,12 +1,13 @@
 #pragma once
 
+#include "../../Utilities/Move/Move.hpp"
 #include "../../Utilities/Resolution/Resolution.hpp"
 #include "../Potentiometer/Potentiometer.hpp"
 #include "../Switch/Switch.hpp"
 
 namespace devuino::device
 {
-	template<typename Signal = devuino::onboard::DigitalInput, typename Power = devuino::onboard::DigitalOutput>
+	template<typename Signal = devuino::onboard::AnalogInput, typename Power = devuino::onboard::DigitalOutput>
 	class Resistance
 	{
 		Potentiometer<Signal> signal;
@@ -15,7 +16,8 @@ namespace devuino::device
 	  public:
 		/// Make a reading of a analog input from (T signal) by powering on a resistor from the (T power) pin.
 		/// That to prevent for example powerdraw and corrosion on water sensors.
-		constexpr Resistance(const Potentiometer<Signal> signal, const Switch<Power> power) : signal {signal}, power {power} {};
+		constexpr Resistance(Potentiometer<Signal>&& signal, Switch<Power>&& power) :
+			signal {devuino::move(signal)}, power {devuino::move(power)} {};
 
 		constexpr operator int() const
 		{

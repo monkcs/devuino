@@ -2,6 +2,7 @@
 
 #include "../../Onboard/Digital.hpp"
 #include "../../Onboard/Pin.hpp"
+#include "../../Utilities/Move/Move.hpp"
 
 namespace devuino::device
 {
@@ -21,8 +22,8 @@ namespace devuino::device
 		/// @param pin Physical or logical pin
 		/// @param pull Configure internal pull resistors
 		/// @param debounce Configure debounce mitigation
-		constexpr Button(const DigitalBackend pin, const Resistor pull = Resistor::None, const bool debounce = false) :
-			pin {pin}, pull {pull}, debounce {debounce}
+		constexpr Button(DigitalBackend&& pin, const Resistor pull = Resistor::None, const bool debounce = false) :
+			pin {devuino::move(pin)}, pull {pull}, debounce {debounce}
 		{
 			this->pin.resistor(pull);
 		}

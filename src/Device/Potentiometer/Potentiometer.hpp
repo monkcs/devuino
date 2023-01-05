@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../Onboard/Analog.hpp"
+#include "../../Utilities/Move/Move.hpp"
 #include "../../Utilities/Resolution/Resolution.hpp"
 
 namespace devuino
@@ -15,8 +16,8 @@ namespace devuino
 			bool debounce;
 
 		  public:
-			constexpr Potentiometer(const AnalogBackend pin, const bool debounce = false, const uint8_t iterations = 10) :
-				pin {pin}, iterations {iterations}, debounce {iterations < 2 ? false : debounce} {};
+			constexpr Potentiometer(AnalogBackend&& pin, const bool debounce = false, const uint8_t iterations = 10) :
+				pin {devuino::move(pin)}, iterations {iterations}, debounce {iterations < 2 ? false : debounce} {};
 
 			constexpr double fraction() const
 			{
