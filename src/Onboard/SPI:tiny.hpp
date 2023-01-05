@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../Device/Switch/Switch.hpp"
+#include "../Utilities/Move/Move.hpp"
 #include "Digital.hpp"
 
-#include <SPI.h>
 #include <stdint.h>
 #include <util/atomic.h>
 
@@ -19,7 +19,7 @@ namespace devuino::onboard
 		};
 	};
 
-	class SpiATtiny
+	class SPItiny
 	{
 		template<typename DigitalBackendController>
 		class Controller
@@ -125,16 +125,18 @@ namespace devuino::onboard
 			SPI::Mode mode;
 
 		  public:
-			Controller(const DigitalBackendController chipselect, const SPI::Mode mode) : chipselect {chipselect}, mode {mode}
+			Controller(DigitalBackendController&& chipselect, const SPI::Mode mode) : chipselect {devuino::move(chipselect)}, mode {mode}
 			{
 				this->chipselect.on();
 			};
 
-			Transaction<DigitalBackendController> transaction() { return Transaction<DigitalBackendController> {chipselect, mode}; }
+			constexpr auto transaction() { return Transaction<DigitalBackendController> {chipselect, mode}; }
 		};
 
+		bool valid = true;
+
 	  public:
-		SpiATtiny(volatile uint8_t& ddr, const uint8_t clock, const uint8_t output, const uint8_t input)
+		constexpr SPItiny(volatile uint8_t& ddr, const uint8_t clock, const uint8_t output, const uint8_t input)
 		{
 			/* Select three-wire mode */
 			USICR = /*(0 << USIWM1) |*/ (1 << USIWM0);
@@ -152,16 +154,24 @@ namespace devuino::onboard
 			/* Set input pin as input */
 			ddr &= ~(1 << input);
 		}
-		~SpiATtiny()
+
+		SPItiny(SPItiny&) = delete;
+		SPItiny& operator=(SPItiny&) = delete;
+
+		constexpr SPItiny(SPItiny&& other) noexcept { other.valid = false; }
+
+		~SPItiny()
 		{
-			/* Disable USI */
-			USICR = (0 << USIWM1) | (0 << USIWM0);
+			if (valid)
+			{
+				/* Disable USI */
+				USICR = (0 << USIWM1) | (0 << USIWM0);
+			}
 		}
 
-		template<typename DigitalBackend = devuino::onboard::DigitalOutput>
-		[[nodiscard]] Controller<DigitalBackend> controller(const DigitalBackend chipselect, const SPI::Mode mode) const
+		[[nodiscard]] constexpr auto controller(auto&& chipselect, const SPI::Mode mode)
 		{
-			return {chipselect, mode};
+			return Controller {devuino::move(chipselect), mode};
 		}
 	};
 }
