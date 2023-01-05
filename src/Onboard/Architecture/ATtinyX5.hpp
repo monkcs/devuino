@@ -1,9 +1,10 @@
 #pragma once
 
+#include "../../Device/EEPROM/EEPROM.hpp"
 #include "../Analog.hpp"
 #include "../Digital.hpp"
-#include "../EEPROM.hpp"
-#include "../SpiATtiny.hpp"
+#include "../EepromBackend:tiny:mega.hpp"
+#include "../SPI:tiny.hpp"
 
 #include <Arduino.h>
 
@@ -24,51 +25,33 @@ namespace devuino::onboard
 	  private:
 		class Analog
 		{
-			class ArduinoPin
-			{
-				uint8_t pin;
-
-			  public:
-				constexpr ArduinoPin(const int pin) : pin {static_cast<uint8_t>(pin)} { }
-				constexpr operator uint8_t() const { return pin; }
-			};
-
 		  public:
 			/// Low-level access to analog output pin onboard device.
 			/// @param pin Arduino pin numbering.
-			[[nodiscard]] auto output(const ArduinoPin pin) { return AnalogOutput {pin}; }
+			[[nodiscard]] auto output(const int pin) { return AnalogOutput {static_cast<uint8_t>(pin)}; }
 
 			/// Low-level access to analog input pin onboard device.
 			/// @param pin Arduino analog pin numbering.
-			[[nodiscard]] auto input(const ArduinoPin pin)
+			[[nodiscard]] auto input(const int pin)
 			{
 				switch (pin)
 				{
-					case A1: return AnalogInput {pin, PB2, DDRB};
-					case A2: return AnalogInput {pin, PB4, DDRB};
-					case A3: return AnalogInput {pin, PB3, DDRB};
+					case A1: return AnalogInput {static_cast<uint8_t>(pin), PB2, DDRB};
+					case A2: return AnalogInput {static_cast<uint8_t>(pin), PB4, DDRB};
+					case A3: return AnalogInput {static_cast<uint8_t>(pin), PB3, DDRB};
 
 					case A0:
-					default: return AnalogInput {pin, PB5, DDRB};
+					default: return AnalogInput {static_cast<uint8_t>(pin), PB5, DDRB};
 				}
 			}
 		};
 
 		class Digital
 		{
-			class ArduinoPin
-			{
-				int pin;
-
-			  public:
-				constexpr ArduinoPin(const int pin) : pin {pin} { }
-				constexpr operator int() const { return pin; }
-			};
-
 		  public:
 			/// Low-level access to digital output pin onboard device.
 			/// @param pin Arduino pin numbering.
-			[[nodiscard]] auto output(const ArduinoPin pin)
+			[[nodiscard]] auto output(const int pin)
 			{
 				switch (pin)
 				{
@@ -85,7 +68,7 @@ namespace devuino::onboard
 
 			/// Low-level access to digital input pin onboard device.
 			/// @param pin Arduino pin numbering.
-			[[nodiscard]] auto input(const ArduinoPin pin)
+			[[nodiscard]] auto input(const int pin)
 			{
 				switch (pin)
 				{
@@ -105,62 +88,65 @@ namespace devuino::onboard
 		{
 			class PinChange
 			{
-				class ArduinoPin
+				class PinChangePin
 				{
-					constexpr uint8_t calculate(const int pin) const
-					{
-						switch (pin)
-						{
-							case 0: return (1 << PCINT0);
-							case 1: return (1 << PCINT1);
-							case 2: return (1 << PCINT2);
-							case 3: return (1 << PCINT3);
-							case 4: return (1 << PCINT4);
-							case 5: return (1 << PCINT5);
-
-							default: return 0;
-						}
-					}
-
+					volatile uint8_t& channel;
 					uint8_t bitmask;
 
 				  public:
-					constexpr ArduinoPin(const int pin) : bitmask {calculate(pin)} { }
-					constexpr operator uint8_t() const { return bitmask; }
+					constexpr PinChangePin(volatile uint8_t& channel, const uint8_t bit) :
+						channel {channel}, bitmask {static_cast<uint8_t>(1 << bit)}
+					{
+					}
+
+					/// @brief Attach pin for interrupt on pin change
+					constexpr void attach() { channel |= bitmask; }
+
+					/// @brief Detach pin for interrupt on pin change
+					constexpr void detach() { channel &= ~bitmask; }
 				};
 
 			  public:
+				/// @brief Access to pin change interrupt, located on (physical pin 1, 2, 3, 5, 6, 7), (arduino pin 0, 1, 2, 3, 4, 5),
+				/// (whole PORTB).
+				/// @param interrupt Pin change using PCINTx numbering
+				[[nodiscard]] constexpr PinChangePin pin(const int interrupt)
+				{
+					switch (interrupt)
+					{
+						case 1: return PinChangePin {PCMSK, PCINT1};
+						case 2: return PinChangePin {PCMSK, PCINT2};
+						case 3: return PinChangePin {PCMSK, PCINT3};
+						case 4: return PinChangePin {PCMSK, PCINT4};
+						case 5: return PinChangePin {PCMSK, PCINT5};
+
+						case 0:
+						default: return PinChangePin {PCMSK, PCINT0};
+					}
+				}
+
 				/// Enable interrupt for pin change, located on (physical pin 1, 2, 3, 5, 6, 7), (arduino pin 0, 1, 2, 3, 4, 5),
 				/// (whole PORTB).
-				void enable() { GIMSK |= (1 << PCIE); }
+				constexpr void enable() { GIMSK |= (1 << PCIE); }
 
 				/// Disable interrupt for pin change, located on (physical pin 1, 2, 3, 5, 6, 7), (arduino pin 0, 1, 2, 3, 4, 5),
 				/// (whole PORTB).
-				void disable() { GIMSK &= ~(1 << PCIE); }
-
-				/// Attach pin for interrupt on pin change, located on (physical pin 1, 2, 3, 5, 6, 7), (arduino pin 0, 1, 2, 3, 4,
-				/// 5), (whole PORTB).
-				/// @param pin Arduino pin numbering.
-				void attach(const ArduinoPin pin) { PCMSK |= pin; }
-
-				/// Detach pin for interrupt on pin change.
-				/// @param pin Arduino pin numbering.
-				void detach(const ArduinoPin pin) { PCMSK &= ~pin; }
+				constexpr void disable() { GIMSK &= ~(1 << PCIE); }
 			};
 
 			class External
 			{
 			  public:
-				/// Enable interrupt INT0, located on physical pin 7.
+				/// Attach interrupt INT0, located on physical pin 7.
 				/// @param trigger Condition that will trigger an interrupt.
-				void enable(const Trigger trigger)
+				void attach(const Trigger trigger)
 				{
 					MCUCR |= static_cast<uint8_t>(trigger);
 					GIMSK |= (1 << INT0);
 				}
 
-				/// Disable interrupt INT0, located on physical pin 7.
-				void disable() { GIMSK &= ~(1 << INT0); }
+				/// Detach interrupt INT0, located on physical pin 7.
+				void detach() { GIMSK &= ~(1 << INT0); }
 			};
 
 		  public:
@@ -183,62 +169,25 @@ namespace devuino::onboard
 			USI(const USI&) = delete;
 			USI& operator=(const USI&) = delete;
 
-			[[nodiscard]] auto spi() { return SpiATtiny {DDRB, PB2, PB1, PB0}; }
+			[[nodiscard]] auto spi() { return SPItiny {DDRB, PB2, PB1, PB0}; }
 		};
 
-		class EepromBackend
+		class Port
 		{
+			/// @brief Global pull-up resistor control
+			class PullUp
+			{
+			  public:
+				/// @brief Globally allow pull-up resistors
+				void enable() { MCUCR &= ~(1 << PUD); }
+
+				/// @brief Globally disallow pull-up resistors
+				void disable() { MCUCR |= (1 << PUD); }
+			};
+
 		  public:
-			EepromBackend()
-			{
-				/* Set Programming mode */
-				EECR = (0 << EEPM1) | (0 << EEPM0);
-			}
-
-			/// @brief Read the value at the current address
-			uint8_t read(const uint16_t address) const
-			{
-				/* Wait for completion of previous write */
-				while (EECR & (1 << EEPE)) { }
-
-				if (eeprom_size <= 256)
-				{
-					EEARL = address;
-				}
-				else
-				{
-					EEARH = address >> 8;
-					EEARL = address;
-				}
-
-				/* Start eeprom read by writing EERE */
-				EECR |= (1 << EERE);
-
-				return EEDR;
-			}
-
-			void write(const uint16_t address, const uint8_t data)
-			{
-				/* Wait for completion of previous write */
-				while (EECR & (1 << EEPE)) { }
-
-				if (eeprom_size <= 256)
-				{
-					EEARL = address;
-				}
-				else
-				{
-					EEARH = address >> 8;
-					EEARL = address;
-				}
-				EEDR = data;
-
-				/* Write logical one to EEMPE */
-				EECR |= (1 << EEMPE);
-
-				/* Start eeprom write by setting EEPE */
-				EECR |= (1 << EEPE);
-			}
+			/// @brief Global pull-up resistor control
+			PullUp pullup {};
 		};
 
 	  public:
@@ -246,8 +195,9 @@ namespace devuino::onboard
 		Digital digital {};
 		Interrupt interrupt {};
 		USI usi {};
+		Port port {};
 
-		[[nodiscard]] auto eeprom() { return EEPROM<eeprom_size, EepromBackend> {{}}; }
+		[[nodiscard]] auto eeprom() { return devuino::device::EEPROM<eeprom_size, EepromBackend> {EepromBackend {}}; }
 	};
 
 	using ATtiny25 = ATtinyX5<2048, 128, 128>;
