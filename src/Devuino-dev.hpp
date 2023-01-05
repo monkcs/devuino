@@ -5,7 +5,7 @@
    —— /dev/uino —————————————————————————————————————————————————————————
    Devuino (https://github.com/monkcs/devuino) created by Charlie Habolin
 
-   The Devuino standard library aims to unify the library implementations
+   The Devuino library aims to unify the library implementations
    for different devices to create clearer code and promote code reuse.
 
    If you want to write a device driver for the library, or just give a
@@ -51,6 +51,7 @@
 #include "Utilities/Light/Animation.hpp"
 #include "Utilities/Light/Colour.hpp"
 #include "Utilities/Light/Spectrum.hpp"
+#include "Utilities/Move/Move.hpp"
 #include "Utilities/Resolution/Resolution.hpp"
 #include "Utilities/Span/Span.hpp"
 #include "Utilities/String/String.hpp"
@@ -58,11 +59,19 @@
 #include "Utilities/Temperature/Temperature.hpp"
 
 /* Include I/O interfaces */
-#include "Onboard/SpiATtiny.hpp"
 
 /* Architecture */
+#include "Device/EEPROM/EEPROM.hpp"
 #include "Device/MAX7219/DotMatrix.hpp"
+#include "Utilities/Storage/Storage.hpp"
+
+#ifdef ARDUINO_AVR_ATTINYX5
 #include "Onboard/Architecture/ATtinyX5.hpp"
+#endif
+
+#ifdef ARDUINO_AVR_UNO
+#include "Onboard/Architecture/ATmegaX8.hpp"
+#endif
 
 /* Put all namspaces in scope */
 using namespace devuino;
