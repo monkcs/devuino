@@ -29,17 +29,7 @@ namespace devuino::utilities
 
 	  public:
 		SevenSegmentString() = default;
-		constexpr SevenSegmentString(const char character)
-		{
-			if (MSB)
-			{
-				this->front() = character;
-			}
-			else
-			{
-				this->back() = character;
-			}
-		}
+
 		constexpr SevenSegmentString(const Stringview string)
 		{
 			/*
@@ -62,7 +52,7 @@ namespace devuino::utilities
 					previously_merged = true;
 				}
 
-				if (MSB == true)
+				if constexpr (MSB == true)
 				{
 					auto iterator_buffer = this->begin();
 					auto iterator_string = string.begin();
