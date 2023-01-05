@@ -15,11 +15,12 @@
 
 namespace devuino::device
 {
-	// TODO: Implement support for multiple units
 	template<typename SpiController>
 	class MAX7219
 	{
 	  public:
+		using DeviceString = devuino::utilities::SevenSegmentString<8, false>;
+
 		enum class Decode : uint8_t
 		{
 			None = 0,
@@ -45,51 +46,73 @@ namespace devuino::device
 		Resolution<4> bitsize {};
 		uint8_t bright;
 		bool status;
+		bool valid = true;
 
 	  public:
-		SevenSegmentString<8> buffer;
+		constexpr MAX7219(const SpiController spi, const bool initial = true, const DeviceString& string = {}) :
 
-		MAX7219(const SpiController spi, const bool initial = true, const Stringview string = {}) :
-
-			spi {spi}, bright {static_cast<uint8_t>(bitsize.maximum)}, status {initial}, buffer {string}
+			spi {spi}, bright {static_cast<uint8_t>(bitsize.maximum)}, status {initial}	   //, buffer {string}
 		{
 			/* Reset display */
 			brightness(bright);
 			decode(Decode::None);
 			scanlimit(Scanlimit::D01234567);
 			test(false);
-			print();
-			set(initial);
+			print(string);
+			power(initial);
+		}
+
+		MAX7219(MAX7219&) = delete;
+		MAX7219& operator=(MAX7219&) = delete;
+
+		constexpr MAX7219(MAX7219&& other) noexcept :
+			spi {devuino::move(other.spi)}, bitsize {other.bitsize}, bright {other.bright}, status {other.status}
+		{
+			other.valid = false;
+		}
+		constexpr MAX7219& operator=(MAX7219&& other) noexcept
+		{
+			spi = devuino::move(other.spi);
+			bitsize = other.bitsize;
+			bright = other.bright;
+			status = other.status;
+
+			valid = true;
+			other.valid = false;
+
+			return *this;
 		}
 
 		~MAX7219()
 		{
-			test(false);
-			off();
+			if (valid)
+			{
+				test(false);
+				power(false);
+			}
 		}
 
-		void print()
+		constexpr void print(const devuino::utilities::Stringview string) { print(DeviceString {string}); }
+		constexpr void print(const DeviceString& buffer)
 		{
 			auto transaction = spi.transaction();
 
-			uint8_t index {8};
-			for (const auto character : buffer)
+			for (uint8_t index = 0; index < buffer.size(); index++)
 			{
-				transaction.transfer(index, static_cast<uint8_t>(character));
-				--index;
+				transaction.transfer(index + 1, static_cast<uint8_t>(buffer[index]));
 			}
 		}
 
 		/*  Test mode turns on all digits at full brightness.
 			All programming is preserved while using this mode. */
-		void test(const bool value)
+		constexpr void test(const bool value)
 		{
 			auto transaction = spi.transaction();
 			transaction.transfer(0x0f, value);
 		}
 
 		/* Set how many of the digits to decode using code-b */
-		void decode(const Decode mode)
+		constexpr void decode(const Decode mode)
 		{
 			auto transaction = spi.transaction();
 
@@ -115,21 +138,32 @@ namespace devuino::device
 			}
 		}
 
-		/* Set how many digit to display from memory. */
-		void scanlimit(const Scanlimit limit)
+		/// @brief Set how many digit to display from memory
+		/// @param limit Number of digits to show
+		constexpr void scanlimit(const Scanlimit limit)
 		{
 			auto transaction = spi.transaction();
 			transaction.transfer(0x0b, static_cast<uint8_t>(limit));
 		}
 
-		void clear()
+		/// @brief Clear the digit memory
+		constexpr void clear()
 		{
-			buffer.clear();
-			print();
+			auto transaction = spi.transaction();
+
+			for (uint8_t index = 1; index <= 8; index++)
+			{
+				transaction.transfer(index, 0);
+			}
 		}
 
+		/// @brief Get brightness of display
+		/// @return Current brightness in range [0..15]
 		constexpr uint8_t brightness() const { return bright; }
-		void brightness(const uint8_t value)
+
+		/// @brief Set brightness of display
+		/// @param value New brightness in range [0..15]
+		constexpr void brightness(const uint8_t value)
 		{
 			bright = value;
 
@@ -137,43 +171,48 @@ namespace devuino::device
 			transaction.transfer(0x0a, value);
 		}
 
-		void fraction(const double value) { brightness(static_cast<uint8_t>(bitsize.maximum * value)); }
+		/// @brief Set brightness of display
+		/// @param value New brightness in range [0..1]
+		constexpr void fraction(const double value) { brightness(static_cast<uint8_t>(bitsize.maximum * value)); }
 
-		void off() { set(false); }
-		void on() { set(true); }
+		/// @brief Turn off display and enter low-power mode. It is still possible to program the display while off
+		constexpr void off() { set(false); }
+		constexpr void on() { set(true); }
 
-		void toggle() { set(!status); }
+		constexpr void toggle() { set(!status); }
 
-		/* 	Turn on or off the display to enter low-power mode.
-			It is still possible to program the display in power-off mode. */
-		void set(const bool value)
+		/// @brief Turn display on or off. It is still possible to program the display while off
+		constexpr void set(const bool value)
 		{
 			status = value;
+			power(value);
+		}
 
+		/// @brief Update string to show on display
+		/// @param string New string to show
+		constexpr void operator=(const DeviceString& string) { print(string); }
+
+		/// @brief Update string to show on display
+		/// @param string New string to show
+		constexpr void operator=(const devuino::utilities::Stringview string) { print(string); }
+
+		/// @brief Get brightness resolution
+		constexpr decltype(bitsize) resolution() const { return bitsize; }
+
+	  private:
+		/// @brief Turn display on or off. It is still possible to program the display while off
+		constexpr void power(const bool value)
+		{
 			auto transaction = spi.transaction();
 			transaction.transfer(0x0c, value);
 		}
-
-		constexpr void operator=(const SevenSegmentString<8> string)
-		{
-			buffer = string;
-			print();
-		}
-
-		void operator=(const devuino::utilities::Stringview string)
-		{
-			buffer = string;
-			print();
-		}
-
-		constexpr SevenSegmentCharacter operator[](const size_t position) const { return buffer[position]; }
-		constexpr SevenSegmentCharacter& operator[](const size_t position) { return buffer[position]; }
-
-		constexpr devuino::utilities::Iterator<const SevenSegmentCharacter> begin() const { return buffer.begin(); }
-		constexpr devuino::utilities::Iterator<const SevenSegmentCharacter> end() const { return buffer.end(); }
-		constexpr devuino::utilities::Iterator<SevenSegmentCharacter> begin() { return buffer.begin(); }
-		constexpr devuino::utilities::Iterator<SevenSegmentCharacter> end() { return buffer.end(); }
-
-		constexpr decltype(bitsize) resolution() const { return bitsize; }
 	};
+
+	/// @brief Use if the compiler for some reason does not generate the SevenSegmentString at compile-time
+	/// @param raw char* to character array
+	/// @param i Size of character array
+	constexpr devuino::utilities::SevenSegmentString<8, false> operator"" _max7219(const char* const raw, const size_t i)
+	{
+		return {devuino::utilities::Stringview {raw, i}};
+	}
 }
