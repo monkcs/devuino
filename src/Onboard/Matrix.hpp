@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Utilities/Array/Array.hpp"
+#include "../Utilities/Move/Move.hpp"
 #include "Digital.hpp"
 #include "Pin.hpp"
 
@@ -27,8 +28,8 @@ namespace devuino::onboard
 		Array<DigitalOutputBackend, Height> outputs;
 
 	  public:
-		MatrixInput(const Array<DigitalInputBackend, Width> inputs, const Array<DigitalOutputBackend, Height> outputs) :
-			inputs {inputs}, outputs {outputs}
+		MatrixInput(Array<DigitalInputBackend, Width>&& inputs, Array<DigitalOutputBackend, Height>&& outputs) :
+			inputs {devuino::move(inputs)}, outputs {devuino::move(outputs)}
 		{
 			for (auto& pin : this->inputs)
 			{
