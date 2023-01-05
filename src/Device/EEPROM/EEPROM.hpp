@@ -1,16 +1,20 @@
 #pragma once
 
-#include "../Utilities/Storage/Storage.hpp"
+#include "../../Utilities/Move/Move.hpp"
+#include "../../Utilities/Storage/Storage.hpp"
 
 #include <stdint.h>
 
-namespace devuino::onboard
+namespace devuino::device
 {
+	/// @brief EEPROM is a generic device to access its memory both in raw or managed mode
+	/// @tparam lenght Storage size in bytes
+	/// @tparam EepromBackend Physical or logical backend
 	template<int lenght, typename EepromBackend>
 	class EEPROM
 	{
 		static_assert(lenght > 0, "Storage size of EEPROM needs to be larger than zero");
-		static_assert(lenght <= 512, "Current implementation cannot handle larger storage size than 65536");
+		static_assert(lenght <= 65535, "Current implementation cannot handle larger storage size than 65535 bytes");
 
 		mutable EepromBackend backend;
 
@@ -158,7 +162,7 @@ namespace devuino::onboard
 			constexpr Allocation(EepromBackend& backend) : backend {backend} { }
 
 			/// @brief Size in bytes of allocation
-			constexpr static int size() const { return allocation; }
+			constexpr static int size() { return allocation; }
 
 			/// @brief Erase (set to zero) all bytes in allocation
 			constexpr void erase() { fill(0); }
@@ -194,10 +198,7 @@ namespace devuino::onboard
 		};
 
 	  public:
-		constexpr EEPROM(EepromBackend backend) : backend {backend} { }
-
-		EEPROM(const EEPROM&) = delete;
-		EEPROM& operator=(const EEPROM&) = delete;
+		constexpr EEPROM(EepromBackend&& backend) : backend {devuino::move(backend)} { }
 
 		/// @brief Allocation of raw EEPROM storage
 		/// @tparam allocation Size of allocation in bytes
@@ -217,12 +218,18 @@ namespace devuino::onboard
 			return Allocation<allocation, offset> {backend};
 		}
 
+		/// @brief Allocate a struct of EEPROM storage
+		/// @tparam Structure Struct to allocate
+		/// @tparam offset Offset from begining of EEPROM storage in bytes
 		template<typename Structure, int offset = 0>
 		constexpr auto managed()
 		{
 			return Storage<Structure, Allocation<sizeof(Structure), offset>> {backend};
 		}
 
+		/// @brief Allocate a const struct of EEPROM storage
+		/// @tparam Structure Struct to allocate
+		/// @tparam offset Offset from begining of EEPROM storage in bytes
 		template<typename Structure, int offset = 0>
 		constexpr auto managed() const
 		{
