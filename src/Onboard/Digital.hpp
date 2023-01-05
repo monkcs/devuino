@@ -59,13 +59,6 @@ namespace devuino::onboard
 			ddr |= bitmask;
 		}
 
-		/*
-			DigitalOutput(const uint8_t pin) : bitmask {digitalPinToBitMask(pin)}, output {*portOutputRegister(digitalPinToPort(pin))}
-			{
-				volatile uint8_t& direction {*portModeRegister(digitalPinToPort(pin))};
-				direction |= bitmask;
-			}
-		*/
 		operator bool() const { return port & bitmask; }
 
 		DigitalOutput& operator=(const bool value)
@@ -83,5 +76,26 @@ namespace devuino::onboard
 		}
 
 		void toggle() { port ^= bitmask; }
+	};
+
+	/// @brief DummyDigitalOutput is a placeholder doing nothing
+	class DummyDigitalOutput
+	{
+		bool value;
+
+	  public:
+		/// @brief DummyDigitalOutput is a placeholder doing nothing
+		/// @param initial Initial value of output
+		constexpr DummyDigitalOutput(const bool initial = false) : value {initial} { }
+
+		constexpr operator bool() const { return value; }
+
+		constexpr DummyDigitalOutput& operator=(const bool value)
+		{
+			this->value = value;
+			return *this;
+		}
+
+		constexpr void toggle() { value = !value; }
 	};
 }
