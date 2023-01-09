@@ -51,7 +51,7 @@ namespace devuino::device
 	  public:
 		constexpr MAX7219(const SpiController spi, const bool initial = true, const DeviceString& string = {}) :
 
-			spi {spi}, bright {static_cast<uint8_t>(bitsize.maximum)}, status {initial}	   //, buffer {string}
+			spi {spi}, bright {static_cast<uint8_t>(bitsize.maximum)}, status {initial}
 		{
 			/* Reset display */
 			brightness(bright);
