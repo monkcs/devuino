@@ -1,90 +1,80 @@
 # /dev/uino
-A standard device library for Arduino and other -ino's
+
+A device library for Arduino and other -ino's.
+
+The goal with this project is to create a clean and well-coded library for all kinds of devices attachable to Arduinos. By utilizing modern C++ to create an efficient and high-level abstraction compared to vanilla arduino functions.
 
 It's a mess here right now, but work is going on!  
-The goal with ths project is to create a clean and well-coded library for all kinds of devices attachable to Arduinos.
-By utilizing modern C++ to create an efficient and high-level abstraction compared to vanilla arduino functions.
 
-
-Help is always wanted! Especially the i/o (SPI, I2C) but of course other areas as well!
-
+Help is always wanted! If you want to write a device driver for the library, or just give a suggestion for a specific device, please open a issue.
 
 ![xkcd standards comic](https://imgs.xkcd.com/comics/standards.png) xkcd
 ___
 
-## Example code
-This is a example program where a pushbutton and the on-circutboard led (number 13) are used. When the button is pressed the led light up.
+## Example
 
-The button is connected between pin 3 and ground (because then the built-in pullup resistor can be used) and initiated by creating a `Button` object with a `Onboard` pin (that is a pin onboard the Arduino board) set to use pin number 3. In the loop led = button assigns the boolean value to led if the button is pressed:
+Following example demonstrate on a ATmega328 (Arduino Uno), how to program the on-circutboard led (pin 13) to turn on when a push-button is pressed.
+
+Two device objects are created, `Button` and `Light`.
+The push-button is connected between pin 3 and ground, and uses the built-in pullup resistor. The light is connected to pin 13.
+
+In the loop the reading of the current state of the button is assigned to the led.
 
 ```cpp
 #include <devuino.hpp>
 
-Button<> button{{3}, Resistor::PullUp};
-Led<> led{{13}};
-
-void setup() { }
-
-void loop()
+void setup()
 {
-    led = button;
-}
+    ATmega328 cpu;
+
+    Button button {cpu.digital.input(3), Resistor::PullUp};
+    Light led {cpu.analog.output(13)};
+
+    while (true)
+    {
+        led = button;
+    }
+ }
+
+void loop() { }
 ```
 
+## Support
 
-## Device list
+⚫️ = Not supported yet\
+🔵 = Some support\
+✅ = Fully supported
 
-The devices that are currently supported, planned or not planned to be implemented.
+### Supported microcontrollers
 
-🔵  *Implemented*  
-⚫️  *Not implemented but planned*  
-🔴  *Not planned*
+Following microcontrollers are supported.
 
-### Basic
+| Status | Device            | Implemented | Not implemented yet |
+| :----: | :---------------- | :---------- | :---------- |
+| 🔵     | **ATtiny25**      | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller (via USI) | SPI device (via USI), I2C (via USI), USART (via USI), Low-power mode configuration
+| 🔵     | **ATtiny45**      | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller (via USI) | SPI device (via USI), I2C (via USI), USART (via USI), Low-power mode configuration
+| 🔵     | **ATtiny85**      | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller (via USI) | SPI device (via USI), I2C (via USI), USART (via USI), Low-power mode configuration
+| ⚫️     | **ATmega328**     | |Soon to be implemented   |
 
-| Status | Device            | Description                                 |
-| :----: | :---------------- | :------------------------------------------ |
-| 🔵      | **Switch**        | Digital output to switch between on and off |
-| 🔵      | **Button**        | Digital input between on and off            |
-| 🔵      | **Potentiometer** | Analog input in bitsize range               |
-| 🔵      | **Resistance** | Potentiometer with a autoremoved measuring current   |
+### Supported devices
 
+Following devices are supported.
 
-### Mechanical
+| Status | Device | Description |
+| :----: | :----- | :---------- |
+| ✅     | **Switch** | Digital output between on and off |
+| ✅     | **Button** | Digital input between on and off |
+| ✅     | **Potentiometer** | Analog input in selectable range |
+| ✅     | **Resistance** | Potentiometer with a auto-removed measuring voltage   |
+| ✅     | **Light** | Analog output, supporting independent on/off and brightness control |
+| ✅     | **LightRgb** | Same as Light but with 3 channels for rgb control |
+| ⚫️     | **Neopixel** | Neopixel/WS2812 1-wire rgb/rgbw led |
+| ✅     | **HCSR04**   | HC-SR04 distance sensor |
+| ✅     | **MAX7219 segment display** | MAX7219 seven segment display |
+| ⚫️     | **MAX7219 dotmatrix display** | MAX7219 dotmatrix display |
 
-| Status | Mechanical | Description           |
-| :----: | :--------- | :-------------------- |
-| ⚫️     | **Servo**  | Control generic servo |
+## Installation
 
+To download the library, use the [Arduino IDE Library Manager](https://www.arduino.cc/reference/en/libraries/devuino/).
 
-### Light
-Light devices include both analog and digital controlled light sources.
-
-| Status | Light        | Description                                 |
-| :----: | :----------- | :------------------------------------------ |
-| 🔵      | **Led**      | Light control on/off and brightness for led |
-| 🔵      | **LedRgb**   | Same as Led but with 3-pin rgb              |
-| ⚫️     | **Neopixel** | Neopixel/WS2812 1-wire rgb/rgbw led         |
-
-
-### Sound
-Sound devices include both buzzers to speakers and other primary sound-making devices.
-
-| Status | Sound             | Description    |
-| :----: | :---------------- | :------------- |
-| ⚫️     | **BuzzerPassive** | Passive buzzer |
-| ⚫️     | **BuzzerActive**  | Active buzzer  |
-
-
-### Messuarement
-
-| Status | Messuarement | Description             |
-| :----: | :----------- | :---------------------- |
-| 🔵     | **HCSR04**   | HC-SR04 distance sensor |
-
-
-### Display
-
-| Status | Display     | Description                         |
-| :----: | :---------- | :---------------------------------- |
-| 🔵     | **MAX7219** | Max 7219 seven-segment display |
+Note that the library requires at least C++17, so editing of the ```platform.txt``` file is required. The file, usually located at ```~/.arduino15/packages/arduino/hardware/avr/x.x.x/platform.txt``` should be changed on line ```compiler.cpp.flags``` to have the flag ```-std=gnu++17``` instead of the default one.
