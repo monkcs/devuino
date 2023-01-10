@@ -38,6 +38,7 @@
 #include "Device/Light/LightRgb.hpp"
 #include "Device/MAX7219/DotMatrix.hpp"
 // #include "Device/MAX7219/DotMatrixMAX7219.hpp"
+#include "Device/EEPROM/EEPROM.hpp"
 #include "Device/MAX7219/SegmentDisplayMAX7219.hpp"
 #include "Device/Potentiometer/Potentiometer.hpp"
 #include "Device/Resistance/Resistance.hpp"
@@ -54,6 +55,7 @@
 #include "Utilities/Move/Move.hpp"
 #include "Utilities/Resolution/Resolution.hpp"
 #include "Utilities/Span/Span.hpp"
+#include "Utilities/Storage/Storage.hpp"
 #include "Utilities/String/String.hpp"
 #include "Utilities/String/Stringview.hpp"
 #include "Utilities/Temperature/Temperature.hpp"
@@ -61,9 +63,6 @@
 /* Include I/O interfaces */
 
 /* Architecture */
-#include "Device/EEPROM/EEPROM.hpp"
-#include "Device/MAX7219/DotMatrix.hpp"
-#include "Utilities/Storage/Storage.hpp"
 
 #ifdef ARDUINO_AVR_ATTINYX5
 #include "Onboard/Architecture/ATtinyX5.hpp"
