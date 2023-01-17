@@ -7,6 +7,7 @@
 
 #include "../../Utilities/Display/SegmentDisplay/SevenSegmentString.hpp"
 #include "../../Utilities/Iterator/Iterator.hpp"
+#include "../../Utilities/Move/Move.hpp"
 #include "../../Utilities/Resolution/Resolution.hpp"
 #include "../../Utilities/String/Stringview.hpp"
 
@@ -44,14 +45,14 @@ namespace devuino::device
 	  private:
 		SpiController spi;
 		Resolution<4> bitsize {};
-		uint8_t bright;
+		decltype(bitsize.maximum) bright;
 		bool status;
 		bool valid = true;
 
 	  public:
-		constexpr MAX7219(const SpiController spi, const bool initial = true, const DeviceString& string = {}) :
+		constexpr MAX7219(SpiController&& spi, const bool initial = true, const DeviceString& string = {}) :
 
-			spi {spi}, bright {static_cast<uint8_t>(bitsize.maximum)}, status {initial}
+			spi {devuino::move(spi)}, bright {bitsize.maximum}, status {initial}
 		{
 			/* Reset display */
 			brightness(bright);
