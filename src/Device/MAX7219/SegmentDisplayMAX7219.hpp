@@ -55,11 +55,11 @@ namespace devuino::device
 			spi {devuino::move(spi)}, bright {bitsize.maximum}, status {initial}
 		{
 			/* Reset display */
+			print(string);
 			brightness(bright);
 			decode(Decode::None);
 			scanlimit(Scanlimit::D01234567);
 			test(false);
-			print(string);
 			power(initial);
 		}
 
