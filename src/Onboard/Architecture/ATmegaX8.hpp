@@ -4,6 +4,7 @@
 #include "../Analog.hpp"
 #include "../Digital.hpp"
 #include "../EepromBackend:tiny:mega.hpp"
+#include "../SPI:mega.hpp"
 
 #include <Arduino.h>
 
@@ -318,6 +319,8 @@ namespace devuino::onboard
 		Analog analog {};
 		Digital digital {};
 		Interrupt interrupt {};
+
+		[[nodiscard]] constexpr auto spi() { return SPImega {}; }
 
 		[[nodiscard]] auto eeprom() { return devuino::device::EEPROM<eeprom_size, EepromBackend> {EepromBackend {}}; }
 	};
