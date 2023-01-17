@@ -54,7 +54,7 @@ Following microcontrollers are supported.
 | 🔵     | **ATtiny25**      | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller (via USI) | SPI device (via USI), I2C (via USI), USART (via USI), Low-power mode configuration
 | 🔵     | **ATtiny45**      | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller (via USI) | SPI device (via USI), I2C (via USI), USART (via USI), Low-power mode configuration
 | 🔵     | **ATtiny85**      | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller (via USI) | SPI device (via USI), I2C (via USI), USART (via USI), Low-power mode configuration
-| ⚫️     | **ATmega328**     | |Soon to be implemented   |
+| 🔵     | **ATmega328**     | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller | SPI device, I2C, USART, Low-power mode configuration |
 
 ### Supported devices
 
