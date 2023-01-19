@@ -15,25 +15,25 @@ namespace devuino::utilities
 		constexpr Lenght operator-() const { return Lenght {-this->metre}; };
 		constexpr Lenght operator+() const { return *this; }
 
-		Lenght& operator+=(Lenght const& rhs)
+		constexpr Lenght& operator+=(Lenght const& rhs)
 		{
 			this->metre += rhs.metre;
 			return *this;
 		};
 
-		Lenght& operator-=(Lenght const& rhs)
+		constexpr Lenght& operator-=(Lenght const& rhs)
 		{
 			this->metre -= rhs.metre;
 			return *this;
 		};
 
-		Lenght& operator*=(const long double rhs)
+		constexpr Lenght& operator*=(const long double rhs)
 		{
 			this->metre *= rhs;
 			return *this;
 		};
 
-		Lenght& operator/=(const long double rhs)
+		constexpr Lenght& operator/=(const long double rhs)
 		{
 			this->metre /= rhs;
 			return *this;
@@ -83,7 +83,7 @@ namespace devuino::utilities
 			Nano
 		};
 
-		long double as(const Imperial unit) const
+		constexpr long double as(const Imperial unit) const
 		{
 			switch (unit)
 			{
@@ -100,7 +100,7 @@ namespace devuino::utilities
 			}
 		}
 
-		long double as(const SI unit) const
+		constexpr long double as(const SI unit) const
 		{
 			switch (unit)
 			{
