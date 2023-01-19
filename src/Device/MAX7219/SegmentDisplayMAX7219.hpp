@@ -104,6 +104,14 @@ namespace devuino::device
 			}
 		}
 
+		/// @brief Update string to show on display
+		/// @param string New string to show
+		constexpr void operator=(const devuino::utilities::Stringview string) { print(string); }
+
+		/// @brief Update string to show on display
+		/// @param string New string to show
+		constexpr void operator=(const DeviceString& string) { print(string); }
+
 		/*  Test mode turns on all digits at full brightness.
 			All programming is preserved while using this mode. */
 		constexpr void test(const bool value)
@@ -188,14 +196,6 @@ namespace devuino::device
 			status = value;
 			power(value);
 		}
-
-		/// @brief Update string to show on display
-		/// @param string New string to show
-		constexpr void operator=(const DeviceString& string) { print(string); }
-
-		/// @brief Update string to show on display
-		/// @param string New string to show
-		constexpr void operator=(const devuino::utilities::Stringview string) { print(string); }
 
 		/// @brief Get brightness resolution
 		constexpr decltype(bitsize) resolution() const { return bitsize; }
