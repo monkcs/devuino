@@ -13,6 +13,8 @@ ___
 
 ## Example
 
+Examples for all devices can be found in examples directory.
+
 Following example demonstrate on a ATmega328 (Arduino Uno), how to program the on-circutboard led (pin 13) to turn on when a push-button is pressed.
 
 Two device objects are created, `Button` and `Light`.
@@ -54,7 +56,7 @@ Following microcontrollers are supported.
 | 🔵     | **ATtiny25**      | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller (via USI) | SPI device (via USI), I2C (via USI), USART (via USI), Low-power mode configuration
 | 🔵     | **ATtiny45**      | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller (via USI) | SPI device (via USI), I2C (via USI), USART (via USI), Low-power mode configuration
 | 🔵     | **ATtiny85**      | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller (via USI) | SPI device (via USI), I2C (via USI), USART (via USI), Low-power mode configuration
-| 🔵     | **ATmega328**     | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller | SPI device, I2C, USART, Low-power mode configuration |
+| 🔵     | **ATmega328** (**ArduinoUno**)     | Digital I/O, Analog I/O, Pin iterrupt, Pin change interrupt, EEPROM, SPI controller | SPI device, I2C, USART, Low-power mode configuration |
 
 ### Supported devices
 
