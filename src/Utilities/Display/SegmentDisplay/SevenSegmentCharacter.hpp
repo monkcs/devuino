@@ -17,15 +17,16 @@ namespace devuino::utilities
 			{
 				case ' ': return 0x0;
 				case '!': return 0x0;
-				case '"': return 0x0;
-				case '\'': return 0x0;
+				case '"': return 34;
+				case '\'': return 32;
 				case '(': return 0x0;
 				case ')': return 0x0;
-				case '+': return 0x0;
 				case ',': return 0x80;
 				case '-': return 0x01;
 				case '.': return 0x80;
 				case '/': return 0x0;
+				case '_': return 0x8;
+				case '=': return 0x9;
 
 				case '0': return 0x7E;
 				case '1': return 0x30;
@@ -119,4 +120,5 @@ namespace devuino::utilities
 
 	/* User defined litterals */
 	constexpr SevenSegmentCharacter operator""_char7s(const char character) { return character; }
+	constexpr SevenSegmentCharacter operator""_char7s_raw(const char character) { return SevenSegmentCharacter {character, true}; }
 }
