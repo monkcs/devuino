@@ -52,7 +52,7 @@ namespace devuino::onboard
 		  public:
 			/// Low-level access to analog output pin onboard device.
 			/// @param pin Arduino pin numbering.
-			[[nodiscard]] auto output(const int pin) { return AnalogOutput {pin}; }
+			[[nodiscard]] auto output(const int pin) { return AnalogOutput {static_cast<uint8_t>(pin)}; }
 
 			/// Low-level access to analog input pin onboard device.
 			/// @param pin Arduino analog pin numbering.
@@ -326,4 +326,5 @@ namespace devuino::onboard
 	};
 
 	using ATmega328 = ATmegaX8<32768, 1024, 2048>;
+	using ArduinoUno = ATmega328;
 }
