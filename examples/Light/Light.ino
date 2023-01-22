@@ -34,8 +34,4 @@ void setup()
 	const bool value = led;
 }
 
-void loop()
-{
-	/* Assign the value of the button to the led */
-	led = button;
-}
+void loop() { }
