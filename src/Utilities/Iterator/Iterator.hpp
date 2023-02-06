@@ -15,7 +15,7 @@ namespace devuino::utilities
 		constexpr Type& previous() { return *(pointer - 1); }
 
 		constexpr bool operator==(const Iterator& rhs) const { return pointer == rhs.pointer; }
-		constexpr bool operator!=(const Iterator& rhs) const { return pointer != rhs.pointer; }
+		constexpr bool operator!=(const Iterator& rhs) const { return !operator==(rhs); }
 
 		constexpr void operator++() { ++pointer; }
 		constexpr void operator--() { --pointer; }
@@ -32,7 +32,7 @@ namespace devuino::utilities
 		constexpr Type& previous() { return *(pointer + 1); }
 
 		constexpr bool operator==(const ReverseIterator& rhs) const { return pointer == rhs.pointer; }
-		constexpr bool operator!=(const ReverseIterator& rhs) const { return pointer != rhs.pointer; }
+		constexpr bool operator!=(const ReverseIterator& rhs) const { return !operator==(rhs); }
 
 		constexpr void operator++() { --pointer; }
 		constexpr void operator--() { ++pointer; }
