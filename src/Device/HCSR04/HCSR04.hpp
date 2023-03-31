@@ -56,7 +56,7 @@ namespace devuino::device
 		{
 			if (debounce)
 			{
-				const unsigned int iterations {10};
+				const uint8_t iterations {10};
 
 				Lenght total {};
 
