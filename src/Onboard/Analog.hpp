@@ -36,7 +36,7 @@ namespace devuino::onboard
 	  public:
 		Resolution<8> bitsize {};
 
-		explicit AnalogOutput(const uint8_t pin) : pin {pin} { }
+		explicit constexpr AnalogOutput(const uint8_t pin) : pin {pin} { }
 		void operator=(const int value) const { analogWrite(pin, value); }
 	};
 }
