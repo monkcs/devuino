@@ -54,6 +54,8 @@ namespace devuino::utilities
 		uint8_t bits = static_cast<uint8_t>(bitsize);
 		typename ResolutionStorage<calculate(bitsize)>::type maximum;
 
+		using type = typename ResolutionStorage<calculate(bitsize)>::type;
+
 		/* Calculate the maximum value, provided the number of bits in template parameter */
 		constexpr Resolution() : maximum {static_cast<decltype(maximum)>((static_cast<uint_least64_t>(1) << bitsize) - 1)} { }
 	};
