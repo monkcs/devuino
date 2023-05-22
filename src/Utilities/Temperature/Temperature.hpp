@@ -4,14 +4,7 @@ namespace devuino::utilities
 {
 	class Temperature
 	{
-		long double temperature;
-
 	  public:
-		explicit constexpr Temperature(const long double celsius = {}) : temperature {celsius} {};
-
-		// Untill C++20
-		// constexpr auto operator<=>(const Temperature&) const = default;
-
 		enum class Unit
 		{
 			Celsius,
@@ -19,10 +12,31 @@ namespace devuino::utilities
 			Kelvin
 		};
 
+	  private:
+		long double temperature;
+
+		constexpr auto convert(const Unit origin, const long double value) const
+		{
+			switch (origin)
+			{
+				case Unit::Fahrenheit: return (value - 32.0) * (5.0 / 9.0);
+				case Unit::Kelvin: return value - 273.15;
+
+				case Unit::Celsius:
+				default: return value;
+			}
+		}
+
+		explicit constexpr Temperature(const long double temperature = {}) : temperature {temperature} {};
+
+	  public:
+		explicit constexpr Temperature(const Unit unit, const long double temperature = {}) : temperature {convert(unit, temperature)} {};
+
+		// Untill C++20
+		// constexpr auto operator<=>(const Temperature&) const = default;
+
 		constexpr long double as(const Unit unit) const
 		{
-			// return (unit == Unit::Celsius) ? celsius() : ((unit == Unit::Fahrenheit) ? fahrenheit() : kelvin());
-
 			switch (unit)
 			{
 				case Unit::Fahrenheit: return fahrenheit();
@@ -37,32 +51,13 @@ namespace devuino::utilities
 		constexpr long double fahrenheit() const { return temperature * (9.0 / 5.0) + 32.0; };
 		constexpr long double kelvin() const { return temperature + 273.15; };
 
-		constexpr Temperature operator-() const { return Temperature {-this->temperature}; }
+		constexpr Temperature operator-() const { return Temperature {-temperature}; }
 		constexpr Temperature operator+() const { return *this; }
 
-		constexpr Temperature& operator+=(Temperature const& rhs)
-		{
-			this->temperature += rhs.temperature;
-			return *this;
-		}
-
-		constexpr Temperature& operator-=(Temperature const& rhs)
-		{
-			this->temperature -= rhs.temperature;
-			return *this;
-		}
-
-		constexpr Temperature& operator*=(const long double rhs)
-		{
-			this->temperature *= rhs;
-			return *this;
-		}
-
-		constexpr Temperature& operator/=(const long double rhs)
-		{
-			this->temperature /= rhs;
-			return *this;
-		}
+		constexpr Temperature& operator+=(Temperature const& rhs) { return temperature += rhs.temperature, *this; }
+		constexpr Temperature& operator-=(Temperature const& rhs) { return temperature -= rhs.temperature, *this; }
+		constexpr Temperature& operator*=(const long double rhs) { return temperature *= rhs, *this; }
+		constexpr Temperature& operator/=(const long double rhs) { return temperature /= rhs, *this; }
 
 		constexpr friend Temperature operator+(Temperature const& lhs, Temperature const& rhs)
 		{
@@ -83,33 +78,39 @@ namespace devuino::utilities
 
 	/* User defined litterals */
 
-	constexpr Temperature operator""_C(const long double celsius) { return Temperature {celsius}; }
-	constexpr Temperature operator""_C(const unsigned long long int celsius) { return Temperature {static_cast<long double>(celsius)}; }
-	constexpr Temperature operator""_celsius(const long double celsius) { return Temperature {celsius}; }
+	constexpr Temperature operator""_C(const long double celsius) { return Temperature {Temperature::Unit::Celsius, celsius}; }
+	constexpr Temperature operator""_C(const unsigned long long int celsius)
+	{
+		return Temperature {Temperature::Unit::Celsius, static_cast<long double>(celsius)};
+	}
+	constexpr Temperature operator""_celsius(const long double celsius) { return Temperature {Temperature::Unit::Celsius, celsius}; }
 	constexpr Temperature operator""_celsius(const unsigned long long int celsius)
 	{
-		return Temperature {static_cast<long double>(celsius)};
+		return Temperature {Temperature::Unit::Celsius, static_cast<long double>(celsius)};
 	}
 
-	constexpr Temperature operator""_F(const long double fahrenheit) { return Temperature {(fahrenheit - 32) * (5.0 / 9.0)}; }
+	constexpr Temperature operator""_F(const long double fahrenheit) { return Temperature {Temperature::Unit::Fahrenheit, fahrenheit}; }
 	constexpr Temperature operator""_F(const unsigned long long int fahrenheit)
 	{
-		return Temperature {(static_cast<long double>(fahrenheit) - 32) * (5.0 / 9.0)};
+		return Temperature {Temperature::Unit::Fahrenheit, fahrenheit};
 	}
-	constexpr Temperature operator""_fahrenheit(const long double fahrenheit) { return Temperature {(fahrenheit - 32) * (5.0 / 9.0)}; }
+	constexpr Temperature operator""_fahrenheit(const long double fahrenheit)
+	{
+		return Temperature {Temperature::Unit::Fahrenheit, fahrenheit};
+	}
 	constexpr Temperature operator""_fahrenheit(const unsigned long long int fahrenheit)
 	{
-		return Temperature {(static_cast<long double>(fahrenheit) - 32) * (5.0 / 9.0)};
+		return Temperature {Temperature::Unit::Fahrenheit, fahrenheit};
 	}
 
-	constexpr Temperature operator""_K(const long double kelvin) { return Temperature {kelvin - 273.15}; }
+	constexpr Temperature operator""_K(const long double kelvin) { return Temperature {Temperature::Unit::Kelvin, kelvin}; }
 	constexpr Temperature operator""_K(const unsigned long long int kelvin)
 	{
-		return Temperature {static_cast<long double>(kelvin) - 273.15};
+		return Temperature {Temperature::Unit::Kelvin, static_cast<long double>(kelvin)};
 	}
-	constexpr Temperature operator""_kelvin(const long double kelvin) { return Temperature {kelvin - 273.15}; }
+	constexpr Temperature operator""_kelvin(const long double kelvin) { return Temperature {Temperature::Unit::Kelvin, kelvin}; }
 	constexpr Temperature operator""_kelvin(const unsigned long long int kelvin)
 	{
-		return Temperature {static_cast<long double>(kelvin) - 273.15};
+		return Temperature {Temperature::Unit::Kelvin, static_cast<long double>(kelvin)};
 	}
 }
