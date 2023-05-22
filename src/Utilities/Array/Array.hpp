@@ -1,15 +1,20 @@
 #pragma once
 
 #include "../Iterator/Iterator.hpp"
+#include "../Resolution/Resolution.hpp"
 
 #include <stdlib.h>
 
 namespace devuino::utilities
 {
-	template<class Type, size_t lenght>
+	template<class Type, size_t lenght, int SizeTypeBitLenght = 16>
 	struct Array
 	{
+		using StorageType = typename Resolution<SizeTypeBitLenght>::type;
+
 		static_assert(lenght > 0, "Lenght of Array cannot be zero");
+		static_assert(lenght <= Resolution<SizeTypeBitLenght> {}.maximum,
+					  "Lenght of Array cannot be larger than maximum size of size type");
 
 		Type buffer[lenght];
 
@@ -17,10 +22,10 @@ namespace devuino::utilities
 		constexpr explicit operator Type*() { return buffer; }
 
 		/* Number of elements */
-		constexpr size_t size() const { return lenght; }
+		constexpr StorageType size() const { return lenght; }
 
-		constexpr Type operator[](const size_t position) const { return buffer[position]; }
-		constexpr Type& operator[](const size_t position) { return buffer[position]; }
+		constexpr Type operator[](const StorageType position) const { return buffer[position]; }
+		constexpr Type& operator[](const StorageType position) { return buffer[position]; }
 
 		/* Fill the array with specified value */
 		constexpr void fill(const Type object)
@@ -31,9 +36,9 @@ namespace devuino::utilities
 			}
 		}
 
-		constexpr void swap(Array<Type, lenght>& other)
+		constexpr void swap(Array<Type, lenght, SizeTypeBitLenght>& other)
 		{
-			for (size_t i {}; i < lenght; ++i)
+			for (StorageType i {}; i < lenght; ++i)
 			{
 				const Type temporary {other[i]};
 				other[i] = buffer[i];
@@ -57,13 +62,13 @@ namespace devuino::utilities
 		constexpr ReverseIterator<Type> rbegin() { return {buffer + lenght - 1}; }
 		constexpr ReverseIterator<Type> rend() { return {buffer - 1}; }
 
-		constexpr bool operator==(const Array<Type, lenght>& other) const { return equals(other); }
-		constexpr bool operator!=(const Array<Type, lenght>& other) const { return !operator==(other); }
+		constexpr bool operator==(const Array<Type, lenght, SizeTypeBitLenght>& other) const { return equals(other); }
+		constexpr bool operator!=(const Array<Type, lenght, SizeTypeBitLenght>& other) const { return !operator==(other); }
 
 	  protected:
-		constexpr bool equals(const Array<Type, lenght>& other) const
+		constexpr bool equals(const Array<Type, lenght, SizeTypeBitLenght>& other) const
 		{
-			for (size_t index {}; index < lenght; ++index)
+			for (StorageType index {}; index < lenght; ++index)
 			{
 				if (buffer[index] != other.buffer[index])
 				{
