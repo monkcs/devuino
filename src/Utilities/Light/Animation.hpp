@@ -27,7 +27,7 @@ namespace devuino::utilities::animation
 	/// @param origin Origin to fade from
 	/// @param target Target to fade to
 	template<typename LightSource>
-	static void fade(LightSource& light, const Origin origin, const Target target)
+	static constexpr void fade(LightSource& light, const Origin origin, const Target target)
 	{
 		fade(light, origin, target, []() {});
 	};
@@ -39,7 +39,7 @@ namespace devuino::utilities::animation
 	/// @param target Target to fade to
 	/// @param function Lambda to call after each fade step
 	template<typename LightSource, typename Lambda>
-	static void fade(LightSource& light, const Origin origin, const Target target, Lambda function)
+	static constexpr void fade(LightSource& light, const Origin origin, const Target target, Lambda function)
 	{
 		if (origin == Origin::Current)
 		{
