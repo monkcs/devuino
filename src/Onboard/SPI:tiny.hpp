@@ -139,7 +139,7 @@ namespace devuino::onboard
 		constexpr SPItiny(volatile uint8_t& ddr, const uint8_t clock, const uint8_t output, const uint8_t input)
 		{
 			/* Select three-wire mode */
-			USICR = /*(0 << USIWM1) |*/ (1 << USIWM0);
+			USICR = (0 << USIWM1) | (1 << USIWM0);
 
 			/* Disable 'Start Condition Interrupt' and 'Counter Overflow Interrupt' */
 			USICR &= ~((1 << USISIE) | (1 << USIOIE));
