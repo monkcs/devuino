@@ -163,13 +163,14 @@ namespace devuino::onboard
 			void disable() const { cli(); }
 		};
 
+		/// @brief Universal Serial Interface
 		class USI
 		{
 		  public:
 			USI(const USI&) = delete;
 			USI& operator=(const USI&) = delete;
 
-			[[nodiscard]] auto spi() { return SPItiny {DDRB, PB2, PB1, PB0}; }
+			[[nodiscard]] SPItiny spi() { return SPItiny {DDRB, PB2, PB1, PB0}; }
 		};
 
 		class Port
@@ -178,7 +179,7 @@ namespace devuino::onboard
 			class PullUp
 			{
 			  public:
-				/// @brief Globally allow pull-up resistors
+				/// @brief Globally allow pull-up resistors (default on reset)
 				void enable() { MCUCR &= ~(1 << PUD); }
 
 				/// @brief Globally disallow pull-up resistors
