@@ -2,200 +2,21 @@
 
 #include "../../Utilities/Move/Move.hpp"
 #include "../../Utilities/Storage/Storage.hpp"
+#include "Allocation.hpp"
 
 #include <stdint.h>
 
 namespace devuino::device
 {
 	/// @brief EEPROM is a generic device to access its memory both in raw or managed mode
-	/// @tparam lenght Storage size in bytes
 	/// @tparam EepromBackend Physical or logical backend
-	template<int lenght, typename EepromBackend>
+	template<typename EepromBackend>
 	class EEPROM
 	{
-		static_assert(lenght > 0, "Storage size of EEPROM needs to be larger than zero");
-		static_assert(lenght <= 65535, "Current implementation cannot handle larger storage size than 65535 bytes");
+		static_assert(EepromBackend::lenght > 0, "Storage size of EEPROM needs to be larger than zero");
+		static_assert(EepromBackend::lenght <= 65535, "Current implementation cannot handle larger storage size than 65535 bytes");
 
 		mutable EepromBackend backend;
-
-		template<int allocation = lenght, int offset = 0>
-		class Allocation
-		{
-			static_assert((allocation >= 0) && (offset >= 0), "Allocation size and offset cannot be negative");
-			static_assert((allocation + offset) <= lenght, "Storage size + offset cannot be larger than EEPROM size");
-
-			EepromBackend& backend;
-
-			class ByteAccess
-			{
-				EepromBackend& backend;
-				uint16_t address;
-
-			  public:
-				constexpr ByteAccess(EepromBackend& backend, const uint16_t address) : backend {backend}, address {address} { }
-
-				constexpr operator uint8_t() const { return read(); }
-
-				/// @brief Update the value if the new one is different from the old one
-				constexpr ByteAccess& operator=(const uint8_t data)
-				{
-					update(data);
-					return *this;
-				}
-				constexpr ByteAccess& operator+=(const uint8_t rhs)
-				{
-					write(read() + rhs);
-					return *this;
-				}
-				constexpr ByteAccess operator-=(const uint8_t rhs)
-				{
-					write(read() - rhs);
-					return *this;
-				}
-				constexpr ByteAccess operator*=(const uint8_t rhs)
-				{
-					write(read() * rhs);
-					return *this;
-				}
-				constexpr ByteAccess operator/=(const uint8_t rhs)
-				{
-					write(read() / rhs);
-					return *this;
-				}
-				constexpr ByteAccess operator^=(const uint8_t rhs)
-				{
-					write(read() ^ rhs);
-					return *this;
-				}
-				constexpr ByteAccess operator%=(const uint8_t rhs)
-				{
-					write(read() % rhs);
-					return *this;
-				}
-				constexpr ByteAccess operator&=(const uint8_t rhs)
-				{
-					write(read() & rhs);
-					return *this;
-				}
-				constexpr ByteAccess operator|=(const uint8_t rhs)
-				{
-					write(read() | rhs);
-					return *this;
-				}
-				constexpr ByteAccess operator<<=(const uint8_t rhs)
-				{
-					write(read() << rhs);
-					return *this;
-				}
-				constexpr ByteAccess operator>>=(const uint8_t rhs)
-				{
-					write(read() >> rhs);
-					return *this;
-				}
-
-				constexpr ByteAccess operator++() { return operator+=(1); }
-				constexpr ByteAccess operator--() { return operator-=(1); }
-				constexpr uint8_t operator++(int)
-				{
-					const auto result = read();
-					operator++();
-					return result;
-				}
-				constexpr uint8_t operator--(int)
-				{
-					const auto result = read();
-					operator--();
-					return result;
-				}
-
-				constexpr bool operator==(const ByteAccess& rhs) const { return read() == rhs.read(); }
-				constexpr bool operator!=(const ByteAccess& rhs) const { return !operator==(rhs); }
-
-				/// @brief Update the value if the new one is different from the old one
-				/// @param value The data to store at the current address
-				constexpr void update(const uint8_t value)
-				{
-					if (backend.read(address) != value)
-					{
-						backend.write(address, value);
-					}
-				}
-
-				/// @brief Read the value at the current address
-				constexpr uint8_t read() const { return backend.read(address); }
-
-				/// @brief Write the value at the current address
-				/// @param value The data to store
-				constexpr void write(const uint8_t value) { backend.write(address, value); }
-			};
-
-			template<typename Type>
-			class Iterator
-			{
-			  public:
-				EepromBackend& backend;
-				uint16_t address;
-
-				constexpr Type operator*() { return Type {backend, address}; }
-
-				constexpr bool operator==(const Iterator& rhs) const { return address == rhs.address; }
-				constexpr bool operator!=(const Iterator& rhs) const { return !operator==(rhs); }
-
-				constexpr void operator++() { ++address; }
-			};
-			template<typename Type>
-			class ReverseIterator
-			{
-			  public:
-				EepromBackend& backend;
-				uint16_t address;
-
-				constexpr Type operator*() { return Type {backend, address}; }
-
-				constexpr bool operator==(const ReverseIterator& rhs) const { return address == rhs.address; }
-				constexpr bool operator!=(const ReverseIterator& rhs) const { return !operator==(rhs); }
-
-				constexpr void operator++() { --address; }
-			};
-
-		  public:
-			constexpr Allocation(EepromBackend& backend) : backend {backend} { }
-
-			/// @brief Size in bytes of allocation
-			constexpr static int size() { return allocation; }
-
-			/// @brief Erase (set to zero) all bytes in allocation
-			constexpr void erase() { fill(0); }
-
-			/// @brief Fill all bytes in allocation
-			/// @param value Value to fill
-			constexpr void fill(const uint8_t value)
-			{
-				for (auto i : *this)
-				{
-					i = value;
-				}
-			}
-
-			constexpr const ByteAccess front() const { return {backend, offset}; }
-			constexpr ByteAccess front() { return {backend, offset}; }
-
-			constexpr const ByteAccess back() const { return {backend, offset + allocation - 1}; }
-			constexpr ByteAccess back() { return {backend, offset + allocation - 1}; }
-
-			constexpr Iterator<const ByteAccess> begin() const { return {backend, offset}; }
-			constexpr Iterator<const ByteAccess> end() const { return {backend, offset + allocation}; }
-			constexpr Iterator<ByteAccess> begin() { return {backend, offset}; }
-			constexpr Iterator<ByteAccess> end() { return {backend, offset + allocation}; }
-
-			constexpr ReverseIterator<const ByteAccess> rbegin() const { return {backend, offset + allocation - 1}; }
-			constexpr ReverseIterator<const ByteAccess> rend() const { return {backend, offset - 1}; }
-			constexpr ReverseIterator<ByteAccess> rbegin() { return {backend, offset + allocation - 1}; }
-			constexpr ReverseIterator<ByteAccess> rend() { return {backend, offset - 1}; }
-
-			constexpr const ByteAccess operator[](const uint16_t address) const { return {backend, address}; }
-			constexpr ByteAccess operator[](const uint16_t address) { return {backend, address}; }
-		};
 
 	  public:
 		constexpr EEPROM(EepromBackend&& backend) : backend {devuino::move(backend)} { }
@@ -203,19 +24,19 @@ namespace devuino::device
 		/// @brief Allocation of raw EEPROM storage
 		/// @tparam allocation Size of allocation in bytes
 		/// @tparam offset Offset from begining of EEPROM storage in bytes
-		template<int allocation = lenght, int offset = 0>
+		template<int allocation = EepromBackend::lenght, int offset = 0>
 		constexpr auto raw()
 		{
-			return Allocation<allocation, offset> {backend};
+			return Allocation<EepromBackend, allocation, offset> {backend};
 		}
 
 		/// @brief Allocation of raw const EEPROM storage
 		/// @tparam allocation Size of allocation in bytes
 		/// @tparam offset Offset from begining of EEPROM storage in bytes
-		template<int allocation = lenght, int offset = 0>
-		constexpr const auto raw() const
+		template<int allocation = EepromBackend::lenght, int offset = 0>
+		constexpr auto raw() const
 		{
-			return Allocation<allocation, offset> {backend};
+			return AllocationReadonly<const EepromBackend, allocation, offset> {backend};
 		}
 
 		/// @brief Allocate a struct of EEPROM storage
@@ -224,7 +45,7 @@ namespace devuino::device
 		template<typename Structure, int offset = 0>
 		constexpr auto managed()
 		{
-			return Storage<Structure, Allocation<sizeof(Structure), offset>> {backend};
+			return Storage<Structure, Allocation<EepromBackend, sizeof(Structure), offset>> {backend};
 		}
 
 		/// @brief Allocate a const struct of EEPROM storage
@@ -233,7 +54,7 @@ namespace devuino::device
 		template<typename Structure, int offset = 0>
 		constexpr auto managed() const
 		{
-			return StorageReadonly<Structure, const Allocation<sizeof(Structure), offset>> {backend};
+			return StorageReadonly<Structure, const Allocation<EepromBackend, sizeof(Structure), offset>> {backend};
 		}
 	};
 }
